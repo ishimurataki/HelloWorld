@@ -10,18 +10,18 @@ class Header extends Component {
                 const path = this.props.location.pathname;
                 if(path === "/login") {
                     return ([
-                        <li><a href = '/signup'>Sign up </a> </li>,
-                        <li><a href = "/"> Back</a></li>
+                        <li key = "1"><a href = '/signup'>Sign up </a> </li>,
+                        <li key = "2"><a href = "/"> Back</a></li>
                     ])
-                } else if (path == "/signup" ) {
+                } else if (path ==="/signup" ) {
                     return ([
-                        <li><a href = '/login'>Login </a> </li>,
-                        <li><a href = "/"> Back</a></li>
+                        <li key = "1"><a href = '/login'>Login </a> </li>,
+                        <li key = "2" ><a href = "/"> Back</a></li>
                     ])
                 } else {
                     return ([
-                        <li><a href = '/login'>Login </a></li>,
-                        <li><a href = '/signup'>Sign up </a> </li>
+                        <li key = "1"><a href = '/login'>Login </a></li>,
+                        <li key = "2"><a href = '/signup'>Sign up </a> </li>
                     ]
                     );
                 }

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-
+import SignupForm from './SignupForm'
 
 class Signup extends Component {
+    // connect this to redux
+    handleSubmit = (values) => {
+        console.log(values)
+    }
     render () {
         return (
             <div>
-                Welcome to the Signup page
+                <SignupForm onSubmit = {this.handleSubmit} />
             </div>
         )
     }
