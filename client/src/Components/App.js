@@ -4,6 +4,8 @@ import Home from './Home'
 import Header from './Header'
 import Login from './Login'
 import Signup from './Signup'
+import Feed from './Feed/Feed'
+import { ProtectedRoute } from './ProtectedRoute';
 class App extends Component {
     render () {
         return (
@@ -14,6 +16,7 @@ class App extends Component {
                         <Route exact path = "/" component = {Home} />
                         <Route path = "/login" component = {Login} />
                         <Route path = "/signup" component = {Signup} />
+                        <ProtectedRoute path = "/feed" component = {Feed} />
                     </div>
                 </BrowserRouter>
             </div>
