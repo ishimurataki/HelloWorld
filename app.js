@@ -1,6 +1,6 @@
 var express = require('express');
 var session = require('express-session');
-var schemas = require('./createTables');
+var schemas = require('./createTableSchemas');
 var User = schemas.User;
 var Friend = schemas.Friend;
 var authRoutes = require('./routes/authroutes.js')(User);

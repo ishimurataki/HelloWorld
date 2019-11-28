@@ -14,7 +14,7 @@ var routes = function(Friend){
 
     return {
         get_all_friends: getAllFriends,
-        get_all_online_friends, getAllOnlineFriends
+        get_all_online_friends: getAllOnlineFriends
     }
 }
 
