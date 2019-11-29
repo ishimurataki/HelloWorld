@@ -13,7 +13,7 @@ var friendsDb = require('./db/friendsdb')(Friend);
 //define require all routes here
 var authRoutes = require('./routes/authroutes.js')(User);
 var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
-var postRoutes = require('./routes/postroutes.js')(Post, Comment, friendsDb);
+var postRoutes = require('./routes/postroutes.js')(Post, friendsDb);
 
 
 
@@ -33,8 +33,8 @@ app.use(session({
    app.post('/api/signup', authRoutes.add_user);
    app.post('/api/getAllFriends', friendRoutes.get_all_friends);
    app.post('/api/getAllOnlineFriends', friendRoutes.get_all_online_friends);
-   app.post('/api/getAllPosts', postRoutes.get_all_posts);
-   app.post('/api/getAllComments', postRoutes.get_all_comments);
+   app.post('/api/getAllPosts', postRoutes.get_posts);
+   //app.post('/api/getAllComments', commentRoutes.get_all_comments);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

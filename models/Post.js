@@ -2,12 +2,11 @@ const Joi = require('joi');
 
 module.exports = dynamo => {
     return dynamo.define('Facebook Posts', {
-      hashKey  : 'username',
+      hashKey  : 'creator',
       schema : {
-        username  : Joi.string(),
-        email : Joi.string(),
-        password  : Joi.string()
+        creator  : Joi.string(),
+        caption : Joi.string()
       },
-      tableName: "facebookUsers"
+      tableName: "facebookPosts"
     });
 }
