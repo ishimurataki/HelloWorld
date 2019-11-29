@@ -7,7 +7,6 @@ var routes = function(Post) {
 
 	}
 
-
 	return {
 		get_post : getPosts
 	}
