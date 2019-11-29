@@ -5,6 +5,7 @@ var session = require('express-session');
 var schemas = require('./createTableSchemas');
 var User = schemas.User;
 var Friend = schemas.Friend;
+var Post = schemas.Post;
 
 
 // define/require all helper dbs here

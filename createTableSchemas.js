@@ -3,6 +3,7 @@ dynamo.AWS.config.loadFromPath('./models/credentials.json');
 
 var User = require('./models/User')(dynamo);
 var Friend = require('./models/Friend')(dynamo); 
+var Post = require('./models/Post')(dynamo);
 
 // create tables snippet of code is a one time thing, to build a table that does not exist.
 // if a schema was updated and a table already exists, we will have to delete the table, and rebuild it
@@ -19,5 +20,6 @@ var Friend = require('./models/Friend')(dynamo);
 
 module.exports = {
     User: User,
-    Friend: Friend
+    Friend: Friend,
+    Post: Post
 };
