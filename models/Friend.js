@@ -7,7 +7,7 @@ module.exports = dynamo => {
       schema : {
         username  : Joi.string(),
         friendUsername: Joi.string(),
-        active: Joi.string()
+        active: Joi.boolean()
       },
       tableName: "facebookFriends"
     });
