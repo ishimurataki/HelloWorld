@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './Home'
 import Header from './Header'
-import Login from './Login'
-import Signup from './Signup'
+import Login from './Auth/Login'
+import Signup from './Auth/Signup'
 import Feed from './Feed/Feed'
-import { ProtectedRoute } from './ProtectedRoute';
+import { ProtectedRoute } from './Auth/ProtectedRoute';
 class App extends Component {
     render () {
         return (

@@ -1,4 +1,4 @@
-var routes = function(Post) {
+var routes = function(Post, friendsDb) {
 
 	// function that gets all posts that should be seen by a
 	// certain user (posts made by friends)

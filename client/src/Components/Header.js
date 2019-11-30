@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import auth from './Auth/Auth';
+import auth from '../Middleware/Auth';
 class Header extends Component {
     handleLogout = (event) => {
         event.preventDefault();

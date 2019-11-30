@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'; 
-import auth from './Auth/Auth';
-class Login extends Component {
+import { Link } from 'react-router-dom'; 
+import auth from './../../Middleware/Auth';
+
+class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             errorUser: '',
             password: '',
-            errorPass: ''
+            errorPass: '',
+            email: '',
+            errorEmail: ''
         }
     }
     handleUsernameChange = (event) => {
@@ -21,11 +24,16 @@ class Login extends Component {
             password: event.target.value
         })
     }
-    validLoginAttempt = () => {
-        if(!this.state.errorPass && !this.state.errorUser) {
-            console.log("triggered login sequence");
-            var obj = {username: this.state.username, password: this.state.password};
-            auth.login(obj, (result) => {
+    handleEmailChange = (event) => {
+        this.setState({
+            email: event.target.value
+        })
+    }
+    validSignupAttempt = () => {
+        if(!this.state.errorPass && !this.state.errorUser && !this.state.errorEmail) {
+            console.log("triggered signup sequence");
+            var obj = {username: this.state.username, password: this.state.password, email: this.state.email};
+            auth.signup(obj, (result) => {
                 if(result === "success") {
                     this.props.history.push("/feed");
                 } else {
@@ -38,26 +46,35 @@ class Login extends Component {
         event.preventDefault();
         var errorUser = '';
         var errorPass = '';
+        var errorEmail = '';
         if(!this.state.username) {
-            errorUser = "Blank username error"
-        } 
-        if(!this.state.password) {
-            errorPass = "Blank password error"
+          errorUser = "blank email error";
         }
-        this.setState({errorUser: errorUser, errorPass: errorPass}, () => {
-            this.validLoginAttempt();
+        if(!this.state.email) {
+           errorEmail = 'blank email error';
+        }
+        if(!this.state.password) {
+           errorPass = "blank password error"
+        }
+        this.setState({errorUser: errorUser, errorPass: errorPass, errorEmail: errorEmail}, () => {
+            this.validSignupAttempt();
         });
+        
     }
+    // to do incorporate interests into the state/etc
     render () {
         return (
             <div>
                 <form onSubmit = {this.handleSubmit}>
                     <div><label> Username </label><input value = {this.state.username} onChange = {this.handleUsernameChange}/>
                     <div className = "red-text" style = {{ marginBottom : '20px'}}>{this.state.errorUser}</div> </div>
-                    <div><label> Password </label><input id = "password" type = "password" value = {this.state.password} onChange = {this.handlePasswordChange}/>
+                    <div><label> Password </label><input label = "password" type = "password" value = {this.state.password} onChange = {this.handlePasswordChange}/>
                     <div className = "red-text" style = {{ marginBottom : '20px'}}>{this.state.errorPass}</div>
                     </div>
-                    
+                    <div><label> Email </label><input value = {this.state.email} onChange = {this.handleEmailChange}/>
+                    <div className = "red-text" style = {{ marginBottom : '20px'}}>{this.state.errorEmail}</div>
+                    </div> 
+                    <div className = "row"><input id = "name" type = "text" length = "10" /><label>Enter Interests</label></div>          
                     <Link to= "/" className = "blue btn-flat left white-text">
                             cancel
                     </Link>
@@ -71,4 +88,4 @@ class Login extends Component {
     }
 }
 
-export default withRouter(Login);
+export default Signup;

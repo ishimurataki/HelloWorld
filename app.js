@@ -16,8 +16,6 @@ var authRoutes = require('./routes/authroutes.js')(User);
 var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
 var postRoutes = require('./routes/postroutes.js')(Post, friendsDb);
 
-
-
 const bodyParser = require('body-parser');
 var app = express();
 

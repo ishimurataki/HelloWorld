@@ -1,14 +1,17 @@
 import axios from 'axios' 
 class Auth {
     constructor() {
-        this.authenticated = false;
+        // changed just because
+        this.authenticated = true;
     }
 
     async login (obj, callback) {
         console.log("begin login sequence");
         console.log(obj);
-        const res = await axios.post('/api/checklogin', obj);
-        const value = res.data;
+        //const res = await axios.post('/api/checklogin', obj);
+        //const value = res.data;
+        // true for debugging
+        const value = "success"
         if(value === "success") {
             this.authenticated = true;
         }
