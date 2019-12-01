@@ -8,7 +8,7 @@ class Post{
         console.log(obj);
         //const res = await axios.post('/api/checklogin', obj);
         //const value = res.data;
-        // true for debugging
+        // fake data for now
         var post1 = {
             caption: "Hello",
             creator: "Vinke",

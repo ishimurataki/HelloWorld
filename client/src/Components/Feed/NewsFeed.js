@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import post_middleware from './../../Middleware/Post';
+import TestButton from './TestButton';
 import Post from './Post';
+import CreatePost from './CreatePost'
 
 class NewsFeed extends Component {
     constructor(props) {
@@ -26,7 +28,11 @@ class NewsFeed extends Component {
     render () {
         return (
             <div>
-                {this.renderNewsFeed()}
+                <TestButton/>
+                <CreatePost />
+                <div>
+                    {this.renderNewsFeed()}
+                </div>
             </div>
         )
     }

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-
+import { withRouter } from 'react-router-dom'
+import Auth from './../Middleware/Auth'
 class Home extends Component {
+    componentDidMount() {
+        if(Auth.isAuthenticated()) {
+            this.props.history.push('/feed');
+        }
+    }
     render () {
         return (
             <div className="container">
@@ -44,4 +50,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default withRouter (Home);

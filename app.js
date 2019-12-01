@@ -32,7 +32,7 @@ app.use(session({
    app.post('/api/signup', authRoutes.add_user);
    app.post('/api/getAllFriends', friendRoutes.get_all_friends);
    app.post('/api/getAllOnlineFriends', friendRoutes.get_all_online_friends);
-   app.post('/api/getAllPosts', postRoutes.get_posts);
+   app.post('/api/getAllPosts', postRoutes.get_post);
    //app.post('/api/getAllComments', commentRoutes.get_all_comments);
 
 // run the server below
