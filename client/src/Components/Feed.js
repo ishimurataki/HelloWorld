@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Feed.css';
-import NewsFeed from './NewsFeed';
+import NewsFeed from './Feed/NewsFeed';
 class Feed extends Component {
     render () {
         return (

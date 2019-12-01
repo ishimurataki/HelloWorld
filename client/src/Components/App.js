@@ -4,7 +4,7 @@ import Home from './Home'
 import Header from './Header'
 import Login from './Auth/Login'
 import Signup from './Auth/Signup'
-import Feed from './Feed/Feed'
+import Feed from './Feed'
 import { ProtectedRoute } from './Auth/ProtectedRoute';
 class App extends Component {
     render () {

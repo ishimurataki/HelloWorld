@@ -2,16 +2,16 @@ import axios from 'axios'
 class Auth {
     constructor() {
         // changed just because
-        this.authenticated = true;
+        this.authenticated = false;
     }
 
     async login (obj, callback) {
         console.log("begin login sequence");
         console.log(obj);
-        //const res = await axios.post('/api/checklogin', obj);
-        //const value = res.data;
+        const res = await axios.post('/api/checklogin', obj);
+        const value = res.data;
         // true for debugging
-        const value = "success"
+        // const value = "success"
         if(value === "success") {
             this.authenticated = true;
         }
@@ -35,7 +35,7 @@ class Auth {
     }
 
     isAuthenticated () {
-        return this.authenticated
+        return this.authenticated;
     }
 }
 
