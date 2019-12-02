@@ -10,11 +10,12 @@ var Post = schemas.Post;
 
 // define/require all helper dbs here
 var friendsDb = require('./db/friendsdb')(Friend);
+var postsDb = require('./db/postsdb')(Friend, Post);
 
 //define require all routes here
 var authRoutes = require('./routes/authroutes.js')(User);
 var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
-var postRoutes = require('./routes/postroutes.js')(Post, friendsDb);
+var postRoutes = require('./routes/postroutes.js')(Post, postsDb);
 
 const bodyParser = require('body-parser');
 var app = express();
