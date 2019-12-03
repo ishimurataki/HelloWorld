@@ -23,7 +23,7 @@ var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 
 const bodyParser = require('body-parser');
 var app = express();
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({
 	key: 'user_sid',

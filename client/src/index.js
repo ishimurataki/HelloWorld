@@ -4,7 +4,6 @@ import 'materialize-css/dist/css/materialize.min.css';
 import ReactDOM from 'react-dom';
 //import { Provider } from 'react-redux';
 import App from './Components/App';
-import $ from 'jquery';
 //import reduxThunk from 'redux-thunk';
 //import reducers from './reducers';
 //import { createStore, applyMiddleware} from 'redux';
