@@ -41,9 +41,25 @@ var routes = function(Friend){
         });
     }
 
+    // function to add friend into database
+    var addFriendship = function(username, friendUsername, callback) {
+        console.log('Adding ' + username + 'and ' + friendUsername);
+        var friendship1 = {username: username, friendUsername: friendUsername};
+        var friendship2 = {username: friendUsername, friendUsername: username};
+        Friend.create([friendship1, friendship2], function(err, response) {
+            if (err) {
+                console.log(err);
+                callback(null);
+            } else {
+                console.log('Created friendship between ' + username + 'and ' + friendUsername);
+            }
+        })
+    }
+
     return {
         getAllFriends: getAllFriends,
-        getAllOnlineFriends: getAllOnlineFriends
+        getAllOnlineFriends: getAllOnlineFriends,
+        addFriendship: addFriendship
     }
 }
 

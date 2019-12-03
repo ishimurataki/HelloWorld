@@ -10,8 +10,20 @@ var routes = function(Post, postsDb) {
 
 	}
 
+	// function to add new post
+	var addNewPost = function (req, res) {
+		var creator = req.body.creator;
+		var date = req.body.date;
+		var recipient = req.body.recipient;
+		var content = req.body.content;
+		postsDb.addNewPost(creator, date, recipient, content, function(response) {
+			console.log('Added new post for ' + creator + ' at ' + date);
+		})
+	}
+
 	return {
-		get_post : getAllPosts
+		get_post : getAllPosts,
+		add_new_post: addNewPost
 	}
 }
 

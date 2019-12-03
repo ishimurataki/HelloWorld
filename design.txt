@@ -7,3 +7,8 @@ When we add new Schemas. The work show should be as follows.
 2) Insert your new schema into createTables
 3) Go to app.js and update whatever route requires your new schema
 4) Go into this routes class and add a method. 
+
+
+** for getAllComments, need to determine how we are storing the date
+** for Post schema - consider making 
+** send postID to backend - 

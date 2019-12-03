@@ -6,8 +6,7 @@ module.exports = dynamo => {
       rangeKey :  'friendUsername',
       schema : {
         username  : Joi.string(),
-        friendUsername : Joi.string(),
-        active  : Joi.string()
+        friendUsername : Joi.string()
       },
       tableName: "facebookFriends"
     });

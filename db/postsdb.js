@@ -24,17 +24,32 @@ var routes = function(Friend, Post){
                 
             }
             callback(postObj);
-        });
-        
-        
-        
-        
-        
+        }); 
+    }
+
+    // function to make a post
+    var addNewPost = function (creator, date, recipient, content, callback) {
+        console.log('Adding new post for ' + creator + " at " + date);
+        var post = {
+            creator: creator,
+            date: date, 
+            recipient: recipient,
+            content: content
+        }
+        Post.create([post], function(err, response) {
+            if (err) {
+                console.log(err);
+                callback(null);
+            } else {
+                console.log('Added new post for ' + creator + ' at ' + date);
+            }
+        })
     }
 
 
     return {
-        getAllPosts: getAllPosts
+        getAllPosts: getAllPosts,
+        addNewPost: addNewPost
     }
 }
 
