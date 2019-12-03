@@ -1,10 +1,10 @@
 var routes = function(Comment) {
 
 	// function to get all comments for a post
-	var getAllComments = function (postCreator, postID, date, callback) {
+	var getAllComments = function (postID, date, callback) {
 		console.log('Getting all comments for the post made by ' + postCreator +
 			'at ' + date);
-		Comment.query(postCreator).where('postID').equals(postID).exec(function(err, response) {
+		Comment.query(postID).filter('date').equals(date).exec(function(err, response) {
 			if (err) {
 				console.log(err);
 				callback(null);

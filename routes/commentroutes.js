@@ -2,10 +2,9 @@ var routes = function(commentsDb) {
 
 	// function to get all comments for a post
 	var getAllComments = function (req, res) {
-		var postCreator = req.body.postCreator;
 		var postID = req.body.postID;
 		var date = req.body.date;
-		commentsDb.getAllComments(postCreator, postID, date, function(response) {
+		commentsDb.getAllComments(postID, date, function(response) {
 			res.send(response);
 		})
 	}
