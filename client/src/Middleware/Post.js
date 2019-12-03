@@ -3,6 +3,10 @@ class Post{
     constructor() {
     }
 
+    async createPost (obj) {
+        
+    }
+
     async fetchPostData (obj) {
         console.log("fetching posts");
         console.log(obj);

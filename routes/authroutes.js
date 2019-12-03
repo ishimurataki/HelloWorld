@@ -4,6 +4,7 @@ var routes = function(User){
     var checkLogin = function (req, res) {
         var username = req.body.username;
         var password = req.body.password;
+        console.log(req.body);
         User.get(username, function(err, acc) {
             if(err) {
                 res.send("error: error getting user in checkLogin. More information" + err);
@@ -27,6 +28,7 @@ var routes = function(User){
     }
 
     var addNewUser = function (req, res) {
+        console.log(req.body);
         var username = req.body.username;
         var password = req.body.password;
         var email = req.body.email;
