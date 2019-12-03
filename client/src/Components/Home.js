@@ -22,7 +22,7 @@ class Home extends Component {
                 <div className="row">
                     <div className="col s12 m4">
                     <div className="icon-block">
-                    <img className = "center" alt = "taki" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Taki.jpg')} />
+                    <img className = "center" alt = "taki" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Taki.jpg')}></img>
                         <h5 className="center">Taki</h5>
                         <p className="light">Taki is a guy who Daniel introduced me to</p>
                     </div>
@@ -30,7 +30,7 @@ class Home extends Component {
 
                     <div className="col s12 m4">
                     <div className="icon-block">
-                        <img className = "center" alt = "matt" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Matt.jpg')} />
+                        <img className = "center" alt = "matt" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Matt.jpg')}></img>
                         <h5 className="center">Kevin</h5>
 
                         <p className="light">Kevin is a guy who is doing the front end</p>
@@ -38,7 +38,7 @@ class Home extends Component {
                     </div>
                     <div className="col s12 m4">
                     <div className="icon-block">
-                        <img className = "center" alt = "matt" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Matt.jpg')} />
+                        <img className = "center" alt = "matt" style ={{flex: 1, width: "100%", height: "100%", resizeMode: 'contain', verticalAlign: 'middle'}} src = {require('./Images/Matt.jpg')}></img>
                         <h5 className ="center">Matt</h5>
                         <p className = "light">Matt goes to church, and will not be a roomie next year lel</p>
                     </div>

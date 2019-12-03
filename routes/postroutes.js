@@ -1,14 +1,29 @@
-var routes = function(Post, friendsDb) {
+var routes = function(Post, postsDb) {
 
 	// function that gets all posts that should be seen by a
 	// certain user (posts made by friends)
-	var getPosts = function (req, res) {
-		var user = req.body.username;
+	var getAllPosts = function (req, res) {
+		var username = req.body.username;
+		postsDb.getAllPosts(username, function(response) {
+			res.send(response);
+		})
 
 	}
 
+	// function to add new post
+	var addNewPost = function (req, res) {
+		var creator = req.body.creator;
+		var date = req.body.date;
+		var recipient = req.body.recipient;
+		var content = req.body.content;
+		postsDb.addNewPost(creator, date, recipient, content, function(response) {
+			console.log('Added new post for ' + creator + ' at ' + date);
+		})
+	}
+
 	return {
-		get_post : getPosts
+		get_post : getAllPosts,
+		add_new_post: addNewPost
 	}
 }
 

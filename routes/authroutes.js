@@ -30,8 +30,15 @@ var routes = function(User){
     var addNewUser = function (req, res) {
         console.log(req.body);
         var username = req.body.username;
-        var password = req.body.password;
         var email = req.body.email;
+        var password = req.body.password;
+        var active = req.body.active;
+        var firstname = req.body.firstname;
+        var lastname = req.body.lastname;
+        var affiliation = req.body.affiliation;
+        var interests = req.body.interests;
+        var birthday = req.body.birthday;
+        var status = req.body.status;
         User.get(username, function(err, acc) {
             if(err) {
                 res.send("error: error checking existing user in signup. More information" + err);
@@ -39,7 +46,19 @@ var routes = function(User){
                 if(acc) {
                     res.send("error: username already exists. Try again")
                 } else {
-                    User.create({username: username, password: password, email: email}, function (err2, acc2) {
+                    var user = {
+                        username: username,
+                        password: password,
+                        email: email,
+                        active: active,
+                        firstname: firstname,
+                        lastname: lastname,
+                        affiliation: affiliation,
+                        interests: interests,
+                        birthday: birthday,
+                        status: status
+                    };
+                    User.create([user], function (err2, acc2) {
                         if(err2) {
                             res.send("error: error creating new user" + err2);
                         } else {
