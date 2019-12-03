@@ -18,6 +18,8 @@ public class AdsorptionInitMapper extends Mapper<LongWritable, Text, Text, Text>
 			for (int i = 0; i < splitInterests.length; i++) {
 				String interest = splitInterests[i];
 				context.write(new Text(name), new Text(interest));
+				String keyForInterest = "*" + interest
+				context.write(new Text(keyForInterest), new Text(name));
 			}
 		}
 
