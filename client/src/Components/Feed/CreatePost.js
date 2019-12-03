@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './CreatePost.css'
 import Post from './../../Middleware/Post'; 
-
+import auth from './../../Middleware/Auth';
 
 class CreatePost extends Component {
     constructor(props) {
@@ -9,6 +9,8 @@ class CreatePost extends Component {
         this.state = {
             caption: ""
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCaptionChange = this.handleCaptionChange.bind(this);
     }
 
     handleCaptionChange(event) {
@@ -17,7 +19,26 @@ class CreatePost extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log("Creating post");
-        Post.CreatePost();
+        var date = new window.Date();
+        // format of date will be 12-2-2019-12-02
+        // format of date will be month-day-year-hour-minute-second
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDay();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var seconds = date.getSeconds();
+        var timeOfPost = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
+        var obj = {
+            content: this.state.caption,
+            recipient: "none",
+            date: timeOfPost,
+            creator: auth.getUsername()
+        }
+        Post.createPost(obj, (response) => {
+            console.log(response);
+            this.props.pushToNewsFeed(response);
+        });
     }
     render() {
         return (

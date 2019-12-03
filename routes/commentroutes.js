@@ -4,7 +4,8 @@ var routes = function(commentsDb) {
 	var getAllComments = function (req, res) {
 		var postCreator = req.body.postCreator;
 		var postID = req.body.postID;
-		commentsDb.getAllComments(postCreator, postID, function(response) {
+		var date = req.body.date;
+		commentsDb.getAllComments(postCreator, postID, date, function(response) {
 			res.send(response);
 		})
 	}
@@ -18,6 +19,7 @@ var routes = function(commentsDb) {
 		var content = req.body.content;
 		commentsDb.addNewComment(postID, postDate, creator, date, content, function(response) {
 			console.log('Added new comment by ' + creator + ' at ' + date);
+			res.send(response);
 		})
 	}
 

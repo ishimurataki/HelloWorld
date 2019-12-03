@@ -42,6 +42,7 @@ var routes = function(Friend, Post){
                 callback(null);
             } else {
                 console.log('Added new post for ' + creator + ' at ' + date);
+                callback(post);
             }
         })
     }

@@ -6,23 +6,13 @@ export class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      caption: "",
-      imageDescription: "",
-      imageUrl: "",
-      postUser: "",
-      time: "",
-      id: ""
-    }
-  }
-  componentDidMount() {
-    this.setState({
-      caption: this.props.data.caption,
+      content: this.props.data.content,
       imageUrl: this.props.data.imageUrl,
-      postUser: this.props.data.postUser,
+      creator: this.props.data.creator,
       imageDescription : this.props.data.imageDescription,
-      time: this.props.data.time,
-      id: this.props.id
-    });
+      postDate: this.props.data.date,
+      postID: this.props.data.postID
+    }
   }
   renderImage() {
     if(this.state.imageUrl && this.state.imageDescription) {
@@ -52,14 +42,14 @@ export class Post extends React.Component {
                   </div>
                 </header>
                 <div className = "Post-time">
-                  Posted on {this.state.time}
+                  Posted on {this.state.postDate}
                 </div>
               </div>
               {this.renderImage()}
               <div className="Post-caption">
-                {this.state.caption}
+                {this.state.content}
               </div>
-              <CommentSection postId = {this.state.id}/>
+              <CommentSection postID = {this.state.postID} postDate = {this.state.postDate} creator = {this.state.creator}/>
           </article>
         </div>
 

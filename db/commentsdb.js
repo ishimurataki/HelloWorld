@@ -1,10 +1,10 @@
 var routes = function(Comment) {
 
 	// function to get all comments for a post
-	var getAllComments = function (postCreator, postID, callback) {
+	var getAllComments = function (postCreator, postID, date, callback) {
 		console.log('Getting all comments for the post made by ' + postCreator +
 			'at ' + date);
-		Comment.query(postCreator).filter('postID').equals(postID).exec(function(err, response) {
+		Comment.query(postCreator).where('postID').equals(postID).exec(function(err, response) {
 			if (err) {
 				console.log(err);
 				callback(null);
@@ -37,6 +37,7 @@ var routes = function(Comment) {
 				callback(null);
 			} else {
 				console.log('Added new comment by ' + creator + ' at ' + date);
+				callback(response);
 			}
 		})
 	}

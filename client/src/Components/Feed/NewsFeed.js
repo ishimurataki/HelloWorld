@@ -3,35 +3,49 @@ import post_middleware from './../../Middleware/Post';
 import TestButton from './TestButton';
 import Post from './Post';
 import CreatePost from './CreatePost'
+import Auth from '../../Middleware/Auth';
 
 class NewsFeed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []};
+            data: []
+        };
+        this.pushToNewsFeed.bind(this);
     }
     async componentDidMount() {
-        var response = await post_middleware.fetchPostData();
-        this.setState({data: response.data});
+        var obj = {username: Auth.getUsername()};
+        var response = await post_middleware.fetchPostData(obj);
+        this.setState({data: response});
     }
-    renderNewsFeed() {
-        if(!this.state.data) {
-            return <div> Loading </div>
+
+    renderNewsFeed = (data) => {
+        console.log(data);
+        if(!data) {
+            return <div> No Posts </div>
         } else {
-            return this.state.data.map((postData) => {
-                console.log(postData);
-                var uniquePostId = postData.id;
+            return data.map((postData) => {
+                var uniquePostId = postData.date;
                 return <Post key={uniquePostId} data= {postData}/>
             })
         }
     }
+
+    pushToNewsFeed = (response) => {
+        console.log(response);
+        this.setState(prevState => ({
+            data: [response, ...prevState.data]
+        }));
+    }
+
     render () {
+        const { data } = this.state;
         return (
             <div>
                 <TestButton/>
-                <CreatePost />
+                <CreatePost pushToNewsFeed={this.pushToNewsFeed}/>
                 <div>
-                    {this.renderNewsFeed()}
+                    {this.renderNewsFeed(data)}
                 </div>
             </div>
         )

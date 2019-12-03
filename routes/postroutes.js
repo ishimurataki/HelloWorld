@@ -5,6 +5,7 @@ var routes = function(Post, postsDb) {
 	var getAllPosts = function (req, res) {
 		var username = req.body.username;
 		postsDb.getAllPosts(username, function(response) {
+			console.log(response);
 			res.send(response);
 		})
 
@@ -18,6 +19,7 @@ var routes = function(Post, postsDb) {
 		var content = req.body.content;
 		postsDb.addNewPost(creator, date, recipient, content, function(response) {
 			console.log('Added new post for ' + creator + ' at ' + date);
+			res.send(response);
 		})
 	}
 

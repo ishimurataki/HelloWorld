@@ -3,6 +3,7 @@ class Auth {
     constructor() {
         // changed just because
         this.authenticated = false;
+        this.username = "";
     }
 
     async login (obj, callback) {
@@ -18,8 +19,17 @@ class Auth {
         callback(value);
     }
 
+    setUsername(username) {
+        this.username = username;
+    }
+
+    getUsername() {
+        return this.username;
+    }
+
     logout(callback) {
         this.authenticated = false;
+        this.username = "";
         callback();
     }
 
