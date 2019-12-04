@@ -15,6 +15,7 @@ class Auth {
         // const value = "success"
         if(value === "success") {
             this.authenticated = true;
+            localStorage.setItem("token", value);
         }
         callback(value);
     }
@@ -30,7 +31,9 @@ class Auth {
     logout(callback) {
         this.authenticated = false;
         this.username = "";
+        localStorage.removeItem("token");
         callback();
+
     }
 
     async signup(obj, callback) {
@@ -40,6 +43,7 @@ class Auth {
         const value = res.data;
         if(value === "success") {
             this.authenticated = true;
+            localStorage.setItem("token", value);
         }
         callback(value);
     }
@@ -47,6 +51,7 @@ class Auth {
     isAuthenticated () {
         return this.authenticated;
     }
+
 }
 
 export default new Auth();

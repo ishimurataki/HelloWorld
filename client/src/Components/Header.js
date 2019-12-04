@@ -12,7 +12,7 @@ class Header extends Component {
     renderContent() {
         // lets just store login in windows lmao
         const path = this.props.location.pathname;
-        if(auth.isAuthenticated()) {
+        if(auth.isAuthenticated() || localStorage.getItem("token")) {
             return ([
                 <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
             ])

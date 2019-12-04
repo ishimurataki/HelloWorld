@@ -12,7 +12,7 @@ class CommentSection extends Component {
         }
     }
     async componentDidMount() {
-        var obj = {postCreator: this.props.creator, postID: this.props.postID, date: this.props.postDate};
+        var obj = {postID: this.props.postID, date: this.props.postDate};
         var response = await comment_middleware.fetchCommentData(obj);
         console.log(response);
         this.setState({data: response});
@@ -23,7 +23,7 @@ class CommentSection extends Component {
             return <div> No Comments </div>
         } else {
             return data.map((postData) => {
-                return <Comment data= {postData}/>
+                return <Comment key={postData.date} data= {postData}/>
             })
         }
     }

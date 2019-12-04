@@ -12,10 +12,12 @@ var routes = function(Friend, Post){
                 var friend = posts.Items[i].attrs.creator;
                 var boolean = 'true';
                 Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
-                    if (response.Items.length != 0) {
-                        boolean = 'true';
-                    } else {
-                        boolean = 'false';
+                    if(response) {
+                        if (response.Items.length != 0) {
+                            boolean = 'true';
+                        } else {
+                            boolean = 'false';
+                        }
                     }
                 });
                 if (boolean === 'true') {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Feed.css';
 import NewsFeed from './Feed/NewsFeed';
+import ChatBar from './Chat/ChatBar'
 class Feed extends Component {
     render () {
         return (
@@ -11,9 +12,7 @@ class Feed extends Component {
                         <NewsFeed/>
                     </div>
                     <div className ="col s3">
-                        <div className="card-panel blue">
-                            <span className="white-text">Chat Bar</span>
-                        </div>
+                        <ChatBar/> 
                     </div>
                 </div>
             </div>
