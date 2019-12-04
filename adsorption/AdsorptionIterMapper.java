@@ -32,20 +32,20 @@ public class AdsorptionIterMapper extends Mapper<LongWritable, Text, Text, Text>
 					String keyToEmit = labelEdge;
 					String valueToEmit = label + "," + Double.toString(weightToSend);
 
+					context.write(new Text(keyToEmit), new Text(valueToEmit));
 				}
-
-
 			}
 
+			// emit special key/value so we can remember neighbors
+			context.write(new Text(origin), new Text("*" + interestOrName[1]));
 		} else {
+			// no values associated with origin
 			String origin = interestOrName[0];
-		}
-		String[] interestOrNameRank = interestOrName[0].split(",");
-		String[] neighbors = interestOrName[1].split(";");
-		String interestOrName = interestOrNameRank[0];
-		String rank = interestOrNameRank[1];
-		int numNeighbors = neighbors.length;
+			String neighbors = interestOrName[1];
 
+			// just need to emit special key/value to remember neighbors
+			context.write(new Text(origin), new Text("*" + neighbors));
+		}
 
 	}
 }

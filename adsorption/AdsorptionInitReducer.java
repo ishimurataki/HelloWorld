@@ -2,6 +2,7 @@ import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import org.apache.hadoop.io.*;
 
