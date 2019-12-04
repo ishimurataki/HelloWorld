@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.apache.hadoop.io.*;
 
-public class SocialRankInitReducer extends Reducer<Text, Text, Text, Text> {
+public class AdsorptionIterReducer extends Reducer<Text, Text, Text, Text> {
 	
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
