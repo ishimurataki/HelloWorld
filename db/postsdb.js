@@ -15,8 +15,10 @@ var routes = function(Friend, Post){
                     if(response) {
                         if (response.Items.length != 0) {
                             boolean = 'true';
+                            console.log('done');
                         } else {
                             boolean = 'false';
+                            console.log('done');
                         }
                     }
                 });
