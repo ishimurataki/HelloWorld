@@ -15,7 +15,7 @@ var friendsDb = require('./db/friendsdb')(Friend);
 var postsDb = require('./db/postsdb')(Friend, Post);
 var usersDb = require('./db/usersdb')(User);
 var commentsDb = require('./db/commentsdb')(Comment);
-var friendreqDb = require('./db/friendrequestdb')(FriendRequests, User);
+var friendreqDb = require('./db/friendrequestdb')(FriendRequests, User, Friend);
 var notificationDb = require('./db/notificationdb')(Notification, Friend);
 
 //define require all routes here
@@ -57,6 +57,8 @@ app.use(session({
    app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
    app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
    app.post('/api/sendFriendRequest', friendRequestRoutes.send_friend_request);
+   app.post('/api/acceptFriendRequest', friendRequestRoutes.accept_friend_request);
+   app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

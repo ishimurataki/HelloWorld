@@ -1,4 +1,4 @@
-var routes = function(FriendRequests, User) {
+var routes = function(FriendRequests, User, Friend) {
 
 	// function to return people who sent indicated user
 	// a friend request - returns list of senders
@@ -58,10 +58,58 @@ var routes = function(FriendRequests, User) {
 		})
 	}
 
+	var acceptFriendRequest = function(username, date, sender, callback) {
+		console.log(username + " accepted " + sender + " friend request");
+		FriendRequests.destroy({username: username, date: date, sender: sender}, function (err, response) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Friend request is accepted');
+				console.log('Creating new friendship in Friends database');
+				var friendship1 = {
+					username: username,
+					friendUsername: sender
+				}
+
+				var friendship2 = {
+					username: sender,
+					friendUsername: username
+				}
+
+				Friend.create([friendship1, friendship2], function(err, friends) {
+					if (err) {
+						console.log(err);
+						callback(null);
+					} else {
+						console.log('Added new friendship');
+						callback(response);
+					}
+				})
+			}
+		})
+
+	}
+
+	var rejectFriendRequest = function(username, date, sender, callback) {
+		console.log(username + " rejected " + sender + " friend request");
+		FriendRequests.destroy({username: username, date: date, sender: sender}, function (err, response) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Friend request is rejected');
+				callback(response);
+			}
+		})
+	}
+
 
 	return {
 		getAllFriendReqs : getAllFriendReqs,
-		sendFriendRequest: sendFriendRequest
+		sendFriendRequest: sendFriendRequest,
+		acceptFriendRequest: acceptFriendRequest,
+		rejectFriendRequest: rejectFriendRequest
 	}
 }
 
