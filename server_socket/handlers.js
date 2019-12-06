@@ -29,7 +29,7 @@ makeHandleEvent = (client, clientManager, chatroomManager) => {
 module.exports = (client, clientManager, chatroomManager) => {
     const handleEvent = makeHandleEvent(client, clientManager, chatroomManager);
     handleJoin = (chatroomName, cb) => {
-        const createEntry = () => ({ event: `joined ${chatroomName}`});
+        const createEntry = () => ({ msg: `joined ${chatroomName}`});
 
         handleEvent(chatroomName, createEntry)
             .then((chatroom) => {
@@ -40,9 +40,11 @@ module.exports = (client, clientManager, chatroomManager) => {
     }
 
     handleMessage = (chatroomName, message, cb) => {
-        const createEntry = () => ({ event: `${client.id} says: ${message}`});
+        const createEntry = () => ({ msg: message});
         handleEvent(chatroomName, createEntry)
             .then((chatroom) => {
+                console.log('Here')
+                console.log(chatroom)
                 cb(null, chatroom.getChatHistory())
             })
             .catch(cb);

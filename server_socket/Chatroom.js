@@ -3,7 +3,10 @@ module.exports = ({name, image}) => {
     let chatHistory = [];
 
     broadcastMessage = (message) => {
-        members.forEach(m => m.emit('message', message));
+        members.forEach(m => {
+            console.log('message sent from server')
+            m.emit('message', message)
+        });
     }
 
     addEntry = (entry) => {

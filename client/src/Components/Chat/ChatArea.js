@@ -31,16 +31,16 @@ class ChatArea extends Component {
     }
 
     render() {
-        let chat = null
-        if (this.state.openChats.size != 0) {
-            chat = <Chatbox show='true' onClose={this.removeChatbox} />
-        }
+        const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c}/>);
         console.log(this.state.openChats)
 
         return (
             <div style={divStyle}>
-                <button type="button" onClick={() => this.addChatbox('TestRoom')}>Add Chatroom!</button>
-                {chat}
+                <button type="button" onClick={() => this.addChatbox('TestRoom')}>Add Chatroom 1!</button>
+                <button type="button" onClick={() => this.addChatbox('TestRoom2')}>Add Chatroom 2!</button>
+                <div id='inner-div'>
+                    {chat}
+                </div>
             </div>
         )
     }

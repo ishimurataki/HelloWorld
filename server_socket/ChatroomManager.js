@@ -3,6 +3,7 @@ const Chatroom = require('./Chatroom.js');
 module.exports = () => {
     const chatrooms = new Map();
     chatrooms.set('TestRoom', Chatroom('TestRoom'));
+    chatrooms.set('TestRoom2', Chatroom('TestRoom2'));
 
     removeClient = (client) => {
         chatrooms.forEach(c => c.removeUser(client));
