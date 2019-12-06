@@ -1,13 +1,25 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.Job;
 
 // need to keep track of edges, weight of edge, curr weight of the label, 
 
 // if user had no interets, make an interest called "nothing"
 
 // input data format:
-// name:interest,interest,interest,...
+// name:interest,interest/friend/affiliation,interest/friend/affiliatio,...
 
 // interemediate data format:
 // _key_: label-label,weight;label,weight \t name,weight;name,weight ...
@@ -17,7 +29,7 @@ import org.apache.hadoop.mapreduce.Job;
 
 public class AdsorptionDriver {
 
-	public static void init(String inputDir, String, outputDir) throw Exception {
+	public static void init(String inputDir, String outputDir) throws Exception {
 		Job job = Job.getInstance();
 		job.setJarByClass(AdsorptionDriver.class);
 		FileInputFormat.addInputPath(job, new Path(inputDir));
@@ -40,7 +52,8 @@ public class AdsorptionDriver {
 		  
 	}
 
-	public static void iter(String inputDir, String, outputDir) throw Exception {
+	public static void iter(String inputDir, String outputDir) throws Exception {
+		deleteDirectory(outputDir);
 		Job job = Job.getInstance();
 		job.setJarByClass(AdsorptionDriver.class);
 		FileInputFormat.addInputPath(job, new Path(inputDir));
@@ -63,7 +76,8 @@ public class AdsorptionDriver {
 		  
 	}
 
-	public static void diff(String inputDir1, String inputDir2, String outputDir, int reducers) throw Exception {
+	public static void diff(String inputDir1, String inputDir2, String outputDir, int reducers) throws ClassNotFoundException, 
+	IllegalStateException, InterruptedException, Exception {
 		Job job = Job.getInstance();
 		job.setJarByClass(AdsorptionDriver.class);
 		FileInputFormat.addInputPath(job, new Path(inputDir1));
@@ -88,7 +102,8 @@ public class AdsorptionDriver {
 		  
 	}
 
-	public static void finish(String inputDir, String outputDir) throw Exception {
+	public static void finish(String inputDir, String outputDir) throws IllegalArgumentException, IOException, 
+	ClassNotFoundException, InterruptedException, IllegalStateException, Exception {
 		Job job = Job.getInstance();
 		job.setJarByClass(AdsorptionDriver.class);
 		FileInputFormat.addInputPath(job, new Path(inputDir));
@@ -112,10 +127,11 @@ public class AdsorptionDriver {
 	}
 
 	public static void composite(String inputDir, String outputDir, String interDir1, 
-			String interDir2, String diffDir) {
+			String interDir2, String interDir3, String diffDir) throws IllegalStateException, Exception {
 		
 		deleteDirectory(interDir1);
 		deleteDirectory(interDir2);
+		deleteDirectory(interDir3);
 		deleteDirectory(diffDir);
 		deleteDirectory(outputDir);
 
@@ -126,24 +142,28 @@ public class AdsorptionDriver {
 
 		int counter = 0;
 		while (Double.compare(maxDifference, 0.9) > 0 ) {
-			if (counter % 2 == 0) {
+			if (counter % 3 == 0) {
 				iter(interDir1, interDir2);
+			} else if (counter % 3 == 1) {
+				iter(interDir2, interDir3);
 			} else {
-				iter(interDir2, interDir1);
+				iter(interDir3, interDir1);
 			}
 
-			if ((counter % 2 == 0) && (counter != 0)) {
-				diff(interDir1, interDir2, diffDir, 10);
+			if (counter % 6 == 1) {
+				diff(interDir1, interDir3, diffDir, 10);
 				maxDifference = readDiffResult(diffDir);
 				deleteDirectory(diffDir);
 			}
 
 			// if counter is even, delete intermediate directory 1
-			if (counter % 2 == 0) {
-				deleteDirectory(interDir1);
-			} else {
-				deleteDirectory(interDir2);
-			}
+			// if (counter % 3 == 0) {
+			// 	deleteDirectory(interDir1);
+			// } else if (counter % 3 == 1) {
+			// 	deleteDirectory(interDir2);
+			// } else {
+			// 	deleteDirectory(interDir3);
+			// }
 			
 			counter++;
 		}
@@ -152,15 +172,45 @@ public class AdsorptionDriver {
 
 	public static void main(String[] args) throws Exception {
 
-		System.out.println('Name: Matthew Kim; SEAS Login: mattmkim');
+		System.out.println("Name: Matthew Kim; SEAS Login: mattmkim");
 
-		if (args.length != 6) {
-			System.err.println("Usage: AdsorptionDriver composite <inputDir> <outputDir> <interDir1> <interDir2> <diffDir>");
-		    System.exit(-1);
+		if (args[0].equals("init")) {
+			if (args.length != 3) {
+				System.err.println("Usage: AdsorptionDriver init <inputDir> <outputDir>");
+		      	System.exit(-1);
+			}
+
+			init(args[1], args[2]);
+
+		} else if (args[0].equals("iter")) {
+			if (args.length != 3) {
+				System.err.println("Usage: AdsorptionDriver iter <inputDir> <outputDir>");
+		      	System.exit(-1);
+			}
+
+			iter(args[1], args[2]);
+		} else if (args[0].equals("diff")) {
+			if (args.length != 5) {
+				System.err.println("Usage: AdsorptionDriver diff <inputDir1> <inputDir2> <outputDir> <#reducers>");
+		      	System.exit(-1);
+			}
+
+			diff(args[1], args[2], args[3], Integer.parseInt(args[4]));
+		} else if (args[0].equals("finish")) {
+			if (args.length != 3) {
+				System.err.println("Usage: AdsorptionDriver finish <inputDir> <outputDir>");
+		      	System.exit(-1);
+			}
+
+			finish(args[1], args[2]);
+		} else {
+			if (args.length != 7) {
+				System.err.println("Usage: AdsorptionDriver composite <inputDir> <outputDir> <interDir1> <interDir2> <interDir3> <diffDir>");
+			    System.exit(-1);
+			}
+
+			composite(args[1], args[2], args[3], args[4], args[5], args[6]);
 		}
-
-		composite(args[1], args[2], args[3], args[4], args[5]);
-		
 	}
 
 

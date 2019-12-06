@@ -11,7 +11,7 @@ public class AdsorptionFinishMapper extends Mapper<LongWritable, Text, Text, Tex
 		if (originAndLabelWeights.contains("-")) {
 			String origin = originAndLabelWeights.split("-")[0];
 			String labelWeights = originAndLabelWeights.split("-")[1];
-			String labelAndWeights = labelWeights.split(";");
+			String[] labelAndWeights = labelWeights.split(";");
 
 			for (int i = 0; i < labelAndWeights.length; i++) {
 				context.write(new Text(origin), new Text(labelAndWeights[i]));

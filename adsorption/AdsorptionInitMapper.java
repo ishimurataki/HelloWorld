@@ -11,14 +11,15 @@ public class AdsorptionInitMapper extends Mapper<LongWritable, Text, Text, Text>
 
 		if (!line.contains(":")) {
 			String name = line;
-			context.write(new Text(name), new Text('nothing'));
+			context.write(new Text(name), new Text("nothing"));
 		} else {
 			String[] splitNameInterests = line.split(":");
+			String name = splitNameInterests[0];
 			String[] splitInterests = splitNameInterests[1].split(",");
 			for (int i = 0; i < splitInterests.length; i++) {
 				String interest = splitInterests[i];
 				context.write(new Text(name), new Text(interest));
-				String keyForInterest = "*" + interest
+				String keyForInterest = "*" + interest;
 				context.write(new Text(keyForInterest), new Text(name));
 			}
 		}

@@ -16,27 +16,39 @@ public class AdsorptionIterMapper extends Mapper<LongWritable, Text, Text, Text>
 
 			String[] labelWeightsEdges = interestOrName[1].split(";");
 
+
 			for (int i = 0; i < labelWeightsArr.length; i++) {
+
 				String[] labelAndWeight = labelWeightsArr[i].split(",");
 				String label = labelAndWeight[0];
 				String weight = labelAndWeight[1];
 				double weightOfLabel = Double.valueOf(weight);
 
 				for (int j = 0; j < labelWeightsEdges.length; j++) {
-					String labelAndWeightEdge = labelWeightsEdges.split(",");
+					String[] labelAndWeightEdge = labelWeightsEdges[j].split(",");
 					String labelEdge = labelAndWeightEdge[0];
 					String labelWeight = labelAndWeightEdge[1];
-					double weightOfLabelEdge = Double.valueOf(lableWeight);
+					double weightOfLabelEdge = Double.valueOf(labelWeight);
 
 					double weightToSend = weightOfLabel * weightOfLabelEdge;
 					String keyToEmit = labelEdge;
 					String valueToEmit = label + "," + Double.toString(weightToSend);
+
+					if (keyToEmit.contains("*")) {
+						keyToEmit = keyToEmit.substring(1);
+						context.write(new Text(keyToEmit), new Text("interest"));
+					}
+
 
 					context.write(new Text(keyToEmit), new Text(valueToEmit));
 				}
 			}
 
 			// emit special key/value so we can remember neighbors
+			if (origin.contains("*")) {
+				origin = origin.substring(1);
+				context.write(new Text(origin), new Text("interest"));
+			}
 			context.write(new Text(origin), new Text("*" + interestOrName[1]));
 		} else {
 			// no values associated with origin
@@ -44,6 +56,10 @@ public class AdsorptionIterMapper extends Mapper<LongWritable, Text, Text, Text>
 			String neighbors = interestOrName[1];
 
 			// just need to emit special key/value to remember neighbors
+			if (origin.contains("*")) {
+				origin = origin.substring(1);
+				context.write(new Text(origin), new Text("interest"));
+			}
 			context.write(new Text(origin), new Text("*" + neighbors));
 		}
 

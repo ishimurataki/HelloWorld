@@ -3,10 +3,13 @@ import org.apache.hadoop.mapreduce.Reducer.Context;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.hadoop.io.*;
 
 public class AdsorptionIterReducer extends Reducer<Text, Text, Text, Text> {
+
+	// NEED TO CHECK IF VALUES CONTAINS "interest" - this means that the key is an interest
 	
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -14,21 +17,30 @@ public class AdsorptionIterReducer extends Reducer<Text, Text, Text, Text> {
 
 		double sumOfWeights = 0.0;
 		HashMap<String, Double> map = new HashMap<String, Double>();
+		boolean isInterest = false;
 
 		String valueToEmit = "";
 		for (Text value: values) {
 			if (value.toString().contains("*")) {
 				valueToEmit = value.toString().substring(1);
+			} else if (value.toString().equals("interest")) {
+				isInterest = true;
 			} else {
 				String[] labelAndWeight = value.toString().split(",");
 				String label = labelAndWeight[0];
 				double weight = Double.valueOf(labelAndWeight[1]);
 				sumOfWeights = sumOfWeights + weight;
-				map.put(lable, weight);
+				map.put(label, weight);
 			}
 		}
 
-		String keyToEmit = key.toString();
+		String keyToEmit = "";
+		if (isInterest) {
+			keyToEmit = "*" + key.toString();
+		} else {
+			keyToEmit = key.toString();
+		}
+		
 		if (map.isEmpty()) {
 			context.write(new Text(keyToEmit), new Text(valueToEmit));
 		} else {
