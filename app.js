@@ -7,12 +7,14 @@ var User = schemas.User;
 var Friend = schemas.Friend;
 var Post = schemas.Post;
 var Comment = schemas.Comment;
+var FriendRequests = schemas.FriendRequests;
 
 // define/require all helper dbs here
 var friendsDb = require('./db/friendsdb')(Friend);
 var postsDb = require('./db/postsdb')(Friend, Post);
 var usersDb = require('./db/usersdb')(User);
 var commentsDb = require('./db/commentsdb')(Comment);
+var friendreqDb = require('./db/friendrequestdb')(FriendRequests, User);
 
 //define require all routes here
 var authRoutes = require('./routes/authroutes.js')(User);
@@ -20,6 +22,7 @@ var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
 var postRoutes = require('./routes/postroutes.js')(Post, postsDb);
 var userRoutes = require('./routes/userroutes.js')(usersDb);
 var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
+var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 
 const bodyParser = require('body-parser');
 var app = express();
@@ -48,6 +51,7 @@ app.use(session({
    app.post('/api/updateProfileAttribute');
    app.post('/api/getTopFriendRecommendations');
    app.post('/api/getAllNotifications');
+   app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

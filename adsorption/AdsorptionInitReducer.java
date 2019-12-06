@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 import org.apache.hadoop.io.*;
 
-public class SocialRankInitReducer extends Reducer<Text, Text, Text, Text> {
+public class AdsorptionInitReducer extends Reducer<Text, Text, Text, Text> {
 	
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
@@ -29,14 +29,14 @@ public class SocialRankInitReducer extends Reducer<Text, Text, Text, Text> {
 			keyToEmit = keyToEmit + key.toString() + '-' + key.toString() + "," + Integer.toString(1);
 		}
 		String valueToEmit = "";
-		while (!interests.isEmpty()) {
+		while (!interestsOrNames.isEmpty()) {
 			String interestOrNameToAdd = interestsOrNames.pollFirst();
 			String stringAppend = "";
-			if (valuetoEmit.length == 0) {
+			if (valueToEmit.length() == 0) {
 				stringAppend = stringAppend + interestOrNameToAdd + ',' + Double.toString(weightEdge);
 				valueToEmit = valueToEmit + stringAppend;
 			} else {
-				stringAppend = stringAppend + ";" + interestToAddOrName + ',' + Double.toString(weightEdge);
+				stringAppend = stringAppend + ";" + interestOrNameToAdd + ',' + Double.toString(weightEdge);
 				valueToEmit = valueToEmit + stringAppend;
 			}
 		}
