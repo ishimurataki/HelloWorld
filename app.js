@@ -56,6 +56,7 @@ app.use(session({
    app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
    app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
    app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
+   app.post('/api/sendFriendRequest', friendRequestRoutes.send_friend_request);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

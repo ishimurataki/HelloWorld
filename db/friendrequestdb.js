@@ -38,9 +38,30 @@ var routes = function(FriendRequests, User) {
 		})
 	}
 
+	// function to send friend request
+
+	var sendFriendRequest = function (username, date, sender, callback) {
+		console.log('Sending a friend requestion from ' + sender + ' to ' + username);
+		var friendReq = {
+			username: username,
+			date: date, 
+			sender: sender
+		}
+		FriendRequests.create([friendReq], function(err, response) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Created friend request from ' + sender + ' to ' + username);
+				callback(response);
+			}
+		})
+	}
+
 
 	return {
-		getAllFriendReqs : getAllFriendReqs
+		getAllFriendReqs : getAllFriendReqs,
+		sendFriendRequest: sendFriendRequest
 	}
 }
 
