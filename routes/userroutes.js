@@ -25,10 +25,20 @@ var routes = function(usersDb) {
 		})
 	}
 
+	var updateProfileAttribute = function (req, res) {
+		var username = req.body.username;
+		var field = req.body.field;
+		var value = req.body.value;
+		usersDb.updateProfileAttribute(username, field, value, function(response) {
+			res.send(response);
+		})
+	}
+
 	return {
 		get_all_user_info: getAllUserInfo,
 		update_status: updateStatus,
-		get_status: getStatus
+		get_status: getStatus,
+		update_profile_attribute: updateProfileAttribute
 	}
 }
 
