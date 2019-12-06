@@ -6,6 +6,7 @@ import Header from './Header'
 import Login from './Auth/Login'
 import Signup from './Auth/Signup'
 import Feed from './Feed'
+import ChatArea from './Chat/ChatArea'
 import { ProtectedRoute } from './Auth/ProtectedRoute';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
                     <Route path = "/signup" component = {Signup} />
                     <ProtectedRoute path = "/feed" component = {Feed} />
                 </div>
+                <ChatArea />
             </BrowserRouter>
         </div>
     )
