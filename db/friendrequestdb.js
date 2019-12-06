@@ -12,17 +12,28 @@ var routes = function(FriendRequests, User) {
 			} else {
 				var users = [];
 				for (var i = 0; i < response.Items.length; i++) {
+					var cnt = 0;
 					var sender = response.Items[i].attrs.sender;
-					(function(sender) {
+					(function(users, sender) {
 						// sending whole user object
-						User.get(username, function(err, userInfo) {
-							users.push(userInfo);
+						User.get(sender, function(err, userInfo) {
+							if (err) {
+								
+							} else {
+								users.push(userInfo);
+								console.log(users);
+							}
+
+							if (cnt === (response.Items.length - 1)) {
+								console.log(users);
+								callback(users);
+							}
+							cnt = cnt + 1;
 						});
-					})(sender);
+					})(users, sender);
 				}
 
 				console.log("Got all users who sent " + username + " a friend request");
-				callback(users);
 			}
 		})
 	}

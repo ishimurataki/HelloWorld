@@ -8,7 +8,7 @@ var routes = function(friendreqDb) {
 	}
 
 	return {
-		get_all_friend_reqs : getAllFriendReqs;
+		get_all_friend_reqs : getAllFriendReqs
 	}
 }
 
