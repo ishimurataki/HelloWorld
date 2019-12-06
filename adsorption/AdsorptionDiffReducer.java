@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class AdsorptionDiffReducer extends Reducer<Text, Text, Text, Text> {

@@ -78,6 +78,7 @@ public class AdsorptionDriver {
 
 	public static void diff(String inputDir1, String inputDir2, String outputDir, int reducers) throws ClassNotFoundException, 
 	IllegalStateException, InterruptedException, Exception {
+		deleteDirectory(outputDir);
 		Job job = Job.getInstance();
 		job.setJarByClass(AdsorptionDriver.class);
 		FileInputFormat.addInputPath(job, new Path(inputDir1));
@@ -141,7 +142,7 @@ public class AdsorptionDriver {
 		init(inputDir, interDir1);
 
 		int counter = 0;
-		while (Double.compare(maxDifference, 0.9) > 0 ) {
+		while (Double.compare(maxDifference, 0.5) > 0 ) {
 			if (counter % 3 == 0) {
 				iter(interDir1, interDir2);
 			} else if (counter % 3 == 1) {
@@ -153,7 +154,6 @@ public class AdsorptionDriver {
 			if (counter % 6 == 1) {
 				diff(interDir1, interDir3, diffDir, 10);
 				maxDifference = readDiffResult(diffDir);
-				deleteDirectory(diffDir);
 			}
 
 			// if counter is even, delete intermediate directory 1
@@ -167,6 +167,10 @@ public class AdsorptionDriver {
 			
 			counter++;
 		}
+
+		finish(interDir3, outputDir);
+
+		
 	}
 
 
@@ -224,7 +228,7 @@ public class AdsorptionDriver {
 	    if (fs.exists(diffpath)) {
 	    	FileStatus[] ls = fs.listStatus(diffpath);
 	    	for (FileStatus file : ls) {
-				if (file.getPath().getName().startsWith("part-r-")) {
+				if (file.getPath().getName().startsWith("part-r-") && !file.getPath().getName().contains(".crc")) {
 					FSDataInputStream diffin = fs.open(file.getPath());
 					BufferedReader d = new BufferedReader(new InputStreamReader(diffin));
 					String diffcontent = d.readLine();

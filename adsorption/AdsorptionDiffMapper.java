@@ -15,7 +15,9 @@ public class AdsorptionDiffMapper extends Mapper<LongWritable, Text, Text, Text>
 			String[] labelWeights = originLabelWeights.split("-")[1].split(";");
 			String origin = originLabelWeights.split("-")[0];
 			for (int i = 0; i < labelWeights.length; i++) {
-				context.write(new Text(origin), new Text(labelWeights[i));
+				System.out.println(origin);
+				System.out.println(labelWeights[i]);
+				context.write(new Text(origin), new Text(labelWeights[i]));
 			}
 		}
 

@@ -36,7 +36,7 @@ public class AdsorptionIterReducer extends Reducer<Text, Text, Text, Text> {
 
 		String keyToEmit = "";
 		if (isInterest) {
-			keyToEmit = "*" + key.toString();
+			keyToEmit = key.toString();
 		} else {
 			keyToEmit = key.toString();
 		}
