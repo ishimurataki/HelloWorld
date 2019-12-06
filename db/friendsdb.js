@@ -52,6 +52,7 @@ var routes = function(Friend){
                 callback(null);
             } else {
                 console.log('Created friendship between ' + username + 'and ' + friendUsername);
+                callback(response);
             }
         })
     }

@@ -33,7 +33,7 @@ class CreatePost extends Component {
             content: this.state.caption,
             recipient: "none",
             date: timeOfPost,
-            creator: auth.getUsername()
+            creator: this.props.username
         }
         Post.createPost(obj, (response) => {
             console.log(response);
@@ -49,7 +49,7 @@ class CreatePost extends Component {
                     </div>
                     <form onSubmit = {this.handleSubmit}>
                         <div><label> Insert a Caption </label><input value = {this.state.caption} onChange = {this.handleCaptionChange}/></div>
-                        <button type = "submit" className = "blue btn-flat right white-text"> 
+                        <button style = {{width: "100%"}} type = "submit" className = "blue btn-flat right white-text"> 
                             Post
                             <i className="material-icons right"> done </i>
                         </button>

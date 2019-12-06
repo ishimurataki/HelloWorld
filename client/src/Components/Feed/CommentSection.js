@@ -14,7 +14,7 @@ class CommentSection extends Component {
     async componentDidMount() {
         var obj = {postID: this.props.postID, date: this.props.postDate};
         var response = await comment_middleware.fetchCommentData(obj);
-        console.log(response);
+        //console.log(response);
         this.setState({data: response});
     }
 

@@ -37,7 +37,8 @@ class Signup extends Component {
         if(!this.state.errorPass && !this.state.errorUser && !this.state.errorEmail) {
             console.log("triggered signup sequence");
             var obj = {username: this.state.username, password: this.state.password, email: this.state.email};
-            auth.signup(obj, (result) => {
+            var obj2 = {username: this.state.username, friendUsername: this.state.username};
+            auth.signup(obj, obj2, (result) => {
                 if(result === "success") {
                     this.props.history.push("/feed");
                 } else {

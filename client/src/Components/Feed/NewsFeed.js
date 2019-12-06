@@ -14,7 +14,7 @@ class NewsFeed extends Component {
         this.pushToNewsFeed.bind(this);
     }
     async componentDidMount() {
-        var obj = {username: Auth.getUsername()};
+        var obj = {username: this.props.username};
         var response = await post_middleware.fetchPostData(obj);
         this.setState({data: response});
     }
@@ -32,9 +32,9 @@ class NewsFeed extends Component {
     }
 
     pushToNewsFeed = (response) => {
-        console.log(response);
+        console.log(response.data);
         this.setState(prevState => ({
-            data: [response, ...prevState.data]
+            data: [response.data, ...prevState.data]
         }));
     }
 
@@ -43,8 +43,8 @@ class NewsFeed extends Component {
         return (
             <div>
                 <TestButton/>
-                <CreatePost pushToNewsFeed={this.pushToNewsFeed}/>
-                <div>
+                <CreatePost pushToNewsFeed={this.pushToNewsFeed} username = {this.props.username}/>
+                <div style = {{marginTop: '70px'}}>
                     {this.renderNewsFeed(data)}
                 </div>
             </div>

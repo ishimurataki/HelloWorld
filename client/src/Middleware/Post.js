@@ -5,6 +5,7 @@ class Post{
 
     async createPost (obj, callback) {
         console.log("creating post");
+        console.log(obj);
         const res = await axios.post('/api/addNewPost', obj);
         console.log(res);
         callback(res);

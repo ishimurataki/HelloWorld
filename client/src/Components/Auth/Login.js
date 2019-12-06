@@ -27,7 +27,6 @@ class Login extends Component {
             var obj = {username: this.state.username, password: this.state.password};
             auth.login(obj, (result) => {
                 if(result === "success") {
-                    auth.setUsername(this.state.username);
                     this.props.history.push({
                         pathname: '/feed',
                         state: { username: this.state.username}

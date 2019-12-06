@@ -45,6 +45,9 @@ app.use(session({
    app.post('/api/addNewPost', postRoutes.add_new_post);
    app.post('/api/getAllComments', commentRoutes.get_all_comments);
    app.post('/api/addNewComment', commentRoutes.add_new_comment);
+   app.post('/api/updateProfileAttribute');
+   app.post('/api/getTopFriendRecommendations');
+   app.post('/api/getAllNotifications');
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

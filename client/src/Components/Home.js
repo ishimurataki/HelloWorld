@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import Auth from './../Middleware/Auth'
 class Home extends Component {
     componentDidMount() {
-        if(Auth.isAuthenticated()) {
+        if(localStorage.getItem("token")) {
             this.props.history.push('/feed');
         }
     }
