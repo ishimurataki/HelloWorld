@@ -7,25 +7,25 @@ var routes = function(Friend, Post){
         Post.scan().exec(function(err, posts) {
             var postObj = [];
             for (var i = 0; i < posts.Items.length; i++) {
-                console.log(i);
                 var post = posts.Items[i];
                 var friend = posts.Items[i].attrs.creator;
-                var boolean = 'true';
-                Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
-                    if(response) {
-                        if (response.Items.length != 0) {
-                            boolean = 'true';
-                        } else {
-                            boolean = 'false';
+                var j = 0;
+                (function(postObj,post) {
+                    Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
+                        if(response) {
+                            if (response.Items.length != 0) {
+                                console.log("Friend matches");
+                                postObj.push(post);
+                            } 
                         }
-                    }
-                });
-                if (boolean === 'true') {
-                    postObj.push(post);
+                        if(j === (posts.Items.length - 1)) {
+                            callback(postObj);
+                        }
+                        j = j + 1;
+                    });
                 }
-                
+                )(postObj, post);
             }
-            callback(postObj);
         }); 
     }
 

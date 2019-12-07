@@ -9,12 +9,16 @@ var User = schemas.User;
 var Friend = schemas.Friend;
 var Post = schemas.Post;
 var Comment = schemas.Comment;
+var FriendRequests = schemas.FriendRequests;
+var Notification = schemas.Notification;
 
 // define/require all helper dbs here
 var friendsDb = require('./db/friendsdb')(Friend);
 var postsDb = require('./db/postsdb')(Friend, Post);
 var usersDb = require('./db/usersdb')(User);
 var commentsDb = require('./db/commentsdb')(Comment);
+var friendreqDb = require('./db/friendrequestdb')(FriendRequests, User, Friend);
+var notificationDb = require('./db/notificationdb')(Notification, Friend);
 
 //define require all routes here
 var authRoutes = require('./routes/authroutes.js')(User);
@@ -22,6 +26,8 @@ var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
 var postRoutes = require('./routes/postroutes.js')(Post, postsDb);
 var userRoutes = require('./routes/userroutes.js')(usersDb);
 var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
+var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
+var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,6 +52,14 @@ app.use(session({
    app.post('/api/addNewPost', postRoutes.add_new_post);
    app.post('/api/getAllComments', commentRoutes.get_all_comments);
    app.post('/api/addNewComment', commentRoutes.add_new_comment);
+   app.post('/api/updateProfileAttribute', userRoutes.update_profile_attribute);
+   app.post('/api/getTopFriendRecommendations');
+   app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
+   app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
+   app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
+   app.post('/api/sendFriendRequest', friendRequestRoutes.send_friend_request);
+   app.post('/api/acceptFriendRequest', friendRequestRoutes.accept_friend_request);
+   app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

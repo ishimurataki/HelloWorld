@@ -3,18 +3,19 @@ import org.apache.hadoop.mapreduce.Reducer.Context;
 
 import java.io.IOException;
 import java.util.PriorityQueue;
+import java.util.Collections;
 
 import org.apache.hadoop.io.*;
 
 public class AdsorptionFinishReducer extends Reducer<Text, Text, Text, Text> {
 
-	public class Node<String,Double> implements Comparable<Node<String, Double>> {
+	public class Node implements Comparable<Node> {
 
 		String key;
 		Double value;
-		Node<String, Double> nextNode;
+		Node nextNode;
 
-		public Node<String, Double>(String label, Double weight, Node<String, Double> nextNode) {
+		public Node(String label, Double weight, Node nextNode) {
 			this.key = label;
 			this.value = weight;
 			this.nextNode = nextNode;
@@ -28,12 +29,12 @@ public class AdsorptionFinishReducer extends Reducer<Text, Text, Text, Text> {
 			return this.value;
 		}
 
-		public Node<String, Double> getNextNode() {
+		public Node getNextNode() {
 			return this.nextNode;
 		}
 
 		@Override
-		public int compareTo(Node<String, Double> node) {
+		public int compareTo(Node node) {
 			if (Double.compare(this.getValue(), node.getValue()) > 0) {
 				return 1;
 			} else if (Double.compare(this.getValue(), node.getValue()) == 0) {
@@ -48,20 +49,20 @@ public class AdsorptionFinishReducer extends Reducer<Text, Text, Text, Text> {
 	@Override
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 
-		PriorityQueue<Node<String, Double>> pq = new PriorityQueue<Node<String, Double>>(Collections.reverseOrder());
+		PriorityQueue<Node> pq = new PriorityQueue<Node>(Collections.reverseOrder());
 
 		for (Text value: values) {
-			String label = value.split(",")[0];
-			double weight = Double.valueOf(value.split(",")[1]);
+			String label = value.toString().split(",")[0];
+			double weight = Double.valueOf(value.toString().split(",")[1]);
 
-			Node<String, Double> node = new Node<String, Double>(label, weight);
+			Node node = new Node(label, weight, null);
 			pq.add(node);
 		}
 
 		String valueToEmit = "";
 
 		while (pq.size() > 0) {
-			Node<String, Double> node = pq.poll();
+			Node node = pq.poll();
 			String label = node.getKey();
 			double weight = node.getValue();
 			if (valueToEmit.length() == 0) {

@@ -22,6 +22,7 @@ var routes = function(friendsDb){
         var friendUsername = req.body.friendUsername;
         friendsDb.addFriendship(username, friendUsername, function(response) {
             console.log(response);
+            res.send(response);
         })
     }
 

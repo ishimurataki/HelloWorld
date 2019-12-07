@@ -15,17 +15,9 @@ class Auth {
         // const value = "success"
         if(value === "success") {
             this.authenticated = true;
-            localStorage.setItem("token", value);
+            localStorage.setItem("token", obj.username);
         }
         callback(value);
-    }
-
-    setUsername(username) {
-        this.username = username;
-    }
-
-    getUsername() {
-        return this.username;
     }
 
     logout(callback) {
@@ -36,21 +28,21 @@ class Auth {
 
     }
 
-    async signup(obj, callback) {
+    async signup(obj, obj2, callback) {
         console.log("adding new user");
         console.log(obj);
         const res = await axios.post('/api/signup', obj);
+        const res2 = await axios.post('/api/addFriendship', obj2);
         const value = res.data;
-        if(value === "success") {
+        const value2 = res2.data;
+        console.log("Result of friends" + value2);
+        if(value === "success" && value2) {
             this.authenticated = true;
-            localStorage.setItem("token", value);
+            localStorage.setItem("token", obj.username);
         }
         callback(value);
     }
 
-    isAuthenticated () {
-        return this.authenticated;
-    }
 
 }
 
