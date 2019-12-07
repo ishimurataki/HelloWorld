@@ -31,7 +31,7 @@ class ChatArea extends Component {
     }
 
     render() {
-        const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c}/>);
+        const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c} username='taki'/>);
         console.log(this.state.openChats)
 
         return (
