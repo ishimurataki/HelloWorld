@@ -4,6 +4,7 @@ import NewsFeed from './Feed/NewsFeed';
 import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
 class Feed extends Component {
+
     render () {
         var username = localStorage.getItem("token");
         return (
