@@ -3,6 +3,7 @@ var session = require('express-session');
 
 // define/require all schemas here
 var schemas = require('./createTableSchemas');
+var friendRecFile = './adsorption/out/part-r-00000';
 var User = schemas.User;
 var Friend = schemas.Friend;
 var Post = schemas.Post;
@@ -26,6 +27,7 @@ var userRoutes = require('./routes/userroutes.js')(usersDb);
 var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
+var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile);
 
 const bodyParser = require('body-parser');
 var app = express();
@@ -52,7 +54,7 @@ app.use(session({
    app.post('/api/getAllComments', commentRoutes.get_all_comments);
    app.post('/api/addNewComment', commentRoutes.add_new_comment);
    app.post('/api/updateProfileAttribute', userRoutes.update_profile_attribute);
-   app.post('/api/getTopFriendRecommendations');
+   app.post('/api/getTopFriendRecommendations', friendRecRoutes.get_top_friend_recs);
    app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
    app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
    app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
