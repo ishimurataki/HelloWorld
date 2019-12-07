@@ -1,5 +1,7 @@
-var express = require('express');
+var app = require('express')();
 var session = require('express-session');
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 // define/require all schemas here
 var schemas = require('./createTableSchemas');
@@ -30,7 +32,6 @@ var notificationRoutes = require('./routes/notificationroutes.js')(notificationD
 var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile);
 
 const bodyParser = require('body-parser');
-var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({
@@ -66,3 +67,49 @@ app.use(session({
 console.log('Author: Kevin Xu (xukevin)');
 app.listen(8080);
 console.log('Server running on port. Now open http://localhost:8080/ in your browser!');
+
+const ClientManager = require('./server_socket/ClientManager');
+const ChatroomManager = require('./server_socket/ChatroomManager');
+const makeHandlers = require('./server_socket/handlers');
+
+const clientManager = ClientManager()
+const chatroomManager = ChatroomManager()
+
+io.on('connection', (client) => {
+
+    console.log('client connected...', client.id);
+
+    // client.on('availableChats', () => {
+    //     io.emit('availableChats', chatroomManager.getAvailableChatrooms())
+    // })
+
+    const {
+        handleJoin,
+        handleMessage
+    } = makeHandlers(client, clientManager, chatroomManager);
+
+    clientManager.addClient(client);
+
+    client.on('join', handleJoin);
+
+    client.on('message', handleMessage);
+
+    client.on('error', () => {
+        console.log('receieved error from client', client.id);
+        console.log(err);
+    })
+
+    // socket.on('disconnect', () => {
+    //     console.log('user disconnected');
+    // });
+    // socket.on('chat message', (msg) => {
+    //     io.emit('chat message', msg);
+    // });
+
+    // socket.on('chat messsage', handleMessage);
+});
+
+
+http.listen(1024, () => {
+    console.log('socket is listening on port 1024');
+});
