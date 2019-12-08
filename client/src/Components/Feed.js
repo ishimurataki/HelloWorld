@@ -5,6 +5,7 @@ import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
 import TestButton from './Feed/TestButton'
 class Feed extends Component {
+
     render () {
         //localStorage.removeItem("token");
         var username = this.props.location.state.username;

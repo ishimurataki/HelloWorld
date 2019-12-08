@@ -2,12 +2,12 @@ const Joi = require('joi');
 
 module.exports = dynamo => {
     return dynamo.define('Facebook Friend Requests', {
-      hashKey  : 'receiver',
+      hashKey  : 'username',
       rangeKey :  'date',
       schema : {
-        receiver  : Joi.string(),
+        username  : Joi.string(),
         date : Joi.string(),
-        sender: Joi.String()
+        sender: Joi.string()
       },
       tableName: "facebookFriendRequests"
     });

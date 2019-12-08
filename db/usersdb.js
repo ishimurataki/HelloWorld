@@ -45,10 +45,74 @@ var routes = function(User) {
 		})
 	}
 
+	var updateProfileAttribute = function(username, field, value, callback) {
+		console.log('Updating ' + field + ' for ' + username + ' to ' + value);
+		var field = field;
+		if (field == 'birthday') {
+			User.update({username: username, birthday: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+
+		} else if (field == 'email') {
+			User.update({username: username, email: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+
+		} else if (field == 'affiliation') {
+			User.update({username: username, affiliation: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+
+		} else if (field == 'interest') {
+			User.update({username: username, interest: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+
+		} else if (field == 'status') {
+			User.update({username: username, status: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+		} else {
+			;
+		}
+		
+	}
+
 	return {
 		getAllUserInfo: getAllUserInfo,
 		updateStatus: updateStatus,
-		getStatus: getStatus
+		getStatus: getStatus,
+		updateProfileAttribute: updateProfileAttribute
 	}
 }
 
