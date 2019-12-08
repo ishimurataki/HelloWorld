@@ -5,11 +5,8 @@ import Header from './Header/Header'
 import Login from './Auth/Login'
 import Signup from './Auth/Signup'
 import Feed from './Feed'
-<<<<<<< HEAD
 import NewsFeed from './Feed/NewsFeed';
-=======
 import ChatArea from './Chat/ChatArea'
->>>>>>> af4bd964d30112fa3bc3aa2aebb32248a4ee4e8d
 import { ProtectedRoute } from './Auth/ProtectedRoute';
 
 class App extends Component {
