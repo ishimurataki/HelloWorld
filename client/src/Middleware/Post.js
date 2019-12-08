@@ -4,7 +4,7 @@ class Post{
     }
 
     async createPost (obj, callback) {
-        console.log("creating post");
+        console.log("creating post for " +  obj.username);
         console.log(obj);
         const res = await axios.post('/api/addNewPost', obj);
         console.log(res);
@@ -12,7 +12,7 @@ class Post{
     }
 
     async fetchPostData (obj) {
-        console.log("fetching posts");
+        console.log("fetching posts data for " + obj.username);
         const res = await axios.post('/api/getAllPosts', obj);
         var val = res.data;
         return val;

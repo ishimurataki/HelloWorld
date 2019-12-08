@@ -10,7 +10,7 @@ var routes = function(User) {
 			} else if (info == null) {
 				console.log('User does not exist');
 			} else {
-				console.log(info);
+				//console.log(info);
 				callback(info);
 			}
 		})

@@ -3,12 +3,15 @@ import './Feed.css';
 import NewsFeed from './Feed/NewsFeed';
 import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
+import TestButton from './Feed/TestButton'
 class Feed extends Component {
     render () {
-        var username = localStorage.getItem("token");
+        //localStorage.removeItem("token");
+        var username = this.props.location.state.username;
         return (
             <div>
                 <div className = "row"></div>
+                <TestButton/>
                 <div className ="row">
                     <div className = "col s3">
                         <Profile username = {username}/>
@@ -17,7 +20,7 @@ class Feed extends Component {
                         <NewsFeed username = {username}/>
                     </div>
                     <div className ="col s3">
-                        <ChatBar/> 
+                        <ChatBar username = {username}/> 
                     </div>
                 </div>
             </div>

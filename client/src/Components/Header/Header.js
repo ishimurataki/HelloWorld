@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import auth from '../Middleware/Auth';
+import auth from '../../Middleware/Auth';
+import Search from './Search';
 class Header extends Component {
     handleLogout = (event) => {
         event.preventDefault();
@@ -37,12 +38,21 @@ class Header extends Component {
         }
                 
     }
+    renderSearch() {
+        var username = localStorage.getItem("token")
+        if(username) {
+            return <Search username = {username}/>
+        }
+    }
     render () {
         return (
             <nav>
                 <div className = "blue nav-wrapper"> 
                     <ul className = "right"> 
                         {this.renderContent()}
+                    </ul>
+                    <ul className = "left">
+                        {this.renderSearch()}
                     </ul>
                 </div>
             </nav>

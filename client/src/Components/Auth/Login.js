@@ -29,7 +29,7 @@ class Login extends Component {
                 if(result === "success") {
                     this.props.history.push({
                         pathname: '/feed',
-                        state: { username: this.state.username}
+                        state: {username: this.state.username}
                     });
                 } else {
                     this.setState({errorUser: result});

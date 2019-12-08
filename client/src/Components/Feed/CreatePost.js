@@ -31,7 +31,7 @@ class CreatePost extends Component {
         var timeOfPost = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
         var obj = {
             content: this.state.caption,
-            recipient: "none",
+            recipient: this.props.recipient,
             date: timeOfPost,
             creator: this.props.username
         }

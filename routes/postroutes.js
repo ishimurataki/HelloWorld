@@ -5,7 +5,7 @@ var routes = function(Post, postsDb) {
 	var getAllPosts = function (req, res) {
 		var username = req.body.username;
 		postsDb.getAllPosts(username, function(response) {
-			console.log(response);
+			//console.log(response);
 			res.send(response);
 		})
 

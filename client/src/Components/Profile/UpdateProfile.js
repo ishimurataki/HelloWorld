@@ -1,6 +1,7 @@
-import Dropdown from 'react-dropdown'
-import React, { Component } from 'react'
-import 'react-dropdown/style.css'
+import Dropdown from 'react-dropdown';
+import React, { Component } from 'react';
+import 'react-dropdown/style.css';
+import profile_middleware from './../../Middleware/Profile';
 const options = [
     {value: 'email', label: 'Email'},
     {value: 'birthday', label: 'Birthday'},
@@ -8,19 +9,35 @@ const options = [
     {value: 'status', label: 'Status'}
 ];
 const defaultOption = options[0];
+
 class UpdateProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
             changeAttribute: '',
-            newValue: ''
+            value: ''
         }
     }
     onSelect = (event) => {
         this.setState({changeAttribute: event.value});
     }
+
+    handleValueChange = (event) => {
+        this.setState({value: event.target.value});
+    }
+
     handleSubmit = (event) => {
+        event.preventDefault();
         console.log("Submitted profile update");
+        var obj = {
+            username: this.props.username,
+            field: this.state.changeAttribute,
+            value: this.state.value
+        }
+        profile_middleware.updateProfile(obj, function(response) {
+            console.log("Successful Update");
+            this.props.updateProfile(response);
+        });
     }
     render () {
         return (
