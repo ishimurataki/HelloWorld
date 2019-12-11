@@ -29,7 +29,7 @@ var userRoutes = require('./routes/userroutes.js')(usersDb);
 var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
-var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile);
+var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile, User, Friend);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,6 +56,7 @@ app.use(session({
    app.post('/api/addNewComment', commentRoutes.add_new_comment);
    app.post('/api/updateProfileAttribute', userRoutes.update_profile_attribute);
    app.post('/api/getTopFriendRecommendations', friendRecRoutes.get_top_friend_recs);
+   app.post('/api/getFriendRecData', friendRecRoutes.get_friend_rec_data);
    app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
    app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
    app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
