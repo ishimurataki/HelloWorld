@@ -1,38 +1,29 @@
-var routes = function(friendsDb){
-    // function that gets all friends for a given user. 
-    // returns a list of usernames of friends
-    var getAllFriendsRoute = function (req, res) {
-        var username = req.body.username;
-        friendsDb.getAllFriends(username, function(response) {
-            res.send(response);
-        })
-    }
-    // function that gets all online friends for a given user. 
-    // returns a list of usernames of friends
-    var getAllOnlineFriendsRoute = function (req, res) {
-        var username = req.body.username;
-        friendsDb.getAllOnlineFriends(username, function(response) {
-            res.send(response);
-        })
-    }
+const express = require('express');
+const Friend = require('../models/Friend')
+const friendsDb = require('../db/friendsdb')(Friend);
 
-    // function to add friendship into database
-    var addFriendship = function (req, res) {
-        var username = req.body.username;
-        var friendUsername = req.body.friendUsername;
-        friendsDb.addFriendship(username, friendUsername, function(response) {
-            console.log(response);
-            res.send(response);
-        })
-    }
+const router = express.Router();
 
+router.post('/api/getAllFriends', (req, res) => {
+    const username = req.body.username;
+    friendsDb.getAllFriends(username, function (response) {
+        res.send(response);
+    })
+});
 
+router.post('/api/getAllOnlineFriends', (req, res) => {
+    const username = req.body.username;
+    friendsDb.getAllOnlineFriends(username, function (response) {
+        res.send(response);
+    })
+})
 
-    return {
-        get_all_friends: getAllFriendsRoute,
-        get_all_online_friends: getAllOnlineFriendsRoute,
-        add_friendship: addFriendship
-    }
-}
+router.post('/api/addFriendship', (req, res) => {
+    const { username, friendUsername } = req.body;
+    friendsDb.addFriendship(username, friendUsername, function (response) {
+        console.log(response);
+        res.send(response);
+    })
+})
 
-module.exports = routes;
+module.exports = router;

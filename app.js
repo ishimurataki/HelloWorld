@@ -20,9 +20,9 @@ var notificationDb = require('./db/notificationdb')(Notification, Friend);
 //define require all routes here
 const authRoutes = require('./routes/authroutes.js');
 const userRoutes = require('./routes/userroutes.js');
+const friendRoutes = require('./routes/friendroutes.js');
+const postRoutes = require('./routes/postroutes.js');
 
-var friendRoutes = require('./routes/friendroutes.js')(friendsDb);
-var postRoutes = require('./routes/postroutes.js')(Post, postsDb);
 var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
@@ -40,17 +40,9 @@ app.use(session({
 // install the routes here
 app.use(authRoutes);
 app.use(userRoutes);
+app.use(friendRoutes);
+app.use(postRoutes);
 
-// app.post('/api/getAllUserInfo', userRoutes.get_all_user_info);
-// app.post('/api/updateStatus', userRoutes.update_status);
-// app.post('/api/getStatus', userRoutes.get_status);
-// app.post('/api/updateProfileAttribute', userRoutes.update_profile_attribute);
-
-app.post('/api/getAllFriends', friendRoutes.get_all_friends);
-app.post('/api/getAllOnlineFriends', friendRoutes.get_all_online_friends);
-app.post('/api/addFriendship', friendRoutes.add_friendship);
-app.post('/api/getAllPosts', postRoutes.get_post);
-app.post('/api/addNewPost', postRoutes.add_new_post);
 app.post('/api/getAllComments', commentRoutes.get_all_comments);
 app.post('/api/addNewComment', commentRoutes.add_new_comment);
 app.post('/api/getTopFriendRecommendations');
