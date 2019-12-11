@@ -5,7 +5,7 @@ module.exports = dynamo.define('Facebook Users', {
       hashKey  : 'username',
       schema : {
         username  : string(),
-        email : string(),
+        email : string().email(),
         password  : string(),
         active: string(),
         firstname: string(),

@@ -1,6 +1,7 @@
 const express = require('express');
 const Post = require('../models/Post')
-const postsDb = require('../db/postsdb')(Post);
+const Friend = require('../models/Friend')
+const postsDb = require('../db/postsdb')(Friend, Post);
 
 const router = express.Router();
 

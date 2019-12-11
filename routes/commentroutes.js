@@ -1,31 +1,22 @@
-var routes = function(commentsDb) {
+const express = require('express');
+const Comment = require('../models/Comment')
+const commentsDb = require('../db/commentsdb')(Comment);
 
-	// function to get all comments for a post
-	var getAllComments = function (req, res) {
-		var postID = req.body.postID;
-		var date = req.body.date;
+const router = express.Router();
+
+router.post('/api/getAllComments', (req, res) => {
+	const {postID, date} = req.body; 
 		commentsDb.getAllComments(postID, date, function(response) {
 			res.send(response);
 		})
-	}
+})
 
-	// function to add new comment for a post
-	var addNewComment = function(req, res) {
-		var postID = req.body.postID;
-		var postDate = req.body.postDate;
-		var creator = req.body.creator;
-		var date = req.body.date;
-		var content = req.body.content;
-		commentsDb.addNewComment(postID, postDate, creator, date, content, function(response) {
-			console.log('Added new comment by ' + creator + ' at ' + date);
-			res.send(response);
-		})
-	}
+router.post('/api/addNewComment', (req, res) => {
+	const {postID, postDate, creator, date, content} = req.body; 
+	commentsDb.addNewComment(postID, postDate, creator, date, content, function(response) {
+		console.log('Added new comment by ' + creator + ' at ' + date);
+		res.send(response);
+	})
+})
 
-	return {
-		get_all_comments: getAllComments,
-		add_new_comment: addNewComment
-	}
-}
-
-module.exports = routes;
+module.exports = router;

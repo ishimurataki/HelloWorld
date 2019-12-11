@@ -9,11 +9,6 @@ dynamo.AWS.config.loadFromPath('./models/credentials.json');
 const { User, Friend, Post, Comment, FriendRequests, Notification } = require('./models');
 
 // define/require all helper dbs here
-
-var friendsDb = require('./db/friendsdb')(Friend);
-var postsDb = require('./db/postsdb')(Friend, Post);
-var usersDb = require('./db/usersdb')(User);
-var commentsDb = require('./db/commentsdb')(Comment);
 var friendreqDb = require('./db/friendrequestdb')(FriendRequests, User, Friend);
 var notificationDb = require('./db/notificationdb')(Notification, Friend);
 
@@ -22,8 +17,8 @@ const authRoutes = require('./routes/authroutes.js');
 const userRoutes = require('./routes/userroutes.js');
 const friendRoutes = require('./routes/friendroutes.js');
 const postRoutes = require('./routes/postroutes.js');
+const commentRoutes = require('./routes/commentroutes.js');
 
-var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
 
@@ -42,9 +37,9 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(friendRoutes);
 app.use(postRoutes);
+app.use(commentRoutes);
 
-app.post('/api/getAllComments', commentRoutes.get_all_comments);
-app.post('/api/addNewComment', commentRoutes.add_new_comment);
+
 app.post('/api/getTopFriendRecommendations');
 app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
 app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
@@ -54,14 +49,13 @@ app.post('/api/acceptFriendRequest', friendRequestRoutes.accept_friend_request);
 app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
 
 // run the server below
-console.log('Author: Kevin Xu (xukevin) also dtao was here lel');
+console.log('Author: Kevin Xu (xukevin)');
 app.listen(8080);
 console.log('Server running on port. Now open http://localhost:8080/ in your browser!');
 
 const clientManager = require('./server_socket/ClientManager')();
 const chatroomManager = require('./server_socket/ChatroomManager')();
 const makeHandlers = require('./server_socket/handlers');
-
 
 io.on('connection', (client) => {
 
