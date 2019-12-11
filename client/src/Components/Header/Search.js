@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './Search.css'
 import Autocomplete from './AutoComplete';
 import user_middleware from '../../Middleware/User';
+import * as actions from '../../actions';
+import { connect } from 'react-redux';
 
 class Search extends Component {
     constructor(props) {
@@ -13,7 +15,12 @@ class Search extends Component {
     async componentDidMount() {
         var obj = {username: this.props.username}
         var options = await user_middleware.getAllFriends(obj);
-        this.setState({options: options})
+        this.setState({options: options});
+        console.log(options);
+        this.props.setActiveFriends(options);
+    }
+    renderAutoComplete () {
+        return <Autocomplete options = {this.state.options}/>
     }
     render() {
         return (
@@ -23,8 +30,7 @@ class Search extends Component {
                 </div>
                 <div class="input-field col s10">
                     <form onSubmit = {this.onSubmit}>
-                        <Autocomplete options={this.state.options}
-                        />
+                        {this.renderAutoComplete()}
                     </form>
                 </div>  
             
@@ -32,4 +38,4 @@ class Search extends Component {
         );
     }
 }
-export default Search
+export default connect(null, actions) (Search);

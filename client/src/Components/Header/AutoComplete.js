@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom'; 
+import { connect } from 'react-redux'; 
 class Autocomplete extends Component {
-  static propTypes = {
-    options: PropTypes.instanceOf(Array).isRequired
-  };
 
   constructor(props) {
     super(props);
@@ -15,12 +12,10 @@ class Autocomplete extends Component {
       filteredOptions: [],
       showOptions: false,
       userInput: '',
-      options: this.props.options
     };
   }
-
   handleChange = (e) => {
-    const { options } = this.props;
+    const options = this.props.friends;
     const userInput = e.currentTarget.value;
 
     const filteredOptions = options.filter(
@@ -37,6 +32,7 @@ class Autocomplete extends Component {
   };
 
   onClick = (e) => {
+    e.preventDefault();
     this.setState({
       activeOption: 0,
       filteredOptions: [],
@@ -46,7 +42,8 @@ class Autocomplete extends Component {
   };
 
   handleKeyDown = (e) => {
-    const { activeOption, filteredOptions, options} = this.state;
+    console.log(this.state);
+    const { activeOption, filteredOptions} = this.state;
     if (e.keyCode === 13) {
       e.preventDefault();
       this.setState({
@@ -55,6 +52,7 @@ class Autocomplete extends Component {
         userInput: filteredOptions[activeOption]
       });
       console.log(this.state);
+      var options = this.props.options;
       console.log(options);
       if(options.includes(this.state.userInput)) {
         console.log("Successful search");
@@ -128,5 +126,8 @@ class Autocomplete extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return { friends: state.friends};
+}
 
-export default withRouter(Autocomplete);
+export default connect(mapStateToProps)(withRouter(Autocomplete));

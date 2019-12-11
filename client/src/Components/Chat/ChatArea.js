@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Chatbox from './Chatbox'
 import { withRouter } from 'react-router-dom';
-
+import { connect } from 'react-redux'; 
 
 const divStyle = {
     position: 'fixed',
@@ -15,32 +15,48 @@ class ChatArea extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            openChats: new Set()
+            openChats: new Set(),
+            openChatCount: 0
         }
         this.addChatbox = this.addChatbox.bind(this)
         this.removeChatbox = this.removeChatbox.bind(this)
     }
 
-    addChatbox(chatboxName) {
+    addChatbox(chat) {
+        console.log("CHAT PARAMTER FOR ADD CHATBOX");
+        console.log(chat);
+        var chatboxName = chat.name;
         var openChats = this.state.openChats.add(chatboxName);
-        this.setState({ openChats })
+        var newCount = this.state.openChatCount + 1;
+        this.setState({ openChats, openChatCount: newCount });
+        console.log(this.state);
     }
 
     removeChatbox(chatboxName) {
         var openChats = this.state.openChats;
+        var newCount = this.state.openChatCount - 1;
         openChats.delete(chatboxName);
-        this.setState({ openChats })
+        this.setState({ openChats, openChatCount: newCount });
+    }
+    // renders the chat buttons like "chat with Matt kim, etc"
+    renderButtons() {
+        console.log(this.props.liveChats);
+        var liveChats = this.props.liveChats;
+        if(this.state.openChatCount === 0) {
+            return liveChats.map((chat) => {
+                // other users
+                var user2 = chat.user2;
+                return <button type="button" onClick={() => this.addChatbox(chat)}>New Chat with {user2}!</button>
+            });
+        }
     }
     renderChats() {
         const path = this.props.location.pathname;
         if(path === "/feed") {
             const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c}/>);
-            console.log(this.state.openChats)
-    
             return (
                 <div style={divStyle}>
-                    <button type="button" onClick={() => this.addChatbox('TestRoom')}>Add Chatroom 1!</button>
-                    <button type="button" onClick={() => this.addChatbox('TestRoom2')}>Add Chatroom 2!</button>
+                    {this.renderButtons()}
                     <div id='inner-div'>
                         {chat}
                     </div>
@@ -56,5 +72,7 @@ class ChatArea extends Component {
         )
     }
 }
- 
-export default withRouter(ChatArea);
+const mapStateToProps = state => {
+    return { liveChats: state.chat};
+}
+export default connect(mapStateToProps)(withRouter(ChatArea));

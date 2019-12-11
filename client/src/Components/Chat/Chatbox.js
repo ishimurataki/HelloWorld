@@ -49,6 +49,7 @@ class Chatbox extends Component {
             {
                 this.state.show &&
                         <form class="form-container" onSubmit={this.handleSubmit}>
+                             <div> Chat with {this.props.chatroomName} </div>
                             <div id='messages-container'>
                                 <ul id="messages">{chat}</ul> 
                             </div>
