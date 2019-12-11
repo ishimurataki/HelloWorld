@@ -9,6 +9,7 @@ router.post('/api/checklogin', async (req, res) => {
     try {
         const user = await User.get(username);
         if (user) {
+            console.log(user)
             console.log("successfully found user, now checking password")
             const storedPassword = user.get('password');
             if (storedPassword === password) {
