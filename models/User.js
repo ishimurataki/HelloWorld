@@ -1,20 +1,19 @@
-const Joi = require('joi');
+const dynamo = require('dynamodb');
+const { string, array } = require('joi');
 
-module.exports = dynamo => {
-    return dynamo.define('Facebook Users', {
+module.exports = dynamo.define('Facebook Users', {
       hashKey  : 'username',
       schema : {
-        username  : Joi.string(),
-        email : Joi.string(),
-        password  : Joi.string(),
-        active: Joi.string(),
-        firstname: Joi.string(),
-        lastname: Joi.string(),
-        affiliation: Joi.string(),
-        interests: Joi.array().items(Joi.string()),
-        birthday: Joi.string(),
-        status: Joi.string()
+        username  : string(),
+        email : string(),
+        password  : string(),
+        active: string(),
+        firstname: string(),
+        lastname: string(),
+        affiliation: string(),
+        interests: array().items(string()),
+        birthday: string(),
+        status: string()
       },
       tableName: "facebookUsers"
     });
-}

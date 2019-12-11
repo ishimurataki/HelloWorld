@@ -21,7 +21,7 @@ class App extends Component {
                     <Route path = "/signup" component = {Signup} />
                     <ProtectedRoute path = "/feed" component = {Feed} />
                 </div>
-                <ChatArea />
+                {/* <ChatArea /> */}
             </BrowserRouter>
         </div>
     )

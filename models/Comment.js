@@ -1,16 +1,15 @@
-const Joi = require('joi');
+const dynamo = require('dynamodb');
+const {string} = require('joi');
 
-module.exports = dynamo => {
-	return dynamo.define('Facebook Comments', {
-		hashKey : 'postID',
-		rangeKey : 'postDate',
-		schema : {
-			postID: Joi.string(),
-			postDate: Joi.string(),
-			creator: Joi.string(),
-			date: Joi.string(),
-			content: Joi.string()
-		},
-		tableName: "facebookComments"
-	});
-}
+module.exports = dynamo.define('Facebook Comments', {
+	hashKey: 'postID',
+	rangeKey: 'postDate',
+	schema: {
+		postID: string(),
+		postDate: string(),
+		creator: string(),
+		date: string(),
+		content: string()
+	},
+	tableName: "facebookComments"
+});

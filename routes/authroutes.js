@@ -1,80 +1,46 @@
+const express = require('express')
+const User = require('../models/User')
 
+const router = express.Router()
 
-var routes = function(User){
-    var checkLogin = function (req, res) {
-        var username = req.body.username;
-        var password = req.body.password;
-        console.log(req.body);
-        User.get(username, function(err, acc) {
-            if(err) {
-                res.send("error: error getting user in checkLogin. More information" + err);
+router.post('/api/checklogin', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    try {
+        const user = await User.get(username);
+        if (user) {
+            console.log("successfully found user, now checking password")
+            const storedPassword = user.get('password');
+            if (storedPassword === password) {
+                console.log("successful login. rerouting to feed");
+                res.send("success");
             } else {
-                if(acc) {
-                    console.log("successfully found user, now checking password")
-                    var storedPassword = acc.get('password');
-                    console.log(storedPassword);
-                    console.log(password);
-                    if(storedPassword === password) {
-                        console.log("successful login. rerouting to feed");
-                        res.send("success");
-                    } else {
-                        res.send("error: password mismatch");
-                    }
-                } else {
-                      res.send("error: user not found")
-                }
+                res.status(401).send("error: password mismatch");
             }
-        })
+        } else res.status(401).send("error: user not found")
+    } catch (e) {
+        res.status(500).send("error: error getting user in checkLogin. More information" + e)
     }
+})
 
-    var addNewUser = function (req, res) {
-        console.log(req.body);
-        var username = req.body.username;
-        var email = req.body.email;
-        var password = req.body.password;
-        var active = req.body.active;
-        var firstname = req.body.firstname;
-        var lastname = req.body.lastname;
-        var affiliation = req.body.affiliation;
-        var interests = req.body.interests;
-        var birthday = req.body.birthday;
-        var status = req.body.status;
-        User.get(username, function(err, acc) {
-            if(err) {
-                res.send("error: error checking existing user in signup. More information" + err);
+router.post('/api/signup', async (req, res) => {
+    console.log(req.body);
+    const {username, email, password, active, firstname, lastname, affiliation, interests, birthday, status} = req.body;
+
+    const user = await User.get(username)
+    try {
+        if (user) return res.status(401).send('error: username already exists. Try again');
+        const newUser = {username, password, email, active, firstname, lastname, affiliation, interests, birthday, status};
+        User.create([newUser], (err2, acc2) => {
+            if (err2) {
+                res.send("error: error creating new user" + err2);
             } else {
-                if(acc) {
-                    res.send("error: username already exists. Try again")
-                } else {
-                    var user = {
-                        username: username,
-                        password: password,
-                        email: email,
-                        active: active,
-                        firstname: firstname,
-                        lastname: lastname,
-                        affiliation: affiliation,
-                        interests: interests,
-                        birthday: birthday,
-                        status: status
-                    };
-                    User.create([user], function (err2, acc2) {
-                        if(err2) {
-                            res.send("error: error creating new user" + err2);
-                        } else {
-                            res.send("success");
-                        }
-                    });
-                }
+                res.send("success");
             }
-        })
-
+        });
+    } catch (e) {   
+        res.status(500).send("error: error checking existing user in signup. More information" + err);
     }
+});
 
-    return {
-        check_login: checkLogin,
-        add_user: addNewUser
-    }
-}
-
-module.exports = routes;
+module.exports = router;
