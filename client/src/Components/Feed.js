@@ -9,7 +9,8 @@ class Feed extends Component {
 
     render () {
         // localStorage.removeItem("token");
-        var username = this.props.location.state.username;
+        // var username = this.props.location.state.username;
+        const username = localStorage.getItem("token");
         return (
             <div>
                 <div className = "row"></div>

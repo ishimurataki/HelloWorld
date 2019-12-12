@@ -29,6 +29,7 @@ class Chatbox extends Component {
         })
 
         socket.emit('join', this.props.chatroomName, (err, chatHistory) => {
+            console.log(this.props.chatroomName)
             if (err) {
                 return console.log(err)
             }

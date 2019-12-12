@@ -12,7 +12,7 @@ class ChatBar extends Component {
     async componentDidMount() {
         //var result = await chatbar_middleware.fetchAllOnlineFriends();
         var result = [
-          "matt", "vinke"
+          "matt", "vinke", "taki4"
         ]
         this.setState({data: result});
     }
