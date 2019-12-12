@@ -1,7 +1,9 @@
 var app = require('express')();
-var session = require('express-session');
+//var session = require('express-session');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
 
 // define/require all schemas here
 var schemas = require('./createTableSchemas');
@@ -31,15 +33,14 @@ var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
 var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile, User, Friend);
 
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(session({
-	key: 'user_sid',
-	secret: 'awegjoiag',
-	resave: false,
-	saveUninitialized: false
-}))
+app.use(
+    cookieSession({
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+	    keys: ['key1', 'key2']
+    })
+);
 
 // install the routes here
    app.post('/api/checklogin', authRoutes.check_login);
@@ -63,6 +64,8 @@ app.use(session({
    app.post('/api/sendFriendRequest', friendRequestRoutes.send_friend_request);
    app.post('/api/acceptFriendRequest', friendRequestRoutes.accept_friend_request);
    app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
+   app.get('/api/current_user', authRoutes.get_user);
+   app.get('/api/logout', authRoutes.remove_user);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

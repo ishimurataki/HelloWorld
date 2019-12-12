@@ -8,12 +8,9 @@ class ChatBar extends Component {
             data: []
         }
     }
-    // we need to test this cheese
+    // IMPORTANT: TEST ALL ONLINE FRIENDS
     async componentDidMount() {
-        //var result = await chatbar_middleware.fetchAllOnlineFriends();
-        var result = [
-          "matt", "vinke"
-        ]
+        var result = await chatbar_middleware.fetchAllOnlineFriends();
         this.setState({data: result});
     }
 

@@ -2,8 +2,6 @@ import axios from 'axios'
 class Auth {
     constructor() {
         // changed just because
-        this.authenticated = false;
-        this.username = "";
     }
 
     async login (obj, callback) {
@@ -14,15 +12,13 @@ class Auth {
         // true for debugging
         // const value = "success"
         if(value === "success") {
-            this.authenticated = true;
             localStorage.setItem("token", obj.username);
         }
         callback(value);
     }
 
-    logout(callback) {
-        this.authenticated = false;
-        this.username = "";
+    async logout(callback) {
+        var res = await axios.get('/api/logout');
         localStorage.removeItem("token");
         callback();
 
@@ -37,7 +33,6 @@ class Auth {
         const value2 = res2.data;
         console.log("Result of friends" + value2);
         if(value === "success" && value2) {
-            this.authenticated = true;
             localStorage.setItem("token", obj.username);
         }
         callback(value);

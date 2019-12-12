@@ -1,12 +1,31 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+
 class Home extends Component {
+    state = {
+        user: ''
+    }
     componentDidMount() {
-        if(localStorage.getItem("token")) {
-            this.props.history.push('/feed');
+        this.props.fetchUser();
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.user !== this.props.user){
+            console.log(this.props.user);
+            this.setState({          
+                user: this.props.user
+            });
         }
     }
     render () {
+        if(this.state.user) {
+            return (
+            <div>
+                    <Redirect to="/feed" />
+            </div>
+            )
+        }
         return (
             <div className="container">
                 <div className="section no-pad-bot" id="index-banner">
@@ -49,4 +68,7 @@ class Home extends Component {
     }
 }
 
-export default withRouter (Home);
+function mapStateToProps(state) {
+    return { user: state.auth};
+}
+export default connect(mapStateToProps, actions)(Home);

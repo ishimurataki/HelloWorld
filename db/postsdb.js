@@ -1,5 +1,5 @@
 var routes = function(Friend, Post){
-
+    // lets change this function only return 10 post
     // function that returns list of post objects 
     // for a specific user 
     var getAllPosts = function (username, callback) {

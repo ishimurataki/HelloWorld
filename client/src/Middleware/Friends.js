@@ -2,11 +2,11 @@ import axios from 'axios'
 class Comment{
     constructor() {
     }
-
+    
+    // to do
     async getAllFriendRequests(obj) {
         var sampleData = [
-            {sender: "Taki", username: "vinkebot"},
-            {sender: "MattK", username: "vinkebot"}
+            "TakiM", "Matt"
         ]
         return sampleData;
     }

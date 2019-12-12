@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import post_middleware from './../../Middleware/Post';
 import Post from './Post';
 import CreatePost from './CreatePost';
-import { withRouter } from 'react-router-dom';
+
 
 
 class NewsFeed extends Component {
@@ -14,10 +14,7 @@ class NewsFeed extends Component {
         this.pushToNewsFeed.bind(this);
     }
     async componentDidMount() {
-        var username = this.props.username;
-        if(this.props.location) {
-            username = this.props.location.state.username
-        }
+        var username = localStorage.getItem("token");
         var obj = {username: username};
         var response = await post_middleware.fetchPostData(obj);
         console.log("Received post data for newsfeed");
@@ -45,7 +42,7 @@ class NewsFeed extends Component {
     renderBack = () => {
         if(this.props.location) {
             return <div className = "blue btn-flat left white-text" onClick = {() => {
-                this.props.history.goBack()
+                this.props.history.goBack();
             }}></div>
         }
     }
@@ -54,8 +51,8 @@ class NewsFeed extends Component {
         const { data } = this.state;
         return (
             <div>
-                <CreatePost pushToNewsFeed={this.pushToNewsFeed} username = {this.props.username ? this.props.username : localStorage.getItem("token")} 
-                recipient = {this.props.location ? this.props.location.state.username : 'none'}/>
+                <CreatePost pushToNewsFeed={this.pushToNewsFeed} username = {localStorage.getItem("token")} 
+                recipient = {this.props.location ? this.props.location.state.recipient : 'none'}/>
                 <div style = {{marginTop: '70px'}}>
                     {this.renderNewsFeed(data)}
                 </div>
@@ -64,5 +61,4 @@ class NewsFeed extends Component {
         )
     }
 }
-
 export default NewsFeed;

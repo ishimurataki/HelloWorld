@@ -16,6 +16,7 @@ var routes = function(User){
                     console.log(password);
                     if(storedPassword === password) {
                         console.log("successful login. rerouting to feed");
+                        req.session.user = username;
                         res.send("success");
                     } else {
                         res.send("error: password mismatch");
@@ -62,6 +63,7 @@ var routes = function(User){
                         if(err2) {
                             res.send("error: error creating new user" + err2);
                         } else {
+                            req.session.user = username;
                             res.send("success");
                         }
                     });
@@ -71,9 +73,22 @@ var routes = function(User){
 
     }
 
+    var getUser = function (req, res) {
+        console.log("Getting user" + req.session.user);
+        res.send(req.session.user);
+    }
+
+    var removeUser = function(req, res) {
+        console.log("removing user");
+        req.session.user = "";
+        res.send("successfully removed user");
+    }
+
     return {
         check_login: checkLogin,
-        add_user: addNewUser
+        add_user: addNewUser,
+        get_user: getUser,
+        remove_user: removeUser
     }
 }
 

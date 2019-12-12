@@ -15,7 +15,9 @@ class FriendRequests extends Component {
 
     renderFriendRequests() {
         return this.state.friendRequests.map((friendRequest) => {
-            return <FriendRequest friendRequest = {friendRequest}/>
+            var recipient = friendRequest;
+            var key = this.props.username + recipient;
+            return <FriendRequest sender = {this.props.username} recipient = {recipient} key = {key}/>
         })
     }
 

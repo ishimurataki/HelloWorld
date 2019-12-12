@@ -58,7 +58,7 @@ class Autocomplete extends Component {
         console.log("Successful search");
         this.props.history.push({
           pathname: '/profile',
-          state: {username: this.state.userInput}
+          state: {recipient: this.state.userInput}
         });
       }
     } else if (e.keyCode === 38) {

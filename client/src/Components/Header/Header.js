@@ -2,18 +2,40 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import auth from '../../Middleware/Auth';
 import Search from './Search';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 class Header extends Component {
+    state = {
+        user: ''
+    }
+
     handleLogout = (event) => {
         event.preventDefault();
         auth.logout(() => {
             console.log("Logging out");
+            this.props.fetchUser();
             this.props.history.push("/");
         })
     }
+
+    componentDidMount() {
+        this.props.fetchUser();
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.user !== this.props.user){
+            console.log(this.props.user);
+            this.setState({          
+                user: this.props.user
+            });
+        }
+    }
     renderContent() {
         // lets just store login in windows lmao
-        const path = this.props.location.pathname;
-        if(localStorage.getItem("token")) {
+        var path = "/"
+        if (this.props.location) {
+            path = this.props.location.state;
+        }
+        if(this.state.user) {
             return ([
                 <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
             ])
@@ -39,9 +61,8 @@ class Header extends Component {
                 
     }
     renderSearch() {
-        var username = localStorage.getItem("token")
-        if(username) {
-            return <Search username = {username}/>
+        if(this.state.user) {
+            return <Search username = {this.state.user}/>
         }
     }
     render () {
@@ -60,4 +81,7 @@ class Header extends Component {
         )
     }
 }
-export default withRouter(Header);
+function mapStateToProps(state) {
+    return { user: state.auth};
+}
+export default connect(mapStateToProps, actions)(withRouter(Header));
