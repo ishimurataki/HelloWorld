@@ -24,7 +24,7 @@ class ChatArea extends Component {
 
     addChatbox(chat) {
         console.log("CHAT PARAMTER FOR ADD CHATBOX");
-        console.log(chat);
+        console.log(chat.name);
         var chatboxName = chat.name;
         var openChats = this.state.openChats.add(chatboxName);
         var newCount = this.state.openChatCount + 1;

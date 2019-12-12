@@ -8,7 +8,7 @@ import TestButton from './Feed/TestButton'
 class Feed extends Component {
 
     render () {
-        //localStorage.removeItem("token");
+        // localStorage.removeItem("token");
         var username = this.props.location.state.username;
         return (
             <div>
