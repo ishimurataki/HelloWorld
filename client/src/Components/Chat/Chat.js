@@ -6,7 +6,8 @@ class Chat extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("We clicked chat");
-        var name = this.props.username + ", " + this.props.chatRecipient;
+        const name = [this.props.username, this.props.chatRecipient].sort().join(', ');
+        // var name = this.props.username + ", " + this.props.chatRecipient;
         this.props.addChat(name, this.props.username, this.props.chatRecipient);
     }
     render () {

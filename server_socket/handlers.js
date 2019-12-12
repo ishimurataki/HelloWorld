@@ -27,6 +27,7 @@ makeHandleEvent = (client, clientManager, chatroomManager) => {
 }
 
 module.exports = (client, clientManager, chatroomManager) => {
+
     const handleEvent = makeHandleEvent(client, clientManager, chatroomManager);
     handleJoin = (chatroomName, cb) => {
         const createEntry = () => ({ msg: `joined ${chatroomName}`});
