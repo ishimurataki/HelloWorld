@@ -23,6 +23,21 @@ class Signup extends Component {
             username: event.target.value
         })
     }
+    handleBirthdayChange = (event) => {
+        this.setState({
+            birthday: event.target.value
+        })
+    }
+    handleAffiliationChange = (event) => {
+        this.setState({
+            affiliation: event.target.value
+        })
+    }
+    handleInterestChange = (event) => {
+        this.setState({
+            interests: event.target.value
+        })
+    }
     handlePasswordChange = (event) => {
         this.setState({
             password: event.target.value
@@ -86,11 +101,11 @@ class Signup extends Component {
                     <div><label className = "required"> Email </label><input value = {this.state.email} onChange = {this.handleEmailChange}/>
                     <div className = "red-text" style = {{ marginBottom : '20px'}}>{this.state.errorEmail}</div>
                     </div> 
-                    <div className = "row"><input id = "name" type = "text" length = "40" /><label>Affiliation</label></div>  
-                    <div className = "row"><input id = "name" type = "text" length = "40" /><label>Birthday</label></div>         
-                    <div className = "row"><input id = "name" type = "text" length = "40" /><label>First Name</label></div>   
-                    <div className = "row"><input id = "name" type = "text" length = "40" /><label>Last Name</label></div>   
-                    <div className = "row"><input id = "name" type = "text" length = "10" /><label>Enter Interests</label></div>          
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.affiliation} onChange = {this.handleAffiliationChange}/><label>Affiliation</label></div>  
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.birthday} onChange = {this.handleBirthdayChange}/><label>Birthday</label></div>         
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.firstname} /><label>First Name</label></div>   
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.lastname}/><label>Last Name</label></div>   
+                    <div className = "row"><input id = "name" type = "text" length = "10" value = {this.state.interests} onChange = {this.handleInterestChange}/><label>Enter Interests</label></div>          
                     <Link to= "/" className = "blue btn-flat left white-text">
                             cancel
                     </Link>
