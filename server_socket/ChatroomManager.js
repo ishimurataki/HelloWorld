@@ -7,8 +7,12 @@ module.exports = () => {
         chatrooms.forEach(c => c.removeUser(client));
     }
 
+    chatroomExists = (chatroomName) => {
+        return chatrooms.has(chatroomName);
+    }
+
     getChatroomByName = (chatroomName) => {
-        if (!chatrooms.get(chatroomName)) {
+        if (!chatrooms.has(chatroomName)) {
             chatrooms.set(chatroomName, Chatroom(chatroomName));
         }
         return chatrooms.get(chatroomName)
@@ -24,6 +28,7 @@ module.exports = () => {
 
     return {
         removeClient,
+        chatroomExists,
         getChatroomByName,
         serializeChatrooms,
         getAvailableChatrooms

@@ -250,12 +250,9 @@ io.on('connection', (client) => {
         console.log(err);
     })
 
-    // socket.on('disconnect', () => {
-    //     console.log('user disconnected');
-    // });
-    // socket.on('chat message', (msg) => {
-    //     io.emit('chat message', msg);
-    // });
+    client.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 
     // socket.on('chat messsage', handleMessage);
 });
