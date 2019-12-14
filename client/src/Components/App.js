@@ -7,8 +7,8 @@ import Signup from './Auth/Signup'
 import Feed from './Feed'
 import NewsFeed from './Feed/NewsFeed';
 import ChatArea from './Chat/ChatArea'
+import Notifications from './Notifications/Notifications'
 import { ProtectedRoute } from './Auth/ProtectedRoute';
-
 class App extends Component {
    render () {
     return (
@@ -21,6 +21,7 @@ class App extends Component {
                     <Route path = "/signup" component = {Signup} />
                     <ProtectedRoute path ="/profile" component = {NewsFeed}/>
                     <ProtectedRoute path = "/feed" component = {Feed} />
+                    <ProtectedRoute path = "/notifications" component = {Notifications} />
                 </div>
                 <ChatArea />
             </BrowserRouter>

@@ -19,6 +19,7 @@ class Auth {
 
     async logout(callback) {
         var res = await axios.get('/api/logout');
+        console.log(res.data);
         localStorage.removeItem("token");
         callback();
 

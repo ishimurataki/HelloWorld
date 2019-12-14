@@ -15,7 +15,7 @@ class Profile{
         console.log(obj);
         const res = await axios.post('/api/updateProfileAttribute', obj);
         console.log(res);
-        callback(res);
+        return res;
     }
 }
 

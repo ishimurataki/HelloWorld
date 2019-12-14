@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './CreatePost.css'
-import Post from './../../Middleware/Post'; 
-import auth from './../../Middleware/Auth';
+import post_middleware from './../../Middleware/Post'; 
+import notification_middleware from './../../Middleware/Notifications';
+
+import { connect } from 'react-redux';
 
 class CreatePost extends Component {
     constructor(props) {
@@ -19,9 +21,10 @@ class CreatePost extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log("Creating post");
-        var date = new window.Date();
+        var friends = this.props.friends;
         // format of date will be 12-2-2019-12-02
         // format of date will be month-day-year-hour-minute-second
+        var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth();
         var day = date.getDay();
@@ -35,12 +38,20 @@ class CreatePost extends Component {
             date: timeOfPost,
             creator: this.props.username
         }
-        Post.createPost(obj, (response) => {
+        post_middleware.createPost(obj, (response) => {
             console.log(response);
             this.props.pushToNewsFeed(response);
         });
+        
+        var notification = {
+            username: this.props.username,
+            date: timeOfPost,
+            notification: this.props.username + " created post at " + timeOfPost
+        }
+        notification_middleware.addNewNotification(notification);
     }
     render() {
+        console.log(this.props.friends);
         return (
             <div>
                 <article className="CreatePost" ref="CreatePost">
@@ -60,5 +71,8 @@ class CreatePost extends Component {
     }
 }
 
+function mapStateToProps(state){
+    return { friends: state.friends }
+}
 
-export default CreatePost;
+export default connect(mapStateToProps)(CreatePost);

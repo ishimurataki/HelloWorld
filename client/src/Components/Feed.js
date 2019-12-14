@@ -3,29 +3,17 @@ import './Feed.css';
 import NewsFeed from './Feed/NewsFeed';
 import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
-import FriendRequests from './FriendRequests/FriendRequests';
+import FriendRecommendations from './FriendRecommendations/FriendRecommendations';
 import TestButton from './Feed/TestButton'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-
 class Feed extends Component {
-    state = {
-        user: ''
-    }
-    componentDidMount() {
+    async componentDidMount() {
         this.props.fetchUser();
     }
-    componentDidUpdate(prevProps){
-        if(prevProps.user !== this.props.user){
-            console.log(this.props.user);
-            this.setState({          
-                user: this.props.user
-            });
-        }
-    }
-    render () {
-        var username = this.state.user;
+    renderContent() {
+        var username = this.props.user;
         if(!username) {
             username = localStorage.getItem("token");
         }
@@ -37,7 +25,7 @@ class Feed extends Component {
                     <div className ="row">
                         <div className = "col s3">
                             <Profile username = {username}/>
-                            <FriendRequests username = {username} />
+                            <FriendRecommendations username = {username} />
                         </div>
                         <div className ="col s6">
                             <NewsFeed username = {username}/>
@@ -51,6 +39,13 @@ class Feed extends Component {
         } else {
             return <div> Loading </div>
         }
+    }
+    render () {
+        return ( 
+            <div>
+                {this.renderContent()}
+            </div>
+        )
     }
 }
 function mapStateToProps(state) {

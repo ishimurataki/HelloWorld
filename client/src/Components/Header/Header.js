@@ -5,9 +5,6 @@ import Search from './Search';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 class Header extends Component {
-    state = {
-        user: ''
-    }
 
     handleLogout = (event) => {
         event.preventDefault();
@@ -18,27 +15,37 @@ class Header extends Component {
         })
     }
 
+    handleNotifications = (event) => {
+        event.preventDefault();
+        this.props.history.push("/notifications");
+    }
+
+    handleBackToFeed = (event) => {
+        event.preventDefault();
+        this.props.history.push("/feed");
+    }
+
     componentDidMount() {
         this.props.fetchUser();
-    }
-    componentDidUpdate(prevProps){
-        if(prevProps.user !== this.props.user){
-            console.log(this.props.user);
-            this.setState({          
-                user: this.props.user
-            });
-        }
     }
     renderContent() {
         // lets just store login in windows lmao
         var path = "/"
         if (this.props.location) {
-            path = this.props.location.state;
+            path = this.props.location.pathname;
         }
-        if(this.state.user) {
-            return ([
-                <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
-            ])
+        if(this.props.user) {
+            if(path == "/feed") {
+                return ([
+                    <li key = "0"><div style = {{marginRight: "20px"}} onClick = {this.handleNotifications}>Notifications</div> </li>,
+                    <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
+                ])
+            } else if (path == "/notifications") {
+                return ([
+                    <li key = "0"><div style = {{marginRight: "20px"}} onClick = {this.handleBackToFeed}>Back To Feed</div> </li>,
+                    <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
+                ])
+            }
         } else {
             if(path === "/login") {
                 return ([
@@ -61,8 +68,8 @@ class Header extends Component {
                 
     }
     renderSearch() {
-        if(this.state.user) {
-            return <Search username = {this.state.user}/>
+        if(this.props.user) {
+            return <Search username = {this.props.user}/>
         }
     }
     render () {

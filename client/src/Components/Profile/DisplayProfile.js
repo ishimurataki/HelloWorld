@@ -17,6 +17,12 @@ class DisplayProfile extends Component {
                 <div> 
                     Your full name is {profileInfo.firstname ? profileInfo.firstname : 'Default'}
                 </div>
+                <div> 
+                    Your affiliation is {profileInfo.affiliation ? profileInfo.affiliation : 'Default Affiliation'}
+                </div>
+                <div> 
+                    Your interests are {profileInfo.interest ? profileInfo.interest : 'Default Interests'}
+                </div>
             </div>
         )
     }
