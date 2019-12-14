@@ -1,6 +1,26 @@
-module.exports = ({name, image}) => {
+const chatsDb = require('../db/chatsdb')
+
+module.exports = (name) => {
+
     const members = new Map();
-    let chatHistory = [];
+    let currTimeStamp = new Date().getTime();
+    let currChatHistory = [];
+    let allChatHistory = [];
+    let initialized = false;
+
+    initialize = async () => {
+        try {
+            const data = await chatsDb.getChats(name, new Date().getTime());
+            if (data.length > 0) {
+                currChatHistory = data[0].map((c) => JSON.parse(c));
+                allChatHistory = data.flat().map((c) => JSON.parse(c));
+                currTimeStamp = parseInt(currChatHistory[0].timestamp);
+            }
+            initialized = true;
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     broadcastMessage = (message) => {
         members.forEach(m => {
@@ -9,12 +29,28 @@ module.exports = ({name, image}) => {
         });
     }
 
-    addEntry = (entry) => {
-        chatHistory = chatHistory.concat(entry);
+    addEntry = async (entry) => {
+        const newEntry = {
+            sender: entry.client,
+            timestamp: new Date().getTime(),
+            msg: entry.msg
+        }
+        if (currChatHistory.length >= 10) {
+            const content = currChatHistory.map((c) => JSON.stringify(c));
+            try {
+                await chatsDb.addChat(name, currTimeStamp, content);
+                currChatHistory = [];
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        currChatHistory = currChatHistory.concat(newEntry);
+        allChatHistory = allChatHistory.concat(newEntry);
     }
 
-    getChatHistory = () => {
-        return chatHistory.slice();
+    getChatHistory = async () => {
+        if (!initialized) await initialize();
+        return allChatHistory.slice();
     }
 
     addClient = (client) => {

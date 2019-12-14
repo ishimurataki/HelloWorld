@@ -16,7 +16,6 @@ var routes = function(Comment) {
 					postComments.push(comment);
 				}
 				callback(postComments);
-
 			}
 		})
 	}
