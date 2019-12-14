@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { ADD_CHAT, REMOVE_CHAT, CLEAR_CHATS, SET_FRIENDS, GET_FRIENDS, FETCH_USER, UPDATE_TOGGLE} from './types';
+import { ADD_CHAT, REMOVE_CHAT, CLEAR_CHATS, SET_FRIENDS, GET_FRIENDS, FETCH_USER} from './types';
+
 
 export const addChat = (name, user1, user2) => async dispatch => {
     var data = {name: name, user1: user1, user2: user2};
@@ -26,3 +27,4 @@ export const getFriends = () => async dispatch => {
 export const clearChats = () => async dispatch => {
     dispatch({ type: CLEAR_CHATS});
 }
+

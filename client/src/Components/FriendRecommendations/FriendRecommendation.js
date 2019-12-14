@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import friendReq_middleware from './../../Middleware/FriendReq';
+import friendRec_middleware from '../../Middleware/FriendRec';
 import { connect } from 'react-redux'; 
-import * as actions from './../../actions';
-class FriendRequest extends Component {
+import * as actions from '../../actions';
+class FriendRecommendation extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log("We clicked on a friend request");
+        console.log("We clicked accept ");
         // formatted from ,to
         var obj = {
             sender: this.props.sender,
-            recipient: this.props.recipient
+            username: this.props.recipient
         }
-        friendReq_middleware.makeNewFriendRequest(obj);
+        friendRec_middleware.makeNewFriendRequest(obj);
     }
     render () {
-        var {sender, recipient, key } = this.props;
+        var {recipient, key } = this.props;
         return (
             <div>
                 <div key = {key} onClick= {this.handleSubmit}> 
@@ -26,4 +26,4 @@ class FriendRequest extends Component {
 }
 
 
-export default connect(null, actions) (FriendRequest);
+export default connect(null, actions) (FriendRecommendation);

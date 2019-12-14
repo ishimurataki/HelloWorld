@@ -5,3 +5,4 @@ export const CLEAR_CHATS = "clear_chats";
 export const SET_FRIENDS = "set_friends";
 export const GET_FRIENDS = "get_friends";
 export const FETCH_USER = "fetch_user";
+export const UPDATE_PROFILE = "update_profile";

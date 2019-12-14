@@ -48,6 +48,16 @@ class Signup extends Component {
             email: event.target.value
         })
     }
+    handleFirstNameChange = (event) => {
+        this.setState({
+            firstname: event.target.value
+        })
+    }
+    handleLastNameChange = (event) => {
+        this.setState({
+            lastname: event.target.value
+        })
+    }
     validSignupAttempt = () => {
         if(!this.state.errorPass && !this.state.errorUser && !this.state.errorEmail) {
             console.log("triggered signup sequence");
@@ -103,8 +113,8 @@ class Signup extends Component {
                     </div> 
                     <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.affiliation} onChange = {this.handleAffiliationChange}/><label>Affiliation</label></div>  
                     <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.birthday} onChange = {this.handleBirthdayChange}/><label>Birthday</label></div>         
-                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.firstname} /><label>First Name</label></div>   
-                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.lastname}/><label>Last Name</label></div>   
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.firstname} onChange = {this.handleFirstNameChange} /><label>First Name</label></div>   
+                    <div className = "row"><input id = "name" type = "text" length = "40" value = {this.state.lastname} onChange = {this.handleLastNameChange} /><label>Last Name</label></div>   
                     <div className = "row"><input id = "name" type = "text" length = "10" value = {this.state.interests} onChange = {this.handleInterestChange}/><label>Enter Interests</label></div>          
                     <Link to= "/" className = "blue btn-flat left white-text">
                             cancel

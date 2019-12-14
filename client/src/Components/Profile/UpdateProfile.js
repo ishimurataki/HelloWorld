@@ -2,13 +2,15 @@ import Dropdown from 'react-dropdown';
 import React, { Component } from 'react';
 import 'react-dropdown/style.css';
 import profile_middleware from './../../Middleware/Profile';
+import notification_middleware from './../../Middleware/Notifications';
 const options = [
     {value: 'email', label: 'Email'},
     {value: 'birthday', label: 'Birthday'},
-    {value: 'interests', label: 'Interests'},
-    {value: 'status', label: 'Status'}
+    {value: 'interest', label: 'Interests'},
+    {value: 'status', label: 'Status'},
+    {value: 'firstname', label: 'First Name'},
+    {value: 'lastname', label: 'Last Name'}
 ];
-const defaultOption = options[0];
 
 class UpdateProfile extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class UpdateProfile extends Component {
             changeAttribute: '',
             value: ''
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     onSelect = (event) => {
         this.setState({changeAttribute: event.value});
@@ -26,23 +29,36 @@ class UpdateProfile extends Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit = (event) => {
+    async handleSubmit (event) {
         event.preventDefault();
         console.log("Submitted profile update");
+        var username = localStorage.getItem("token");
+        var date = new window.Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDay();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var seconds = date.getSeconds();
+        var timeOfPost = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
         var obj = {
-            username: this.props.username,
+            username: username,
             field: this.state.changeAttribute,
             value: this.state.value
         }
-        profile_middleware.updateProfile(obj, function(response) {
-            console.log("Successful Update");
-            this.props.updateProfile(response);
-        });
+        var res = await profile_middleware.updateProfile(obj);
+        var notification = {
+            username: username,
+            date: timeOfPost,
+            notification: username + " updated " + this.state.changeAttribute + " at " + timeOfPost
+        }
+        await notification_middleware.addNewNotification(notification);
+        this.props.updateProfile(res);
     }
     render () {
         return (
             <div>
-                <Dropdown options={options} onChange={this.onSelect} value={defaultOption} placeholder="Select an option" />
+                <Dropdown options={options} onChange={this.onSelect} value={this.state.changeAttribute} placeholder="Select an option" />
                 <form onSubmit = {this.handleSubmit}>
                         <div><label> Update Value {this.state.changeAttribute} </label><input value = {this.state.newValue} onChange = {this.handleValueChange}/></div>
                         <button type = "submit" className = "blue btn-flat right white-text"> 
@@ -54,5 +70,4 @@ class UpdateProfile extends Component {
         )
     }
 }
-
 export default UpdateProfile;

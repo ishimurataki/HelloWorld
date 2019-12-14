@@ -17,7 +17,8 @@ class Profile extends Component {
         this.setState({profileData: userInfo});
     }
     updateProfile = (response) => {
-        this.setState({profileData : response});
+        console.log(response);
+        this.setState({profileData : response.data});
     }
     renderProfile = () => {
         return (

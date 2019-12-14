@@ -33,7 +33,7 @@ var routes = function(Notification, Friend) {
 					console.log(friend);
 					(function(notifications, friend) {
 						Notification.query(friend).exec(function(err, notifs) {
-							console.log(notifs);
+							console.log("LISTING ALL NOTIFS" + notifs);
 							if (err) {
 								console.log(err);
 								callback(null);
@@ -42,7 +42,7 @@ var routes = function(Notification, Friend) {
 							} else {
 								for (var j = 0; j < notifs.Items.length; j++) {
 									var notif = notifs.Items[j];
-									console.log(notif);
+									console.log("SPECIFIC NOTIF" + notif);
 									notifications.push(notif);
 								}
 							}
