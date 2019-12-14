@@ -25,23 +25,6 @@ const addChat = async (chatroomID, timestamp, content) => {
     }
 }
 
-// const addChat = (chatroomID, timestamp, content, cb) => {
-//     console.log('Adding chat msg "' + content + '" to ' + chatroomID);
-//     const chat = {
-//         chatroomID,
-//         timestamp, 
-//         content
-//     };
-//     Chat.create([chat], (err, response) => {
-//         if (err) {
-//             cb ()
-//         } else {
-//             console.log('Added chat msg "' + content + '" to ' + chatroomID);
-//             return response;
-//         }
-//     })
-// }
-
 module.exports = {
     getChats,
     addChat
