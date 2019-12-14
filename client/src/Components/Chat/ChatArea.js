@@ -53,7 +53,8 @@ class ChatArea extends Component {
     renderChats() {
         const path = this.props.location.pathname;
         if(path === "/feed") {
-            const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c}/>);
+            // const chat = [...this.state.openChats].map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c}/>);
+            const chat = this.props.liveChats.map((c) => <Chatbox show='true' onClose={this.removeChatbox} chatroomName={c.name} sender={c.user1}/>)
             return (
                 <div style={divStyle}>
                     {this.renderButtons()}

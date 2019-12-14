@@ -16,7 +16,7 @@ var FriendRequests = schemas.FriendRequests;
 var Notification = schemas.Notification;
 
 // define/require all helper dbs here
-var friendsDb = require('./db/friendsdb')(Friend);
+var friendsDb = require('./db/friendsdb')(Friend, User);
 var postsDb = require('./db/postsdb')(Friend, Post);
 var usersDb = require('./db/usersdb')(User);
 var commentsDb = require('./db/commentsdb')(Comment);
@@ -41,6 +41,153 @@ app.use(
 	    keys: ['key1', 'key2']
     })
 );
+
+// friend visualizer 
+
+app.get('/friendvisualizer', function(req, res) {
+    res.render('friendvisualizer.ejs');
+});
+
+app.get('/friendvisualization', function(req, res) {
+
+    // var json = {
+    //   "id": "alice","name": "Alice","children": [{
+    //       "id": "bob",
+    //       "name": "Bob",
+    //       "data": {},
+    //       "children": [{
+    //           "id": "dylan",
+    //           "name": "Dylan",
+    //           "data": {},
+    //           "children": []
+    //         }, {
+    //           "id": "marley",
+    //           "name": "Marley",
+    //           "data": {},
+    //           "children": []
+    //         }]
+    //       }, {
+    //       "id": "sarah",
+    //       "name": "Sarah",
+    //       "data": {},
+    //       "children": []
+    //       }],
+    //       "data": []
+    //   };
+    //   res.send(json);
+
+    var user = req.body.username;
+    var jsonString = '{' + '"id": ' + '"' + user + '"' + ", " + '"name": ' + '"' ;
+
+    User.get(username, function(err, info) {
+        if (err) {
+            console.log(err);
+            res.send(null);
+        } else {
+            jsonString = jsonString + info.attrs.firstname + '"' + ', ' + '"data: "' + '{}, ' + '"children": [';
+        }
+    })
+
+    Friend.query(username).exec(function(err, response) {
+        if (err) {
+            console.log(err);
+            res.send(null);
+        } else {
+            if (response.Items.length == 0) {
+               jsonString = jsonString + ']}';
+            } else {
+                for (var i = 0; i < response.Items.length; i++) {
+                    var id = response.Items[i].attrs.username;
+                    var name = response.Items[i].attrs.firstname;
+                    if (i == 0) {
+                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                    } else {
+                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                    } 
+                }
+
+                jsonString = jsonString + ']}';
+                console.log(jsonString);
+                res.send(jsonString);
+            }
+            
+        }
+    });
+});
+
+
+
+    
+
+app.get('/getFriends/:user', function(req, res) {
+
+    console.log(req.params.user);
+
+    var jsonString = '{' + '"id": ' + '"' + user + '"' + ", " + '"name": ' + '"' ;
+    User.get(req.params.user, function(err, info) {
+        if (err) {
+            console.log(err);
+            res.send(null);
+        } else {
+            jsonString = jsonString + info.attrs.firstname + '"' + ', ' + '"data: "' + '{}, ' + '"children": [';
+        }
+    })
+
+    Friend.query(username).exec(function(err, response) {
+        if (err) {
+            console.log(err);
+            res.send(null);
+        } else {
+            if (response.Items.length == 0) {
+               jsonString = jsonString + ']}';
+            } else {
+                for (var i = 0; i < response.Items.length; i++) {
+                    var id = response.Items[i].attrs.username;
+                    var name = response.Items[i].attrs.firstname;
+                    if (i == 0) {
+                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                    } else {
+                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                    } 
+                }
+
+                jsonString = jsonString + ']}';
+                console.log(jsonString);
+                res.send(jsonString);
+            }
+            
+        }
+    });
+
+
+
+
+    // console.log(req.params.user);
+    // var newFriends = {"id": "alice","name": "Alice","children": [{
+    //     "id": "james",
+    //         "name": "James",
+    //         "data": {},
+    //         "children": [{
+    //             "id": "arnold",
+    //             "name": "Arnold",
+    //             "data": {},
+    //             "children": []
+    //         }, {
+    //             "id": "elvis",
+    //             "name": "Elvis",
+    //             "data": {},
+    //             "children": []
+    //         }]
+    //     }, {
+    //         "id": "matt",
+    //         "name": "Matthe",
+    //         "data": {},
+    //         "children": []
+    //     }],
+    //     "data": []
+    // };
+    // res.send(newFriends);
+});
 
 // install the routes here
    app.post('/api/checklogin', authRoutes.check_login);
@@ -103,12 +250,9 @@ io.on('connection', (client) => {
         console.log(err);
     })
 
-    // socket.on('disconnect', () => {
-    //     console.log('user disconnected');
-    // });
-    // socket.on('chat message', (msg) => {
-    //     io.emit('chat message', msg);
-    // });
+    client.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 
     // socket.on('chat messsage', handleMessage);
 });

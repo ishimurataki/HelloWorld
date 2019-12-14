@@ -7,6 +7,8 @@ class Chatbox extends Component {
         super(props);
         const socket = io.connect('http://localhost:1024');
 
+        console.log(this.props.sender);
+        
         this.messagesArea = React.createRef();
 
         this.state = {
@@ -28,8 +30,9 @@ class Chatbox extends Component {
             if (element) element.scrollTop = element.scrollHeight;
         })
 
-        socket.emit('join', this.props.chatroomName, (err, chatHistory) => {
+        socket.emit('join', this.props.chatroomName, this.props.sender, (err, chatHistory) => {
             console.log(this.props.chatroomName)
+            console.log(chatHistory);
             if (err) {
                 return console.log(err)
             }
@@ -41,8 +44,9 @@ class Chatbox extends Component {
         let msg = this.refs.textarea.value
         if (event.which === 13 && msg) {
             event.preventDefault();
-            this.state.socket.emit('message', this.props.chatroomName, msg, (err, chatHistory) => {
+            this.state.socket.emit('message', this.props.chatroomName, this.props.sender, msg, (err, chatHistory) => {
                 if (err) console.log('error in emitting message')
+                if (chatHistory) console.log(chatHistory);
             })
             this.refs.textarea.value = ''
         }
