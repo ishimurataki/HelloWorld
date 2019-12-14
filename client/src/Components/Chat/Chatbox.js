@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './Chatbox.css'
 import io from 'socket.io-client';
+import * as actions from '../../actions';
+import { connect } from 'react-redux';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -8,7 +10,7 @@ class Chatbox extends Component {
         const socket = io.connect('http://localhost:1024');
 
         console.log(this.props.sender);
-        
+
         this.messagesArea = React.createRef();
 
         this.state = {
@@ -53,13 +55,13 @@ class Chatbox extends Component {
     }
 
     render() {
-        const chat = this.state.chatHistory.map((c) => <li>{c.msg}</li>);
+        const chat = this.state.chatHistory.map((c) => <li><strong>{c.sender}</strong>{': ' + c.msg}</li>);
         return (
             <div id='outer-div'>
             <div className="chatbox-container">
                     <div id='header-container'>
                         <a href="https://www.w3schools.com" id='chatname'>{this.props.chatroomName}</a>
-                        <button type="button" id="cancelbtn" onClick={() => this.props.onClose(this.props.chatroomName)}>&times;</button>
+                        <button type="button" id="cancelbtn" onClick={() => this.props.removeChat(this.props.chatroomName)}>&times;</button>
                     </div>
                     <hr />
                     <div id='messages-container' ref={this.messagesArea}>
@@ -73,4 +75,4 @@ class Chatbox extends Component {
     }
 }
 
-export default Chatbox;
+export default connect(null, actions) (Chatbox);
