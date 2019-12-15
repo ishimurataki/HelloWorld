@@ -23,7 +23,6 @@ class Feed extends Component {
             return (
                 <div>
                     <div className = "row"></div>
-                    <TestButton/>
                     <div className ="row">
                         <div className = "col s3">
                             <Profile username = {username}/>
@@ -34,6 +33,7 @@ class Feed extends Component {
                             <NewsFeed username = {username}/>
                         </div>
                         <div className ="col s3">
+                            <TestButton/>
                             <ChatBar username = {username}/> 
                         </div>
                     </div>

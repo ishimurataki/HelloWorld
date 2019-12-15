@@ -33,7 +33,7 @@ class UpdateProfile extends Component {
         event.preventDefault();
         console.log("Submitted profile update");
         var username = localStorage.getItem("token");
-        var timeOfPost = new Date().toUTCString;
+        var timeOfPost = new Date().toUTCString();
         var obj = {
             username: username,
             field: this.state.changeAttribute,
@@ -45,6 +45,7 @@ class UpdateProfile extends Component {
             date: timeOfPost,
             notification: username + " updated " + this.state.changeAttribute + " at " + timeOfPost
         }
+        console.log(notification);
         await notification_middleware.addNewNotification(notification);
         this.props.updateProfile(res);
     }

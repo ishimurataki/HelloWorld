@@ -45,6 +45,7 @@ app.use(
 // friend visualizer 
 
 app.get('/friendvisualizer', function(req, res) {
+    console.log("CALLED");
     res.render('friendvisualizer.ejs');
 });
 

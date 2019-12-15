@@ -29,11 +29,14 @@ class Auth {
         console.log("adding new user");
         console.log(obj);
         const res = await axios.post('/api/signup', obj);
-        const res2 = await axios.post('/api/addFriendship', obj2);
+        //const res2 = await axios.post('/api/addFriendship', obj2);
         const value = res.data;
-        const value2 = res2.data;
-        console.log("Result of friends" + value2);
-        if(value === "success" && value2) {
+        //const value2 = res2.data;
+        //console.log("Result of friends" + value2);
+        //if(value === "success" && value2) {
+        //    localStorage.setItem("token", obj.username);
+        //}
+        if(value === "success") {
             localStorage.setItem("token", obj.username);
         }
         callback(value);
