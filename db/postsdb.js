@@ -55,10 +55,25 @@ var routes = function(Friend, Post){
         })
     }
 
+    var deletePost = function(creator, postID, callback) {
+        console.log("Deleting the post created by " + creator + " with post ID " + postID)
+        Post.destroy({creator: creator, postID: postID}, function(err, response) {
+            if(err) {
+                console.log(err);
+                callback(null);
+            } else {
+                console.log("Deleted post");
+                callback("success");
+            }
+        })
+
+    }
+
 
     return {
         getAllPosts: getAllPosts,
-        addNewPost: addNewPost
+        addNewPost: addNewPost,
+        deletePost: deletePost
     }
 }
 

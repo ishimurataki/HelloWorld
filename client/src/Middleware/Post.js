@@ -2,7 +2,12 @@ import axios from 'axios'
 class Post{
     constructor() {
     }
-
+    async deletePost(obj, callback) {
+        console.log("Deleting post for" + obj.creator);
+        console.log(obj);
+        const res = await axios.post('/api/deletePost', obj);
+        return res;
+    }
     async createPost (obj, callback) {
         console.log("creating post for " +  obj.username);
         console.log(obj);
