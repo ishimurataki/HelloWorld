@@ -31,7 +31,7 @@ module.exports = (client, clientManager, chatroomManager) => {
     const handleEvent = makeHandleEvent(client, clientManager, chatroomManager);
 
     handleJoin = (chatroomName, username, cb) => {
-        const entry = { client: username, msg: `${username} joined ${chatroomName}` };
+        const entry = { sender: username, timestamp: new Date().getTime(), msg: `${username} joined ${chatroomName}` };
         const chatroom = chatroomManager.getChatroomByName(chatroomName);
 
         chatroom.addClient(client);
@@ -44,26 +44,17 @@ module.exports = (client, clientManager, chatroomManager) => {
 
     handleMessage = (chatroomName, sender, message, cb) => {
 
-        const entry = { client : sender, msg : message };
+        const entry = { sender, timestamp: new Date().getTime(), msg : message };
         if (!chatroomManager.chatroomExists(chatroomName)) cb('Chatroom does not exist', null);
         const chatroom = chatroomManager.getChatroomByName(chatroomName);
 
         chatroom.addEntry(entry).then(() => {
             chatroom.broadcastMessage(entry);
-            chatroom.getChatHistory();
+            return chatroom.getChatHistory();
         }).then((chatHistory) => {
             console.log(chatHistory);
             cb(null, chatHistory);
         }).catch(e => cb(e, null));
-
-        // const createEntry = () => ({ msg: message });
-        // handleEvent(chatroomName, sender, createEntry)
-        //     .then((chatroom) => {
-        //         cb(null, chatroom.getChatHistory())
-        //     })
-        //     .catch((e) => {
-        //         console.log(e)
-        //     });
     }
 
     return {

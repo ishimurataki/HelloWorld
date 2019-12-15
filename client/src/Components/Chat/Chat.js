@@ -7,7 +7,6 @@ class Chat extends Component {
         e.preventDefault();
         console.log("We clicked chat");
         const name = [this.props.username, this.props.chatRecipient].sort().join(', ');
-        // var name = this.props.username + ", " + this.props.chatRecipient;
         this.props.addChat(name, this.props.username, this.props.chatRecipient);
     }
     render () {

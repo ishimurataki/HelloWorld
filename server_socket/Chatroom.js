@@ -30,11 +30,12 @@ module.exports = (name) => {
     }
 
     addEntry = async (entry) => {
-        const newEntry = {
-            sender: entry.client,
-            timestamp: new Date().getTime(),
-            msg: entry.msg
-        }
+        console.log('addentry called');
+        // const newEntry = {
+        //     sender: entry.client,
+        //     timestamp: new Date().getTime(),
+        //     msg: entry.msg
+        // }
         if (currChatHistory.length >= 10) {
             const content = currChatHistory.map((c) => JSON.stringify(c));
             try {
@@ -44,8 +45,8 @@ module.exports = (name) => {
                 console.log(e);
             }
         }
-        currChatHistory = currChatHistory.concat(newEntry);
-        allChatHistory = allChatHistory.concat(newEntry);
+        currChatHistory = currChatHistory.concat(entry);
+        allChatHistory = allChatHistory.concat(entry);
     }
 
     getChatHistory = async () => {
