@@ -6,7 +6,7 @@ class FriendRec{
     async makeNewFriendRequest(obj) {
         console.log("Sending new friend request from " + obj.sender + " to " + obj.username);
         const res = await axios.post('/api/sendFriendRequest', obj);
-        return res;
+        return res.data;
     }
 
     async getAllFriendRecommendations(obj) {

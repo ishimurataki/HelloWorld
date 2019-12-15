@@ -31,11 +31,16 @@ var routes = function(friendreqDb) {
 		})
 	}
 
+	var getAllSentFriendReqs = function(req, res) {
+		
+	}
+
 	return {
 		get_all_friend_reqs : getAllFriendReqs,
 		send_friend_request : sendFriendRequest,
 		accept_friend_request : acceptFriendRequest,
-		reject_friend_request : rejectFriendRequest
+		reject_friend_request : rejectFriendRequest,
+		get_all_sent_friend_reqs: getAllSentFriendReqs
 
 	}
 }

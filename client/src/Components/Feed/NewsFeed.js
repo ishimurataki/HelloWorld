@@ -21,13 +21,16 @@ class NewsFeed extends Component {
         this.setState({data: response});
     }
 
+    removePost(postID) {
+    }
+
     renderNewsFeed = (data) => {
         if(!data) {
             return <div> No Posts </div>
         } else {
             return data.map((postData) => {
                 var uniquePostId = postData.date;
-                return <Post key={uniquePostId} data= {postData}/>
+                return <Post key={uniquePostId} data= {postData} removePost={this.removePost}/>
             })
         }
     }

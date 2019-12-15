@@ -38,6 +38,10 @@ var routes = function(FriendRequests, User, Friend) {
 		})
 	}
 
+	var getAllSentFriendReqs = function(username, callback) {
+		console.log('Getting all users who ' + username + 'sent a friend request');
+	}
+
 	// function to send friend request
 
 	var sendFriendRequest = function (username, sender, callback) {
@@ -66,7 +70,7 @@ var routes = function(FriendRequests, User, Friend) {
 			} else {
 				console.log(contains);
 				console.log('Friend request already sent from ' + sender + ' to ' + username);
-				callback(contains);
+				callback("ALREADY SENT");
 			}
 		})
 
@@ -125,7 +129,8 @@ var routes = function(FriendRequests, User, Friend) {
 		getAllFriendReqs : getAllFriendReqs,
 		sendFriendRequest: sendFriendRequest,
 		acceptFriendRequest: acceptFriendRequest,
-		rejectFriendRequest: rejectFriendRequest
+		rejectFriendRequest: rejectFriendRequest,
+		getAllSentFriendReqs: getAllSentFriendReqs
 	}
 }
 

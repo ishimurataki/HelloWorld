@@ -29,6 +29,13 @@ export class Post extends React.Component {
       )
     }
   }
+
+  renderCancelButton() {
+    var currentUser = localStorage.getItem("token");
+    if(this.state.creator === currentUser ) {
+      return <button type="button" id="cancelbtn" onClick={() => {this.props.removePost(this.props.data.postID)}}>&times;</button>
+    }
+  }
   render() {
     return (
         <div> 
@@ -40,6 +47,7 @@ export class Post extends React.Component {
                       <span>Creator: {this.state.creator}</span>
                     </div>
                   </div>
+                  {this.renderCancelButton()}
                 </header>
                 <div className = "Post-time">
                   Posted on {this.state.postDate}

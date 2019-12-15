@@ -23,9 +23,14 @@ var routes = function(Post, postsDb) {
 		})
 	}
 
+	var deletePost = function(req, res) {
+		
+	}
+
 	return {
 		get_post : getAllPosts,
-		add_new_post: addNewPost
+		add_new_post: addNewPost,
+		delete_post, deletePost
 	}
 }
 

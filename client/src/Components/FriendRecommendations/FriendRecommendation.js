@@ -3,7 +3,10 @@ import friendRec_middleware from '../../Middleware/FriendRec';
 import { connect } from 'react-redux'; 
 import * as actions from '../../actions';
 class FriendRecommendation extends Component {
-    handleSubmit = (e) => {
+    state = {
+        errorMessage: ''
+    }
+    handleSubmit = async (e) => {
         e.preventDefault();
         console.log("We clicked accept ");
         // formatted from ,to
@@ -13,7 +16,11 @@ class FriendRecommendation extends Component {
             username: this.props.recipient,
             date: date
         }
-        friendRec_middleware.makeNewFriendRequest(obj);
+        var response = await friendRec_middleware.makeNewFriendRequest(obj);
+        console.log(response);
+        if(response === "ALREADY SENT") {
+            this.setState({errorMessage: "friend request as already been sent by either you or the other person"});
+        }
     }
     render () {
         var {recipient, key } = this.props;
@@ -21,6 +28,7 @@ class FriendRecommendation extends Component {
             <div>
                 <div key = {key} onClick= {this.handleSubmit}> 
                 {recipient}
+                <div className = "red-text" > {this.state.errorMessage} </div>
                 </div>
             </div>
         )
