@@ -17,16 +17,9 @@ class CreateComment extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log("Creating Comment");
-        var date = new window.Date();
+        var timeOfComment = new Date().toUTCString;
         // format of date will be 12-2-2019-12-02
         // format of date will be month-day-year-hour-minute-second
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var day = date.getDay();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var seconds = date.getSeconds();
-        var timeOfComment = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
 
         var postID = this.props.postID;
         var creator = this.props.creator;

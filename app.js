@@ -100,9 +100,9 @@ app.get('/friendvisualization', function(req, res) {
                     var id = response.Items[i].attrs.username;
                     var name = response.Items[i].attrs.firstname;
                     if (i == 0) {
-                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
                     } else {
-                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
                     } 
                 }
 
@@ -145,9 +145,9 @@ app.get('/getFriends/:user', function(req, res) {
                     var id = response.Items[i].attrs.username;
                     var name = response.Items[i].attrs.firstname;
                     if (i == 0) {
-                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
                     } else {
-                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
+                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
                     } 
                 }
 

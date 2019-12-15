@@ -7,9 +7,11 @@ class FriendRecommendation extends Component {
         e.preventDefault();
         console.log("We clicked accept ");
         // formatted from ,to
+        var date = new Date().toUTCString();
         var obj = {
             sender: this.props.sender,
-            username: this.props.recipient
+            username: this.props.recipient,
+            date: date
         }
         friendRec_middleware.makeNewFriendRequest(obj);
     }

@@ -11,8 +11,10 @@ class FriendRec{
 
     async getAllFriendRecommendations(obj) {
         console.log("Getting all friend recommendations for " + obj.username);
-        const res = await axios.post('/api/getTopFriendRecommendations', obj);
-        return res.data;
+        //const res = await axios.post('/api/getTopFriendRecommendations', obj);
+        //return res.data;
+        // for now
+        return ["Matt", "TakiM"];
     }
 }
 

@@ -33,14 +33,7 @@ class UpdateProfile extends Component {
         event.preventDefault();
         console.log("Submitted profile update");
         var username = localStorage.getItem("token");
-        var date = new window.Date();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var day = date.getDay();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var seconds = date.getSeconds();
-        var timeOfPost = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
+        var timeOfPost = new Date().toUTCString;
         var obj = {
             username: username,
             field: this.state.changeAttribute,

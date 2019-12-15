@@ -20,7 +20,7 @@ var routes = function(FriendRequests, User, Friend) {
 							if (err) {
 								
 							} else {
-								users.push(userInfo);
+								users.push(userInfo.attrs.username);
 								console.log(users);
 							}
 
@@ -83,7 +83,7 @@ var routes = function(FriendRequests, User, Friend) {
 						callback(null);
 					} else {
 						console.log('Added new friendship');
-						callback(response);
+						callback("success");
 					}
 				})
 			}

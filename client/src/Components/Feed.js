@@ -4,6 +4,7 @@ import NewsFeed from './Feed/NewsFeed';
 import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
 import FriendRecommendations from './FriendRecommendations/FriendRecommendations';
+import FriendRequests from './FriendRequests/FriendRequests';
 import TestButton from './Feed/TestButton'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -13,6 +14,7 @@ class Feed extends Component {
         this.props.fetchUser();
     }
     renderContent() {
+        //localStorage.removeItem("token");
         var username = this.props.user;
         if(!username) {
             username = localStorage.getItem("token");
@@ -26,6 +28,7 @@ class Feed extends Component {
                         <div className = "col s3">
                             <Profile username = {username}/>
                             <FriendRecommendations username = {username} />
+                            <FriendRequests username = {username} />
                         </div>
                         <div className ="col s6">
                             <NewsFeed username = {username}/>

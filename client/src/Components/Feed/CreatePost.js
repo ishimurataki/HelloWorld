@@ -21,17 +21,8 @@ class CreatePost extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log("Creating post");
-        var friends = this.props.friends;
-        // format of date will be 12-2-2019-12-02
-        // format of date will be month-day-year-hour-minute-second
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var day = date.getDay();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var seconds = date.getSeconds();
-        var timeOfPost = month + "-" + day + "-" + year + "-" + hour + "-" + minute + "-" + seconds;
+        // format of date is in UTC Time;
+        var timeOfPost = new Date().toUTCString();
         var obj = {
             content: this.state.caption,
             recipient: this.props.recipient,
