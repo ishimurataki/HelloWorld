@@ -24,7 +24,11 @@ var routes = function(Post, postsDb) {
 	}
 
 	var deletePost = function(req, res) {
-		
+		var creator = req.body.creator;
+		var postID = req.body.postID;
+		postsDb.deletePost(creator, postID, function(response) {
+			res.send(response);
+		})
 	}
 
 	return {

@@ -131,8 +131,8 @@ app.get('/getFriends/:user', function(req, res) {
    app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
    app.get('/api/current_user', authRoutes.get_user);
    app.get('/api/logout', authRoutes.remove_user);
-   app.get('/api/deletePost', postRoutes.delete_post);
-   app.get('/api/getSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
+   app.post('/api/deletePost', postRoutes.delete_post);
+   app.post('/api/getSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

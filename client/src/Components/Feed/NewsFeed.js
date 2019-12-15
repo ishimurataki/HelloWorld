@@ -11,7 +11,8 @@ class NewsFeed extends Component {
         this.state = {
             data: []
         };
-        this.pushToNewsFeed.bind(this);
+        this.pushToNewsFeed = this.pushToNewsFeed.bind(this);
+        this.removePost = this.removePost.bind(this);
     }
     async componentDidMount() {
         var username = localStorage.getItem("token");
@@ -21,7 +22,16 @@ class NewsFeed extends Component {
         this.setState({data: response});
     }
 
-    removePost(postID) {
+    async removePost(postID) {
+        var obj = {
+            creator: localStorage.getItem("token"),
+            postID: postID
+        }
+        var response = await post_middleware.deletePost(obj);
+        var newData = this.state.data.filter(x => postID !== x.postID);
+        console.log(newData);
+        this.setState({data: newData});
+
     }
 
     renderNewsFeed = (data) => {
