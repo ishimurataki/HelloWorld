@@ -32,7 +32,10 @@ var routes = function(friendreqDb) {
 	}
 
 	var getAllSentFriendReqs = function(req, res) {
-		
+		const username = req.body.username;
+		friendreqDb.getAllSentFriendReqs(username, (response) => {
+			res.send(response);
+		})
 	}
 
 	return {
@@ -40,8 +43,7 @@ var routes = function(friendreqDb) {
 		send_friend_request : sendFriendRequest,
 		accept_friend_request : acceptFriendRequest,
 		reject_friend_request : rejectFriendRequest,
-		get_all_sent_friend_reqs: getAllSentFriendReqs
-
+		get_all_sent_friend_reqs: getAllSentFriendReqs,
 	}
 }
 

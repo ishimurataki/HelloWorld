@@ -30,7 +30,7 @@ var routes = function(Post, postsDb) {
 	return {
 		get_post : getAllPosts,
 		add_new_post: addNewPost,
-		delete_post, deletePost
+		delete_post: deletePost
 	}
 }
 

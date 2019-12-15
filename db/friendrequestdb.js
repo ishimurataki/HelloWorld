@@ -40,6 +40,15 @@ var routes = function(FriendRequests, User, Friend) {
 
 	var getAllSentFriendReqs = function(username, callback) {
 		console.log('Getting all users who ' + username + 'sent a friend request');
+		FriendRequests.scan().where('sender').equals(username).exec((err, response) => {
+			if (err) {
+				console.log(err);
+				callback(null); 
+			} else {
+				const pendingFriendRequests = response.Items.map((f) => f.attrs.username);
+				callback(pendingFriendsRequests);
+			}
+		})
 	}
 
 	// function to send friend request
@@ -130,7 +139,8 @@ var routes = function(FriendRequests, User, Friend) {
 		sendFriendRequest: sendFriendRequest,
 		acceptFriendRequest: acceptFriendRequest,
 		rejectFriendRequest: rejectFriendRequest,
-		getAllSentFriendReqs: getAllSentFriendReqs
+		getAllSentFriendReqs: getAllSentFriendReqs,
+		getAllSentFriendReqs
 	}
 }
 

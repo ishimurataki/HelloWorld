@@ -125,6 +125,7 @@ app.get('/getFriends/:user', function(req, res) {
    app.post('/api/getAllNotifications', notificationRoutes.get_all_notifications);
    app.post('/api/addNewNotification', notificationRoutes.add_new_notification);
    app.post('/api/getAllFriendReqs', friendRequestRoutes.get_all_friend_reqs);
+   app.post('/api/getAllSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
    app.post('/api/sendFriendRequest', friendRequestRoutes.send_friend_request);
    app.post('/api/acceptFriendRequest', friendRequestRoutes.accept_friend_request);
    app.post('/api/rejectFriendRequest', friendRequestRoutes.reject_friend_request);
