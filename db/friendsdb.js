@@ -22,60 +22,37 @@ var routes = function(Friend, User){
         
         
     }
-    // function that gets all online friends for a given user. 
-    // returns a list of usernames of friends
-    var getAllOnlineFriends = function (username, callback) {
-        console.log('Getting all online friends for ' + username);
-        // Friend.query(username).filter('active').equals('true').exec(function(err, response) {
-        //     if (err) {
-        //         console.log(err);
-        //         callback(null);
-        //     } else {
-        //         var activeFriendUsernames = [];
-        //         for (var i = 0; i < response.Items.length; i++) {
-        //             activeFriendUsernames.push(response.Items[i].attrs.friendUsername);
-        //         }
-        //         callback(activeFriendUsernames);
-        //     }
-            
-        // });
-        Friend.query(username).exec(function(err, response) {
-            if (err) {
-                console.log(err);
-                callback(null);
-            } else {
-                var j = 0;
-                var friendUsernames = [];
-                var activeFriendUsernames = [];
-                for (var i = 0; i < response.Items.length; i++) {
-                    friendUsernames.push(response.Items[i].attrs.friendUsername);
+
+    const userOnline = async (username) => {
+        return await new Promise((resolve, reject) => {
+            User.query(username).exec((err, response) => {
+                if (err) reject(err);
+                if (response.Items.length > 0 && response.Items[0].attrs.active === 'true') {
+                    resolve(true);
+                } else {
+                    resolve(false);
                 }
-                console.log(friendUsernames);
-                //// PREVIOUS code checked for active attribute in friend schema which doesnt existed.
-                //// Check for active attribute in each users corresponding user schema.
-                for(var i = 0; i < friendUsernames.length; i ++) {
-                    var friend = friendUsernames[i];
-                    (function(activeFriendUsernames) {
-                        User.query(friend).filter('active').equals('true').exec(function(err, response) {
-                        if(err) {
-                            console.log(err);
-                            callback(null);
-                        } else {
-                            console.log(response);
-                            if(response.Items.length > 0) {
-                                activeFriendUsernames.push(friend);
-                            }
-                        }
-                        if(j == friendUsernames.length - 1) {
-                            callback(activeFriendUsernames)
-                        }
-                        j = j + 1;
-                    })
-                    })(activeFriendUsernames);
+            })
+        })
+    }
+
+    const getAllOnlineFriends = async (username, callback) => {
+        const friends = await new Promise((resolve, reject) => {
+            Friend.query(username).exec((err, response) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(response.Items);
                 }
-            }
-            
+            })
         });
+        const activeFriendUsernames = [];
+        for (const friend of friends) {
+            if (await userOnline(friend.attrs.friendUsername)) {
+                activeFriendUsernames.push(friend.attrs.friendUsername);
+            }
+        }
+        callback(activeFriendUsernames);
     }
 
     // function to add friend into database

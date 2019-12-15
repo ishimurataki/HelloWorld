@@ -22,7 +22,7 @@ class ChatArea extends Component {
     renderChats() {
         const path = this.props.location.pathname;
         if(path === "/feed") {
-            const chat = this.props.liveChats.map((c) => <Chatbox show='true' chatroomName={c.name} sender={c.user1}/>)
+            const chat = this.props.liveChats.map((c) => <Chatbox show='true' chatroomName={c.name} sender={c.user1} key={c.name}/>)
             return (
                 <div style={divStyle}>
                     <div id='inner-div'>
