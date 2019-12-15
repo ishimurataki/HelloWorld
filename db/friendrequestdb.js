@@ -51,6 +51,8 @@ var routes = function(FriendRequests, User, Friend) {
 			if (err) {
 				console.log(err);
 				callback(null);
+			// changed the clause here because if something is not contained, contains will not be null
+			// instead it will have an object of Items length 0;
 			} else if (contains.Items.length == 0) {	
 				FriendRequests.create([friendReq], function(err, response) {
 					if (err) {

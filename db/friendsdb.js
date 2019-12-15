@@ -51,6 +51,8 @@ var routes = function(Friend, User){
                     friendUsernames.push(response.Items[i].attrs.friendUsername);
                 }
                 console.log(friendUsernames);
+                //// PREVIOUS code checked for active attribute in friend schema which doesnt existed.
+                //// Check for active attribute in each users corresponding user schema.
                 for(var i = 0; i < friendUsernames.length; i ++) {
                     var friend = friendUsernames[i];
                     (function(activeFriendUsernames) {
