@@ -40,27 +40,40 @@ var routes = function(FriendRequests, User, Friend) {
 
 	// function to send friend request
 
-	var sendFriendRequest = function (username, date, sender, callback) {
+	var sendFriendRequest = function (username, sender, callback) {
 		console.log('Sending a friend requestion from ' + sender + ' to ' + username);
 		var friendReq = {
 			username: username,
-			date: date, 
 			sender: sender
 		}
-		FriendRequests.create([friendReq], function(err, response) {
+
+		FriendRequests.query(username).where('sender').equals(sender).exec(function(err, contains) {
 			if (err) {
 				console.log(err);
 				callback(null);
+			} else if (contains == null) {	
+				FriendRequests.create([friendReq], function(err, response) {
+					if (err) {
+						console.log(err);
+						callback(null);
+					} else {
+						console.log('Created friend request from ' + sender + ' to ' + username);
+						callback(response);
+					}
+				})
 			} else {
-				console.log('Created friend request from ' + sender + ' to ' + username);
-				callback(response);
+				console.log('Friend request already sent from ' + sender + ' to ' + username);
+				callback(contains);
 			}
 		})
+
+
+
 	}
 
-	var acceptFriendRequest = function(username, date, sender, callback) {
+	var acceptFriendRequest = function(username, sender, callback) {
 		console.log(username + " accepted " + sender + " friend request");
-		FriendRequests.destroy({username: username, date: date, sender: sender}, function (err, response) {
+		FriendRequests.destroy({username: username, sender: sender}, function (err, response) {
 			if (err) {
 				console.log(err);
 				callback(null);
@@ -91,9 +104,9 @@ var routes = function(FriendRequests, User, Friend) {
 
 	}
 
-	var rejectFriendRequest = function(username, date, sender, callback) {
+	var rejectFriendRequest = function(username, sender, callback) {
 		console.log(username + " rejected " + sender + " friend request");
-		FriendRequests.destroy({username: username, date: date, sender: sender}, function (err, response) {
+		FriendRequests.destroy({username: username, sender: sender}, function (err, response) {
 			if (err) {
 				console.log(err);
 				callback(null);

@@ -9,27 +9,24 @@ var routes = function(friendreqDb) {
 
 	var sendFriendRequest = function (req, res) {
 		var username = req.body.username;
-		var date = req.body.date;
 		var sender = req.body.sender;
-		friendreqDb.sendFriendRequest(username, date, sender, function(response) {
+		friendreqDb.sendFriendRequest(username, sender, function(response) {
 			res.send(response);
 		})
 	}
 
 	var acceptFriendRequest = function (req, res) {
 		var username = req.body.username;
-		var date = req.body.date;
 		var sender = req.body.sender;
-		friendreqDb.acceptFriendRequest(username, date, sender, function(response) {
+		friendreqDb.acceptFriendRequest(username, sender, function(response) {
 			res.send(response);
 		})
 	}
 
 	var rejectFriendRequest = function(req, res) {
 		var username = req.body.username;
-		var date = req.body.date;
 		var sender = req.body.sender;
-		friendreqDb.rejectFriendRequest(username, date, sender, function(response) {
+		friendreqDb.rejectFriendRequest(username, sender, function(response) {
 			res.send(response);
 		})
 	}
