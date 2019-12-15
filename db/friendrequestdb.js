@@ -51,7 +51,7 @@ var routes = function(FriendRequests, User, Friend) {
 			if (err) {
 				console.log(err);
 				callback(null);
-			} else if (contains == null) {	
+			} else if (contains.Items.length == 0) {	
 				FriendRequests.create([friendReq], function(err, response) {
 					if (err) {
 						console.log(err);
@@ -62,6 +62,7 @@ var routes = function(FriendRequests, User, Friend) {
 					}
 				})
 			} else {
+				console.log(contains);
 				console.log('Friend request already sent from ' + sender + ' to ' + username);
 				callback(contains);
 			}

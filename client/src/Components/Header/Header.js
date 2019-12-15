@@ -8,7 +8,10 @@ class Header extends Component {
 
     handleLogout = (event) => {
         event.preventDefault();
-        auth.logout(() => {
+        var obj = {
+            username: this.props.user
+        }
+        auth.logout(obj, () => {
             console.log("Logging out");
             this.props.fetchUser();
             this.props.history.push("/");

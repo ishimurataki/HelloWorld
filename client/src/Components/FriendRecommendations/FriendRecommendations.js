@@ -23,8 +23,11 @@ class FriendRecommendations extends Component {
 
     render () {
         return (
-            <div style = {{marginTop: '100px'}}>
-            {this.renderContent()}
+            <div style = {{marginTop: '100px', backgroundColor: "lightBlue", 
+            paddingTop: "2px", paddingBottom: "2px",
+            paddingLeft: "2px", paddingRight: "2px"}}>
+                <h4> Friend Recs! </h4> 
+                {this.renderContent()}
             </div>
         )
     }

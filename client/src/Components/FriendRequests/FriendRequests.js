@@ -36,7 +36,10 @@ class FriendRequests extends Component {
 
     render () {
         return (
-            <div style = {{marginTop: '100px'}}>
+            <div style = {{marginTop: '100px', backgroundColor: "lightBlue", 
+            paddingTop: "2px", paddingBottom: "2px",
+            paddingLeft: "2px", paddingRight: "2px"}}>
+                <h4>Friend Requests! </h4>
             {this.renderContent()}
             </div>
         )

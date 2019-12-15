@@ -9,6 +9,9 @@ class DisplayProfile extends Component {
         return (
             <div style = {{marginTop: "100px"}}> 
                 <div>
+                    Your username is {profileInfo.username}
+                </div>
+                <div>
                     Email is {profileInfo.email}
                 </div> 
                 <div>

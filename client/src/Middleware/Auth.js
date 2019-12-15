@@ -8,6 +8,12 @@ class Auth {
         console.log("begin login sequence");
         console.log(obj);
         const res = await axios.post('/api/checklogin', obj);
+        var obj2 = {
+            username: obj.username,
+            field: "active",
+            value: "true"
+        }
+        const resActive = await axios.post('/api/updateProfileAttribute', obj2);
         const value = res.data;
         // true for debugging
         // const value = "success"
@@ -17,8 +23,14 @@ class Auth {
         callback(value);
     }
 
-    async logout(callback) {
+    async logout(obj, callback) {
         var res = await axios.get('/api/logout');
+        var obj2 = {
+            username: obj.username,
+            field: "active",
+            value: "false"
+        }
+        const resActive = await axios.post('/api/updateProfileAttribute', obj2);
         console.log(res.data);
         localStorage.removeItem("token");
         callback();

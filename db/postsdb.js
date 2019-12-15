@@ -10,6 +10,9 @@ var routes = function(Friend, Post){
                 var post = posts.Items[i];
                 var friend = posts.Items[i].attrs.creator;
                 var j = 0;
+                if(friend === username) {
+                    postObj.push(post);
+                }
                 (function(postObj,post) {
                     Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
                         if(response) {
@@ -17,11 +20,14 @@ var routes = function(Friend, Post){
                                 console.log("Friend matches");
                                 postObj.push(post);
                             } 
-                        }
-                        if(j === (posts.Items.length - 1)) {
-                            callback(postObj);
+                            
                         }
                         j = j + 1;
+                        if(j === (posts.Items.length - 1)) {
+                            console.log(postObj);
+                            callback(postObj);
+                        }
+                        
                     });
                 }
                 )(postObj, post);

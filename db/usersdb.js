@@ -102,6 +102,16 @@ var routes = function(User) {
 				callback(update);
 			}
 		});
+		} else if (field == 'active') {
+			User.update({username: username, active: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
 		} else {
 			;
 		}

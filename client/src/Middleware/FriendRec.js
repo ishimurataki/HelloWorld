@@ -14,7 +14,7 @@ class FriendRec{
         //const res = await axios.post('/api/getTopFriendRecommendations', obj);
         //return res.data;
         // for now
-        return ["Matt", "TakiM"];
+        return ["Matt", "TakiM", "vinkebot"];
     }
 }
 

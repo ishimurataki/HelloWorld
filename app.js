@@ -1,10 +1,10 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 //var session = require('express-session');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-
 // define/require all schemas here
 var schemas = require('./createTableSchemas');
 var friendRecFile = './adsorption/out/part-r-00000';
@@ -41,6 +41,7 @@ app.use(
 	    keys: ['key1', 'key2']
     })
 );
+app.use('/public', express.static('./public/'));
 
 // friend visualizer 
 
@@ -50,144 +51,59 @@ app.get('/friendvisualizer', function(req, res) {
 });
 
 app.get('/friendvisualization', function(req, res) {
-
-    // var json = {
-    //   "id": "alice","name": "Alice","children": [{
-    //       "id": "bob",
-    //       "name": "Bob",
-    //       "data": {},
-    //       "children": [{
-    //           "id": "dylan",
-    //           "name": "Dylan",
-    //           "data": {},
-    //           "children": []
-    //         }, {
-    //           "id": "marley",
-    //           "name": "Marley",
-    //           "data": {},
-    //           "children": []
-    //         }]
-    //       }, {
-    //       "id": "sarah",
-    //       "name": "Sarah",
-    //       "data": {},
-    //       "children": []
-    //       }],
-    //       "data": []
-    //   };
-    //   res.send(json);
-
-    var user = req.body.username;
-    var jsonString = '{' + '"id": ' + '"' + user + '"' + ", " + '"name": ' + '"' ;
-
-    User.get(username, function(err, info) {
-        if (err) {
-            console.log(err);
-            res.send(null);
-        } else {
-            jsonString = jsonString + info.attrs.firstname + '"' + ', ' + '"data: "' + '{}, ' + '"children": [';
-        }
-    })
-
-    Friend.query(username).exec(function(err, response) {
-        if (err) {
-            console.log(err);
-            res.send(null);
-        } else {
-            if (response.Items.length == 0) {
-               jsonString = jsonString + ']}';
-            } else {
-                for (var i = 0; i < response.Items.length; i++) {
-                    var id = response.Items[i].attrs.username;
-                    var name = response.Items[i].attrs.firstname;
-                    if (i == 0) {
-                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
-                    } else {
-                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
-                    } 
-                }
-
-                jsonString = jsonString + ']}';
-                console.log(jsonString);
-                res.send(jsonString);
-            }
-            
-        }
-    });
+    console.log("called friend visualization");
+    var newFriends = {"id": "alice","name": "Alice","children": [{
+        "id": "james",
+            "name": "James",
+            "data": {},
+            "children": [{
+                "id": "arnold",
+                "name": "Arnold",
+                "data": {},
+                "children": []
+            }, {
+                "id": "elvis",
+                "name": "Elvis",
+                "data": {},
+                "children": []
+            }]
+        }, {
+            "id": "craig",
+            "name": "Craig",
+            "data": {},
+            "children": [{
+                "id":"arnold"
+            }]
+        }, {
+            "id": "amanda",
+            "name": "Amanda",
+            "data": {},
+            "children": []
+        }, {
+            "id": "phoebe",
+            "name": "Phoebe",
+            "data": {},
+            "children": []
+        }, {
+            "id": "spock",
+            "name": "Spock",
+            "data": {},
+            "children": []
+        }, {
+            "id": "matt",
+            "name": "Matthe",
+            "data": {},
+            "children": []
+        }],
+        "data": []
+    };
+    res.send(newFriends);
 });
 
-
-
-    
-
 app.get('/getFriends/:user', function(req, res) {
-
     console.log(req.params.user);
-
-    var jsonString = '{' + '"id": ' + '"' + user + '"' + ", " + '"name": ' + '"' ;
-    User.get(req.params.user, function(err, info) {
-        if (err) {
-            console.log(err);
-            res.send(null);
-        } else {
-            jsonString = jsonString + info.attrs.firstname + '"' + ', ' + '"data: "' + '{}, ' + '"children": [';
-        }
-    })
-
-    Friend.query(username).exec(function(err, response) {
-        if (err) {
-            console.log(err);
-            res.send(null);
-        } else {
-            if (response.Items.length == 0) {
-               jsonString = jsonString + ']}';
-            } else {
-                for (var i = 0; i < response.Items.length; i++) {
-                    var id = response.Items[i].attrs.username;
-                    var name = response.Items[i].attrs.firstname;
-                    if (i == 0) {
-                        jsonString = jsonString + '{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
-                    } else {
-                        jsonString = jsonString + ', {"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data: "' + '{}, ' + '"children": []}';
-                    } 
-                }
-
-                jsonString = jsonString + ']}';
-                console.log(jsonString);
-                res.send(jsonString);
-            }
-            
-        }
-    });
-
-
-
-
-    // console.log(req.params.user);
-    // var newFriends = {"id": "alice","name": "Alice","children": [{
-    //     "id": "james",
-    //         "name": "James",
-    //         "data": {},
-    //         "children": [{
-    //             "id": "arnold",
-    //             "name": "Arnold",
-    //             "data": {},
-    //             "children": []
-    //         }, {
-    //             "id": "elvis",
-    //             "name": "Elvis",
-    //             "data": {},
-    //             "children": []
-    //         }]
-    //     }, {
-    //         "id": "matt",
-    //         "name": "Matthe",
-    //         "data": {},
-    //         "children": []
-    //     }],
-    //     "data": []
-    // };
-    // res.send(newFriends);
+    var newFriends = {"id": "hi"};
+    res.send(newFriends);
 });
 
 // install the routes here

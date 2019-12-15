@@ -7,8 +7,7 @@ class FriendRequest extends Component {
         // formatted from ,to
         var obj = {
             sender: this.props.sender,
-            username: this.props.recipient,
-            date: new Date().toUTCString()
+            username: this.props.recipient
         }
         const response = await friendReq_middleware.acceptFriendRequest(obj);
         console.log(response);

@@ -10,7 +10,9 @@ class ChatBar extends Component {
     }
     // IMPORTANT: TEST ALL ONLINE FRIENDS
     async componentDidMount() {
-        var result = await chatbar_middleware.fetchAllOnlineFriends();
+        var obj = {username: localStorage.getItem("token")};
+        var result = await chatbar_middleware.fetchAllOnlineFriends(obj);
+        console.log(result);
         this.setState({data: result});
     }
 
@@ -27,6 +29,7 @@ class ChatBar extends Component {
         var { data } = this.state;
         return (
             <div>
+                <h5> Chat Active Friends </h5>
                 {this.renderOnlineFriends(data)}
             </div>
         )

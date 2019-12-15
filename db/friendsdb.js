@@ -1,4 +1,4 @@
-var routes = function(Friend){
+var routes = function(Friend, User){
     // function that gets all friends for a given user. 
     // returns a list of usernames of friends
     var getAllFriends = function (username, callback) {
@@ -26,16 +26,51 @@ var routes = function(Friend){
     // returns a list of usernames of friends
     var getAllOnlineFriends = function (username, callback) {
         console.log('Getting all online friends for ' + username);
-        Friend.query(username).filter('active').equals('true').exec(function(err, response) {
+        // Friend.query(username).filter('active').equals('true').exec(function(err, response) {
+        //     if (err) {
+        //         console.log(err);
+        //         callback(null);
+        //     } else {
+        //         var activeFriendUsernames = [];
+        //         for (var i = 0; i < response.Items.length; i++) {
+        //             activeFriendUsernames.push(response.Items[i].attrs.friendUsername);
+        //         }
+        //         callback(activeFriendUsernames);
+        //     }
+            
+        // });
+        Friend.query(username).exec(function(err, response) {
             if (err) {
                 console.log(err);
                 callback(null);
             } else {
+                var j = 0;
+                var friendUsernames = [];
                 var activeFriendUsernames = [];
                 for (var i = 0; i < response.Items.length; i++) {
-                    activeFriendUsernames.push(response.Items[i].attrs.friendUsername);
+                    friendUsernames.push(response.Items[i].attrs.friendUsername);
                 }
-                callback(activeFriendUsernames);
+                console.log(friendUsernames);
+                for(var i = 0; i < friendUsernames.length; i ++) {
+                    var friend = friendUsernames[i];
+                    (function(activeFriendUsernames) {
+                        User.query(friend).filter('active').equals('true').exec(function(err, response) {
+                        if(err) {
+                            console.log(err);
+                            callback(null);
+                        } else {
+                            console.log(response);
+                            if(response.Items.length > 0) {
+                                activeFriendUsernames.push(friend);
+                            }
+                        }
+                        if(j == friendUsernames.length - 1) {
+                            callback(activeFriendUsernames)
+                        }
+                        j = j + 1;
+                    })
+                    })(activeFriendUsernames);
+                }
             }
             
         });
