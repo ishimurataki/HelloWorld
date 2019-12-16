@@ -47,6 +47,7 @@ var routes = function(User){
                 if(acc) {
                     res.send("error: username already exists. Try again")
                 } else {
+                    var interestList = interests.split(',');
                     var user = {
                         username: username,
                         password: password,
@@ -55,7 +56,7 @@ var routes = function(User){
                         firstname: firstname,
                         lastname: lastname,
                         affiliation: affiliation,
-                        interests: interests,
+                        interests: interestList,
                         birthday: birthday,
                         status: status
                     };
