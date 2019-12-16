@@ -7,9 +7,9 @@ class User{
     async getAllFriends(obj ) {
         console.log("fetching all friends for a user");
         //replace this with the info you want to send in req.body
-        var value = ['Matt', 'TakiM'];
-        //const res = await axios.post('/api/getAllFriends', obj);
-        //const value = res.data;
+        // var value = ['Matt', 'TakiM'];
+        const res = await axios.post('/api/getAllFriends', obj);
+        const value = res.data;
         return value;
 
     }

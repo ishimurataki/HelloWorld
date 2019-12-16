@@ -2,8 +2,9 @@ import axios from 'axios'
 import { ADD_CHAT, REMOVE_CHAT, CLEAR_CHATS, SET_FRIENDS, GET_FRIENDS, FETCH_USER} from './types';
 
 
-export const addChat = (name, user1, user2) => async dispatch => {
-    var data = {name: name, user1: user1, user2: user2};
+export const addChat = (sender, members) => async dispatch => {
+    const name = members.sort().join(', ');
+    const data = {name, sender, members};
     dispatch({ type: ADD_CHAT, payload: data});
 }
 
