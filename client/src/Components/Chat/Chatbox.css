@@ -62,6 +62,7 @@
 #messages li {
     padding: 5px 10px;
     font-size: 12px;
+    overflow-wrap: break-word;
 }
 
 #messages li:nth-child(odd) {
