@@ -39,7 +39,7 @@ $(document).ready(function() {
               domElement.innerHTML = node.name;
               domElement.style.cursor = "pointer";
               domElement.onclick = function() {
-                  $.getJSON('/getFriends/'+node.id, function(json) {
+                  $.getJSON('/getFriends/'+node.id+'/'+node.data.affiliation, function(json) {
                       ht.op.sum(json, {
                           type: "fade:seq",
                           fps: 30,

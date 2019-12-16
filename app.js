@@ -49,7 +49,7 @@ app.use('/public', express.static('./public/'));
 
 app.get('/friendvisualizer', friendVisRoutes.get_visualizer);
 app.get('/friendvisualization', friendVisRoutes.init_visualization);
-app.get('/getFriends/:user', friendVisRoutes.get_new_visualization);
+app.get('/getFriends/:user/:affiliation', friendVisRoutes.get_new_visualization);
 
 // install the routes here
    app.post('/api/checklogin', authRoutes.check_login);
