@@ -3,6 +3,7 @@ var routes = function(friendreqDb) {
 	var getAllFriendReqs = function (req, res) {
 		var username = req.body.username;
 		friendreqDb.getAllFriendReqs(username, function(response) {
+			console.log(response);
 			res.send(response);
 		})
 	}

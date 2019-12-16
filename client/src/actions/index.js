@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_CHAT, REMOVE_CHAT, CLEAR_CHATS, SET_FRIENDS, GET_FRIENDS, FETCH_USER} from './types';
+import { ADD_CHAT, REMOVE_CHAT, CLEAR_CHATS, SET_FRIENDS, GET_FRIENDS, FETCH_USER, NEW_FRIEND_REQUEST} from './types';
 
 
 export const addChat = (name, user1, user2) => async dispatch => {
@@ -17,7 +17,11 @@ export const fetchUser = () => async dispatch  => {
     dispatch({ type: FETCH_USER, payload: res.data }); 
 };
 
-export const setActiveFriends = (options) => async dispatch => {
+export const addNewFriendRequest = (username) => async dispatch => {
+    dispatch({type: NEW_FRIEND_REQUEST, payload: username});
+}
+
+export const setFriends = (options) => async dispatch => {
     var data = options;
     dispatch({type: SET_FRIENDS, payload: data});
 }

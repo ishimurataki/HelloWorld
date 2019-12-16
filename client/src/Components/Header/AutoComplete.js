@@ -42,7 +42,6 @@ class Autocomplete extends Component {
   };
 
   handleKeyDown = (e) => {
-    console.log(this.state);
     const { activeOption, filteredOptions} = this.state;
     if (e.keyCode === 13) {
       e.preventDefault();

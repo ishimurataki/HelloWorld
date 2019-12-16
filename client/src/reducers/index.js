@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import chatReducer from './chatReducer';
-import suggestReducer from './suggestReducer';
+import friendReducer from './friendsReducer';
 import authReducer from './authReducer';
+import friendReqReducer from './friendReqReducer'
 
 export default combineReducers({
     chat: chatReducer,
-    friends: suggestReducer,
-    auth: authReducer
+    friends: friendReducer,
+    auth: authReducer,
+    friendRequests: friendReqReducer
 })

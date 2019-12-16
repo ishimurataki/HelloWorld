@@ -17,7 +17,7 @@ class CreateComment extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log("Creating Comment");
-        var timeOfComment = new Date().toUTCString;
+        var timeOfComment = new Date().toUTCString();
         // format of date will be 12-2-2019-12-02
         // format of date will be month-day-year-hour-minute-second
 
@@ -27,7 +27,6 @@ class CreateComment extends Component {
 		var date = this.props.postDate;
         var content = this.state.content;
         var postDate = timeOfComment;
-        
         var obj = {
             postID: postID,
             postDate: postDate,
@@ -36,6 +35,7 @@ class CreateComment extends Component {
             content: content 
         }
         Comment.createComment(obj, (response) => {
+            console.log(response);
             this.props.updateCommentSection(response);
         });
 

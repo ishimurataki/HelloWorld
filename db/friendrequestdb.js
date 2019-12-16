@@ -6,12 +6,13 @@ var routes = function(FriendRequests, User, Friend) {
 	var getAllFriendReqs = function (username, callback) {
 		console.log('Getting all users who sent ' + username + ' a friend request');
 		FriendRequests.query(username).exec(function (err, response) {
+			var length = response.Items.length;
 			if (err) {
 				console.log(err);
 				callback(null);
-			} else {
+			} else if (length > 0) {
 				var users = [];
-				for (var i = 0; i < response.Items.length; i++) {
+				for (var i = 0; i < length; i++) {
 					var cnt = 0;
 					var sender = response.Items[i].attrs.sender;
 					(function(users, sender) {
@@ -24,16 +25,19 @@ var routes = function(FriendRequests, User, Friend) {
 								console.log(users);
 							}
 
-							if (cnt === (response.Items.length - 1)) {
-								console.log(users);
+							if (cnt === (length - 1)) {
+								console.log("Got all users who sent " + username + " a friend request");
 								callback(users);
 							}
+							console.log(cnt);
 							cnt = cnt + 1;
 						});
 					})(users, sender);
 				}
-
+			} else {
+				var users = [];
 				console.log("Got all users who sent " + username + " a friend request");
+				callback(users);
 			}
 		})
 	}
@@ -46,7 +50,7 @@ var routes = function(FriendRequests, User, Friend) {
 				callback(null); 
 			} else {
 				const pendingFriendRequests = response.Items.map((f) => f.attrs.username);
-				callback(pendingFriendsRequests);
+				callback(pendingFriendRequests);
 			}
 		})
 	}
@@ -59,29 +63,41 @@ var routes = function(FriendRequests, User, Friend) {
 			username: username,
 			sender: sender
 		}
-
-		FriendRequests.query(username).where('sender').equals(sender).exec(function(err, contains) {
-			if (err) {
+		Friend.get({username: username, friendUsername: sender}, function(err, response) {
+			console.log("ALREADY FRENT RESULT");
+			console.log(response);
+			if(err) {
 				console.log(err);
 				callback(null);
-			// changed the clause here because if something is not contained, contains will not be null
-			// instead it will have an object of Items length 0;
-			} else if (contains.Items.length == 0) {	
-				FriendRequests.create([friendReq], function(err, response) {
+			} else if (response == null && username != sender) {
+				FriendRequests.query(username).where('sender').equals(sender).exec(function(err, contains) {
 					if (err) {
 						console.log(err);
 						callback(null);
+					// changed the clause here because if something is not contained, contains will not be null
+					// instead it will have an object of Items length 0;
+					} else if (contains.Items.length == 0) {	
+						FriendRequests.create([friendReq], function(err, response) {
+							if (err) {
+								console.log(err);
+								callback(null);
+							} else {
+								console.log('Created friend request from ' + sender + ' to ' + username);
+								callback(response);
+							}
+						})
 					} else {
-						console.log('Created friend request from ' + sender + ' to ' + username);
-						callback(response);
+						//console.log(contains);
+						console.log('Friend request already sent from ' + sender + ' to ' + username);
+						callback("ALREADY SENT");
 					}
 				})
 			} else {
-				console.log(contains);
-				console.log('Friend request already sent from ' + sender + ' to ' + username);
-				callback("ALREADY SENT");
+				console.log("Already friends or cannot be friends with oneselves");
+				callback("ALREADY FRIENDS");
 			}
 		})
+		
 
 
 
@@ -128,7 +144,7 @@ var routes = function(FriendRequests, User, Friend) {
 				callback(null);
 			} else {
 				console.log('Friend request is rejected');
-				callback(response);
+				callback("success");
 			}
 		})
 	}
