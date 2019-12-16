@@ -8,10 +8,6 @@ class ChatBar{
         console.log(obj);
         const res = await axios.post('/api/getAllOnlineFriends', obj);
         return res.data;
-        // var result = [
-        //     "matt", "vinke"
-        // ];
-        //return result;
     }
 }
 
