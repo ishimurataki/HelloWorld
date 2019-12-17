@@ -22,7 +22,9 @@ class CommentSection extends Component {
         if(!data) {
             return <div> No Comments </div>
         } else {
+            console.log(data);
             return data.map((postData) => {
+                console.log(postData);
                 return <Comment key={postData.date} data= {postData}/>
             })
         }

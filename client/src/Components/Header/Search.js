@@ -17,7 +17,7 @@ class Search extends Component {
         var options = await user_middleware.getAllFriends(obj);
         this.setState({options: options});
         console.log(options);
-        this.props.setActiveFriends(options);
+        this.props.setFriends(options);
     }
     renderAutoComplete () {
         return <Autocomplete options = {this.state.options}/>

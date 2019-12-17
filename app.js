@@ -8,6 +8,7 @@ const cookieSession = require('cookie-session');
 // define/require all schemas here
 var schemas = require('./createTableSchemas');
 var friendRecFile = './adsorption/out/part-r-00000';
+var visualizerView = 'friendvisualizer.ejs';
 var User = schemas.User;
 var Friend = schemas.Friend;
 var Post = schemas.Post;
@@ -32,6 +33,7 @@ var commentRoutes = require('./routes/commentroutes.js')(commentsDb);
 var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb);
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
 var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile, User, Friend);
+var friendVisRoutes = require('./routes/friendvisroutes.js')(User, Friend, visualizerView);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -45,66 +47,9 @@ app.use('/public', express.static('./public/'));
 
 // friend visualizer 
 
-app.get('/friendvisualizer', function(req, res) {
-    console.log("CALLED");
-    res.render('friendvisualizer.ejs');
-});
-
-app.get('/friendvisualization', function(req, res) {
-    console.log("called friend visualization");
-    var newFriends = {"id": "alice","name": "Alice","children": [{
-        "id": "james",
-            "name": "James",
-            "data": {},
-            "children": [{
-                "id": "arnold",
-                "name": "Arnold",
-                "data": {},
-                "children": []
-            }, {
-                "id": "elvis",
-                "name": "Elvis",
-                "data": {},
-                "children": []
-            }]
-        }, {
-            "id": "craig",
-            "name": "Craig",
-            "data": {},
-            "children": [{
-                "id":"arnold"
-            }]
-        }, {
-            "id": "amanda",
-            "name": "Amanda",
-            "data": {},
-            "children": []
-        }, {
-            "id": "phoebe",
-            "name": "Phoebe",
-            "data": {},
-            "children": []
-        }, {
-            "id": "spock",
-            "name": "Spock",
-            "data": {},
-            "children": []
-        }, {
-            "id": "matt",
-            "name": "Matthe",
-            "data": {},
-            "children": []
-        }],
-        "data": []
-    };
-    res.send(newFriends);
-});
-
-app.get('/getFriends/:user', function(req, res) {
-    console.log(req.params.user);
-    var newFriends = {"id": "hi"};
-    res.send(newFriends);
-});
+app.get('/friendvisualizer', friendVisRoutes.get_visualizer);
+app.get('/friendvisualization', friendVisRoutes.init_visualization);
+app.get('/getFriends/:user/:affiliation', friendVisRoutes.get_new_visualization);
 
 // install the routes here
    app.post('/api/checklogin', authRoutes.check_login);

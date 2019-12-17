@@ -30,6 +30,7 @@ var routes = function(Comment) {
 			date: date,
 			content: content
 		}
+		console.log(comment);
 		Comment.create([comment], function(err, response) {
 			if (err) {
 				console.log(err);

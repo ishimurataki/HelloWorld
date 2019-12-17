@@ -42,7 +42,7 @@ class CreatePost extends Component {
         notification_middleware.addNewNotification(notification);
     }
     render() {
-        console.log(this.props.friends);
+        //console.log(this.props.friends);
         return (
             <div>
                 <article className="CreatePost" ref="CreatePost">

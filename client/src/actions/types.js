@@ -6,3 +6,4 @@ export const SET_FRIENDS = "set_friends";
 export const GET_FRIENDS = "get_friends";
 export const FETCH_USER = "fetch_user";
 export const UPDATE_PROFILE = "update_profile";
+export const NEW_FRIEND_REQUEST = "add_new_friend_request";
