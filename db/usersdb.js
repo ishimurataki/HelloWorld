@@ -112,8 +112,26 @@ var routes = function(User) {
 				callback(update);
 			}
 		});
-		} else {
-			;
+		} else if (field == 'firstname') {
+			User.update({username: username, firstname: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
+		} else if (field == 'lastname') {
+			User.update({username: username, lastname: value}, function (err, update) {
+			if (err) {
+				console.log(err);
+				callback(null);
+			} else {
+				console.log('Updated ' + field + ' for ' + username + ' to ' + value);
+				callback(update);
+			}
+		});
 		}
 		
 	}

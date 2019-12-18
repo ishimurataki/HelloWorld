@@ -7,15 +7,15 @@ var routes = function(User, Friend, visualizerView) {
 	};
 
 	var initVisualization = function(req, res) {
-		//var username = 'req.session.user';
-	    var username = 'matt';
+		var username = req.session.user;
+	    //var username = 'matt';
 	    var jsonString = '{' + '"id": ' + '"' + username + '"' + ", " + '"name": ' + '"' ;
 	    User.get(username, function(err, info) {
 	        if (err) {
 	            console.log(err);
 	            res.send(null);
 	        } else {
-	            console.log(info);
+				console.log(info);
 	            var affiliation = info.attrs.affiliation;
 	            jsonString = jsonString + info.attrs.firstname + '"' + ', ' + '"children": [';
 	            Friend.query(username).exec(function(err, response) {
