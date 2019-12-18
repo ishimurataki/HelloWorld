@@ -1,11 +1,11 @@
-
+const bcrypt = require('bcryptjs')
 
 var routes = function(User){
     var checkLogin = function (req, res) {
         var username = req.body.username;
         var password = req.body.password;
         console.log(req.body);
-        User.get(username, function(err, acc) {
+        User.get(username, async function(err, acc) {
             if(err) {
                 res.send("error: error getting user in checkLogin. More information" + err);
             } else {
@@ -14,7 +14,8 @@ var routes = function(User){
                     var storedPassword = acc.get('password');
                     console.log(storedPassword);
                     console.log(password);
-                    if(storedPassword === password) {
+                    const isMatch = await bcrypt.compare(password, storedPassword)
+                    if(isMatch) {
                         console.log("successful login. rerouting to feed");
                         req.session.user = username;
                         res.send("success");
@@ -28,11 +29,11 @@ var routes = function(User){
         })
     }
 
-    var addNewUser = function (req, res) {
+    var addNewUser = async function (req, res) {
         console.log(req.body);
         var username = req.body.username;
         var email = req.body.email;
-        var password = req.body.password;
+        var password = await bcrypt.hash(req.body.password, 8)
         var active = req.body.active;
         var firstname = req.body.firstname;
         var lastname = req.body.lastname;
