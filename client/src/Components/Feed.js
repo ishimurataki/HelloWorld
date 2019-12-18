@@ -5,7 +5,7 @@ import ChatBar from './Chat/ChatBar'
 import Profile from './Profile/Profile'
 import FriendRecommendations from './FriendRecommendations/FriendRecommendations';
 import FriendRequests from './FriendRequests/FriendRequests';
-import TestButton from './Feed/TestButton'
+//import TestButton from './Feed/TestButton'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -33,7 +33,6 @@ class Feed extends Component {
                             <NewsFeed username = {username}/>
                         </div>
                         <div className ="col s3">
-                            <TestButton/>
                             <ChatBar username = {username}/> 
                         </div>
                     </div>

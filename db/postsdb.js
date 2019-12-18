@@ -24,7 +24,7 @@ var routes = function(Friend, Post){
                         }
                         j = j + 1;
                         if(j === (posts.Items.length - 1)) {
-                            console.log(postObj);
+                            //console.log(postObj);
                             callback(postObj);
                         }
                         
