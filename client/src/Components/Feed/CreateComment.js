@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './CreateComment.css';
 import Comment from './../../Middleware/Comment';
+
+// this component deals with how to make a new comment for each post
 class CreateComment extends Component {
     constructor(props) {
         super(props);
@@ -18,12 +20,9 @@ class CreateComment extends Component {
         e.preventDefault();
         console.log("Creating Comment");
         var timeOfComment = new Date().toUTCString();
-        // format of date will be 12-2-2019-12-02
-        // format of date will be month-day-year-hour-minute-second
 
         var postID = this.props.postID;
         var creator = this.props.creator;
-        // not sure what this date key is for now
 		var date = this.props.postDate;
         var content = this.state.content;
         var postDate = timeOfComment;
@@ -35,7 +34,6 @@ class CreateComment extends Component {
             content: content 
         }
         Comment.createComment(obj, (response) => {
-            console.log(response);
             this.props.updateCommentSection(response);
         });
 

@@ -12,6 +12,7 @@ class Search extends Component {
             options: []
         }
     }
+    // getData for friends
     async componentDidMount() {
         var obj = {username: this.props.username}
         var options = await user_middleware.getAllFriends(obj);

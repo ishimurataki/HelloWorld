@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import auth from './../../Middleware/Auth';
 import "./Signup.css"
 class Signup extends Component {
+
+    // keep track of variables for each attribute as well as error attributes 
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +21,8 @@ class Signup extends Component {
             interests: ''
         }
     }
+
+    // below are a bunch of handlers to deal with the inputs
     handleUsernameChange = (event) => {
         this.setState({
             username: event.target.value
@@ -59,6 +63,8 @@ class Signup extends Component {
             lastname: event.target.value
         })
     }
+
+    // check if something is a valid signup attempt, if so lets make a request to the backend.
     validSignupAttempt = () => {
         if(!this.state.errorPass && !this.state.errorUser && !this.state.errorEmail) {
             console.log("triggered signup sequence");

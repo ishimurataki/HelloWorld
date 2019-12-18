@@ -2,6 +2,7 @@ var dynamo = require('dynamodb');
 const Chat = require('../models/Chat')(dynamo);
 const Chatroom = require('../models/Chatroom')(dynamo)
 
+// gets existing chats
 const getChats = async (chatroomID, timestamp) => {
     return await new Promise((resolve, reject) => {
         Chat.query(chatroomID).where('timestamp').lt(timestamp).descending().limit(2).exec((err, response) => {
@@ -16,6 +17,8 @@ const getChats = async (chatroomID, timestamp) => {
     })
 }
 
+
+//adds a chat
 const addChat = async (chatroomID, timestamp, content) => {
     const chat = new Chat({ chatroomID, timestamp, content });
     try {
@@ -26,6 +29,7 @@ const addChat = async (chatroomID, timestamp, content) => {
     }
 }
 
+//gets chatroom
 const getChatrooms = async (username) => {
     return await new Promise((resolve, reject) => {
         Chatroom.query(username).exec((err, response) => {
@@ -44,6 +48,7 @@ const getChatrooms = async (username) => {
     })
 }
 
+//adds a chatroom
 const addChatroom = async (username, chatroomID) => {
     try {
         const acc = new Chatroom ({username, chatroomID, timestamp:new Date().getTime(), active : 'true', new: 'false'});
@@ -53,6 +58,7 @@ const addChatroom = async (username, chatroomID) => {
     }
 }
 
+//updates existing chat room
 const updateChatroom = async (username, chatroomID) => {
     return await new Promise((resolve, reject) => {
         Chatroom.update({username, chatroomID, timestamp:new Date().getTime()}, (err, acc) => {
@@ -65,6 +71,7 @@ const updateChatroom = async (username, chatroomID) => {
     })
 }
 
+// views a chatroom
 const viewChatroom = async(username, chatroomID) => {
     console.log('view Chat called!!!')
     return await new Promise((resolve, reject) => {
@@ -79,6 +86,7 @@ const viewChatroom = async(username, chatroomID) => {
     })
 }
 
+// makes a new chatroom
 const makeChatroomNew = async (username, chatroomID) => {
     return await new Promise((resolve, reject) => {
         Chatroom.update({username, chatroomID, new:'true'}, (err, acc) => {
@@ -91,6 +99,7 @@ const makeChatroomNew = async (username, chatroomID) => {
     })
 }
 
+// deletes a chatroom
 const deleteChatroom = async (username, chatroomID) => {
     return await new Promise((resolve, reject) => {
         Chatroom.update({username, chatroomID, active:'false'}, (err, acc) => {

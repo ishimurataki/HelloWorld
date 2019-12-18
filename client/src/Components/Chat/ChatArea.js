@@ -9,7 +9,7 @@ const divStyle = {
     padding: '30px',
     width: '100%'
 }
-
+// chat area is a component on the bottom of the page where all the live chats will pop up
 class ChatArea extends Component {
 
     constructor(props) {
@@ -19,6 +19,8 @@ class ChatArea extends Component {
             openChatCount: 0
         }
     }
+
+    // show all chats that a user has clicked on recently
     renderChats() {
         const path = this.props.location.pathname;
         if(path === "/feed") {

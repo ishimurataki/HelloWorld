@@ -4,6 +4,7 @@ import CreateComment from './CreateComment';
 import Comment from './Comment';
 import comment_middleware from './../../Middleware/Comment';
 
+// the component for a comment section for a specific post
 class CommentSection extends Component {
     constructor(props) {
         super(props)
@@ -11,6 +12,8 @@ class CommentSection extends Component {
             data: []
         }
     }
+
+    // fetch the comment data
     async componentDidMount() {
         var obj = {postID: this.props.postID, date: this.props.postDate};
         var response = await comment_middleware.fetchCommentData(obj);
@@ -22,14 +25,13 @@ class CommentSection extends Component {
         if(!data) {
             return <div> No Comments </div>
         } else {
-            console.log(data);
             return data.map((postData) => {
-                console.log(postData);
                 return <Comment key={postData.date} data= {postData}/>
             })
         }
     }
-    // the response comes in as a list of length 1. In data? Not sure why but debug accordingly
+    
+    // if you create a comment, this will ensure that the comment updates dynamically
     updateCommentSection = response => {
         this.setState(prevState => ({
             data: [response.data[0], ...prevState.data]

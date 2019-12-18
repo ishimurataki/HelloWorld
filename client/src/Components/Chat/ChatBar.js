@@ -5,6 +5,7 @@ import './ChatBar.css';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
 
+// Renders the chat bar component on the side;
 class ChatBar extends Component {
     constructor(props) {
         super(props);
@@ -16,20 +17,28 @@ class ChatBar extends Component {
         this.handleGetChats = this.handleGetChats.bind(this);
         this.renderChatrooms = this.renderChatrooms.bind(this);
     }
-    // IMPORTANT: TEST ALL ONLINE FRIENDS
+    
+    // ensures that we are periodically getting friends who are online;
     async componentDidMount() {
-        var obj = { username: localStorage.getItem("token") };
+        var username = this.props.username
+        var obj = { username: username};
         var result = await chatbar_middleware.fetchAllOnlineFriends(obj);
         console.log(result);
         this.setState({ data: result });
 
-        setInterval(async () => {
-            const c = await chatbar_middleware.getChatrooms();
-            const friendos = await chatbar_middleware.fetchAllOnlineFriends({ username: localStorage.getItem("token") });
-            this.setState({chatrooms: c, data:friendos});
+        var intervalId = setInterval(async () => {
+            if(this.props.username) {
+                clearInterval(intervalId);
+            } else {
+                var obj = {username: username};
+                const c = await chatbar_middleware.getChatrooms(obj);
+                const friendos = await chatbar_middleware.fetchAllOnlineFriends({ username: this.props.username });
+                this.setState({chatrooms: c, data:friendos});
+            }
         }, 5000)
     }
 
+    // render based off who is online;
     renderOnlineFriends = (data) => {
         if (!data) {
             return <div> No Active Friends Online </div>
@@ -40,6 +49,7 @@ class ChatBar extends Component {
         }
     }
 
+    // handles the input where you can type a friend and get a chat with that friend
     handleChange = (event) => {
         this.refs.errorArea.textContent = '';
         if (event.which === 13 && this.refs.textarea.value) {
@@ -98,6 +108,11 @@ class ChatBar extends Component {
     }
 }
 
-const mapStateToProps = ({ friends }) => ({ friends });
+const mapStateToProps = (state) => (
+    {
+        friends: state.friends,
+        username: state.auth
+    }
+);
 
 export default connect(mapStateToProps, actions)(ChatBar);

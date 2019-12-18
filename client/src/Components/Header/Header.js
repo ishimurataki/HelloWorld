@@ -31,6 +31,9 @@ class Header extends Component {
     componentDidMount() {
         this.props.fetchUser();
     }
+
+    // we have a bunch of conditional logic where based off your path and whether you are logged in,
+    // the header will show dynamic content.
     renderContent() {
         // lets just store login in windows lmao
         var path = "/"

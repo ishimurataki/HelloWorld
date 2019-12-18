@@ -36,6 +36,7 @@ var routes = function(Friend, User){
         })
     }
 
+    // get all friends who are online
     const getAllOnlineFriends = async (username, callback) => {
         const friends = await new Promise((resolve, reject) => {
             Friend.query(username).exec((err, response) => {

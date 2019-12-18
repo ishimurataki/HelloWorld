@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import friendRec_middleware from '../../Middleware/FriendRec';
 import FriendRecommendation from './FriendRecommendation';
-
+// this is a component for all the friend recommendations that are displayed
 class FriendRecommendations extends Component {
     state = {
         friendRecommendations: []
@@ -23,7 +23,7 @@ class FriendRecommendations extends Component {
 
     render () {
         return (
-            <div style = {{marginTop: '100px', backgroundColor: "lightBlue", 
+            <div style = {{backgroundColor: "lightBlue", 
             paddingTop: "2px", paddingBottom: "2px",
             paddingLeft: "2px", paddingRight: "2px"}}>
                 <h4> Friend Recs! </h4> 

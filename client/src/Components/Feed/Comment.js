@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react' 
+// html for what a comment should look like
 class Comment extends Component {
     render () {
         var { creator, date, content} = this.props.data;

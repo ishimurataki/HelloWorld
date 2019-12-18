@@ -2,6 +2,7 @@ import React from 'react';
 import './Post.css';
 import CommentSection from './CommentSection';
 
+// this is just a class for what a post looks like. It is mainly html.
 export class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -37,6 +38,7 @@ export class Post extends React.Component {
     }
   }
   render() {
+    //console.log(this.state);
     return (
         <div> 
           <article className="Post" ref="Post">

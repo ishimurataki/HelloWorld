@@ -11,16 +11,21 @@ class Login extends Component {
             errorPass: ''
         }
     }
+    // handle change in input for username
     handleUsernameChange = (event) => {
         this.setState({
             username: event.target.value
         })
     }
+
+    //handle change in input for password 
     handlePasswordChange = (event) => {
         this.setState({
             password: event.target.value
         })
     }
+
+    // check if a login attempt is valid, display errors otherwise
     validLoginAttempt = () => {
         if(!this.state.errorPass && !this.state.errorUser) {
             console.log("triggered login sequence");
@@ -37,6 +42,8 @@ class Login extends Component {
             })
         }
     }
+
+    // handle when someone presses submit
     handleSubmit = (event) => {
         event.preventDefault();
         var errorUser = '';
@@ -51,6 +58,8 @@ class Login extends Component {
             this.validLoginAttempt();
         });
     }
+
+    // render
     render () {
         return (
             <div>

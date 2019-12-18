@@ -3,6 +3,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+// this is the home page
 class Home extends Component {
     componentDidMount() {
         this.props.fetchUser();

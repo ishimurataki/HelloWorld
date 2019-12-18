@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom'; 
 import { connect } from 'react-redux'; 
+// the component for smart search!
 class Autocomplete extends Component {
 
   constructor(props) {

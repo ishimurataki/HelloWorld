@@ -36,7 +36,7 @@ var routes = function(User, Friend, visualizerView) {
 	                                User.get(id, function(err, data) {
 	                                    console.log(id);
 	                                    var name = data.attrs.firstname;
-	                                    if (id == username) {
+	                                    if (id === username) {
 	                                        ;
 	                                    } else {
 	                                        list.push('{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data": ' + '{"affiliation": ' + '"' + affiliation + '"},' + '"children": []}, ');
@@ -85,7 +85,7 @@ var routes = function(User, Friend, visualizerView) {
 	                    res.send(null);
 	                } else {
 	                    console.log(response.Items.length);
-	                    if (response.Items.length == 0) {
+	                    if (response.Items.length === 0) {
 	                       jsonString = jsonString + ']}';
 	                       res.send(jsonString);
 	                    } else {
@@ -98,15 +98,15 @@ var routes = function(User, Friend, visualizerView) {
 	                                    console.log(id);
 	                                    var name = data.attrs.firstname;
 	                                    var friendAffiliation = data.attrs.affiliation;
-	                                    if (friendAffiliation == affiliation) {
-	                                    	if (id == username) {
+	                                    if (friendAffiliation === affiliation) {
+	                                    	if (id === username) {
 	                                        	;
 		                                    } else {
 		                                        list.push('{"id": ' + '"' + id + '"' + ", " + '"name": ' + '"' + name + '"' + ", " + '"data": ' + '{}, ' + '"children": []}, ');
 		                                    }
 
 		                                    cnt = cnt + 1;
-		                                    if (cnt === (response.Items.length)) {
+		                                    if (cnt === (response.Items.length - 1)) {
 		                                        console.log(list);
 		                                        for (var j = 0; j < list.length; j++) {
 		                                            jsonString = jsonString + list[j];

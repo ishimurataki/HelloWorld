@@ -95,6 +95,7 @@ console.log('Author: Kevin Xu (xukevin)');
 app.listen(8080);
 console.log('Server running on port. Now open http://localhost:8080/ in your browser!');
 
+// all chat logic is below 
 const ClientManager = require('./server_socket/ClientManager');
 const ChatroomManager = require('./server_socket/ChatroomManager');
 const makeHandlers = require('./server_socket/handlers');

@@ -48,7 +48,7 @@ var routes = function(User) {
 	var updateProfileAttribute = function(username, field, value, callback) {
 		console.log('Updating ' + field + ' for ' + username + ' to ' + value);
 		var field = field;
-		if (field == 'birthday') {
+		if (field === 'birthday') {
 			User.update({username: username, birthday: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -59,7 +59,7 @@ var routes = function(User) {
 			}
 		});
 
-		} else if (field == 'email') {
+		} else if (field === 'email') {
 			User.update({username: username, email: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -70,7 +70,7 @@ var routes = function(User) {
 			}
 		});
 
-		} else if (field == 'affiliation') {
+		} else if (field === 'affiliation') {
 			User.update({username: username, affiliation: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -81,7 +81,7 @@ var routes = function(User) {
 			}
 		});
 
-		} else if (field == 'interest') {
+		} else if (field ==='interest') {
 			User.update({username: username, interest: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -92,7 +92,7 @@ var routes = function(User) {
 			}
 		});
 
-		} else if (field == 'status') {
+		} else if (field === 'status') {
 			User.update({username: username, status: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -102,7 +102,7 @@ var routes = function(User) {
 				callback(update);
 			}
 		});
-		} else if (field == 'active') {
+		} else if (field === 'active') {
 			User.update({username: username, active: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -112,7 +112,7 @@ var routes = function(User) {
 				callback(update);
 			}
 		});
-		} else if (field == 'firstname') {
+		} else if (field ==='firstname') {
 			User.update({username: username, firstname: value}, function (err, update) {
 			if (err) {
 				console.log(err);
@@ -122,7 +122,7 @@ var routes = function(User) {
 				callback(update);
 			}
 		});
-		} else if (field == 'lastname') {
+		} else if (field === 'lastname') {
 			User.update({username: username, lastname: value}, function (err, update) {
 			if (err) {
 				console.log(err);

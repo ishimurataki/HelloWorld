@@ -1,5 +1,6 @@
 var routes = function(Notification, Friend) {
 
+	// add a new notification
 	var addNewNotification = function (username, date, notification, callback) {
 		console.log('Adding new notification by ' + username);
 		var notif = {
@@ -19,6 +20,7 @@ var routes = function(Notification, Friend) {
 
 	}
 
+	// get all notifications from friends
 	var getAllNotifications = function(username, callback) {
 		console.log('Getting all notifications for ' + username);
 		Friend.query(username).exec(function (err, response) {

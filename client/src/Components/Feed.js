@@ -9,6 +9,7 @@ import FriendRequests from './FriendRequests/FriendRequests';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+// this is the home page for the feed;
 class Feed extends Component {
     async componentDidMount() {
         this.props.fetchUser();

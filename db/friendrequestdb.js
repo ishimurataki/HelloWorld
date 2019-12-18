@@ -41,7 +41,8 @@ var routes = function(FriendRequests, User, Friend) {
 			}
 		})
 	}
-
+	
+	// function to get all friend requests you have sent someone 
 	var getAllSentFriendReqs = function(username, callback) {
 		console.log('Getting all users who ' + username + 'sent a friend request');
 		FriendRequests.scan().where('sender').equals(username).exec((err, response) => {

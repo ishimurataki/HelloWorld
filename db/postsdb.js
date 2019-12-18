@@ -6,31 +6,37 @@ var routes = function(Friend, Post){
         console.log('Getting all posts for ' + username);
         Post.scan().exec(function(err, posts) {
             var postObj = [];
-            for (var i = 0; i < posts.Items.length; i++) {
-                var post = posts.Items[i];
-                var friend = posts.Items[i].attrs.creator;
-                var j = 0;
-                if(friend === username) {
-                    postObj.push(post);
-                }
-                (function(postObj,post) {
-                    Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
-                        if(response) {
-                            if (response.Items.length != 0) {
-                                console.log("Friend matches");
-                                postObj.push(post);
-                            } 
+            var length = posts.Items.length;
+            if(length > 0) {
+                for (var i = 0; i < length; i++) {
+                    var post = posts.Items[i];
+                    var friend = posts.Items[i].attrs.creator;
+                    var j = 0;
+                    if(friend === username) {
+                        postObj.push(post);
+                    }
+                    (function(postObj,post) {
+                        Friend.query(username).where('friendUsername').equals(friend).exec(function(err, response) {
+                            if(response) {
+                                if (response.Items.length != 0) {
+                                    console.log("Friend matches");
+                                    postObj.push(post);
+                                } 
+                                
+                            }
+                            j = j + 1;
+                            if(j === (posts.Items.length - 1)) {
+                                //console.log(postObj);
+                                callback(postObj);
+                            }
                             
-                        }
-                        j = j + 1;
-                        if(j === (posts.Items.length - 1)) {
-                            //console.log(postObj);
-                            callback(postObj);
-                        }
-                        
-                    });
+                        });
+                    }
+                    )(postObj, post);
                 }
-                )(postObj, post);
+            } else {
+                console.log("Returning empty posts");
+                callback(postObj);
             }
         }); 
     }
@@ -55,6 +61,7 @@ var routes = function(Friend, Post){
         })
     }
 
+    // function to delete a post
     var deletePost = function(creator, postID, callback) {
         console.log("Deleting the post created by " + creator + " with post ID " + postID)
         Post.destroy({creator: creator, postID: postID}, function(err, response) {

@@ -4,6 +4,7 @@ import IncomingFriendRequest from './IncomingFriendRequest';
 import OutgoingFriendRequest from './OutgoingFriendRequest';
 import { connect } from 'react-redux';
 
+// this is a component for all friend requests you have received and are sending out
 class FriendRequests extends Component {
     constructor(props) {
         super(props);
@@ -59,7 +60,7 @@ class FriendRequests extends Component {
 
     render () {
         return (
-            <div style = {{marginTop: '100px', backgroundColor: "lightBlue", 
+            <div style = {{backgroundColor: "lightBlue", 
             paddingTop: "2px", paddingBottom: "2px",
             paddingLeft: "2px", paddingRight: "2px"}}>
                 <h4>Friend Requests! </h4>
