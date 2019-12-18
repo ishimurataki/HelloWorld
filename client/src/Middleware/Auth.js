@@ -8,16 +8,16 @@ class Auth {
         console.log("begin login sequence");
         console.log(obj);
         const res = await axios.post('/api/checklogin', obj);
-        var obj2 = {
-            username: obj.username,
-            field: "active",
-            value: "true"
-        }
-        const resActive = await axios.post('/api/updateProfileAttribute', obj2);
         const value = res.data;
         // true for debugging
         // const value = "success"
         if(value === "success") {
+            var obj2 = {
+                username: obj.username,
+                field: "active",
+                value: "true"
+            }
+            const resActive = await axios.post('/api/updateProfileAttribute', obj2);
             localStorage.setItem("token", obj.username);
         }
         callback(value);
@@ -49,12 +49,16 @@ class Auth {
         //    localStorage.setItem("token", obj.username);
         //}
         if(value === "success") {
+            var obj3 = {
+                username: obj.username,
+                field: "active",
+                value: "true"
+            }
+            const resActive = await axios.post('/api/updateProfileAttribute', obj3);
             localStorage.setItem("token", obj.username);
         }
         callback(value);
     }
-
-
 }
 
 export default new Auth();

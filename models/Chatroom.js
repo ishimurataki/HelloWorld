@@ -9,6 +9,7 @@ module.exports = dynamo => {
             chatroomID: string(),
             timestamp: number(),
             active: string(),
+            new: string(),
         },
         tableName: 'facebookChatRooms'
     })

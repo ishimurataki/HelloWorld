@@ -28,9 +28,12 @@ module.exports = (name) => {
         }
     }
 
-    broadcastMessage = async (message) => {
+    broadcastMessage = async (message, sender) => {
         for (const folk of name.split(',').map((c) => c.trim())) {
             await chatsDb.updateChatroom(folk, name);
+            if (folk !== sender) {
+                await chatsDb.makeChatroomNew(folk, name);
+            }
         }
         members.forEach(m => {
             console.log('message sent from server')

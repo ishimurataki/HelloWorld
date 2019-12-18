@@ -22,6 +22,12 @@ class ChatBar extends Component {
         var result = await chatbar_middleware.fetchAllOnlineFriends(obj);
         console.log(result);
         this.setState({ data: result });
+
+        setInterval(async () => {
+            const c = await chatbar_middleware.getChatrooms();
+            const friendos = await chatbar_middleware.fetchAllOnlineFriends({ username: localStorage.getItem("token") });
+            this.setState({chatrooms: c, data:friendos});
+        }, 5000)
     }
 
     renderOnlineFriends = (data) => {
@@ -56,6 +62,7 @@ class ChatBar extends Component {
         const c = await chatbar_middleware.getChatrooms();
         this.setState({chatrooms: c, show: !this.state.show});
         console.log(this.state.show);
+        console.log(c);
     }
 
     renderChatrooms = () => {
@@ -78,10 +85,11 @@ class ChatBar extends Component {
                 {
                     this.state.show && <ul>
                         {
-                            chatrooms.map(chat => <li onClick={() => {
-                                const ppl = chat.split(',').map(a => a.trim()).filter(a => a !== '');
+                            chatrooms.map(chat => <li onClick={async () => {
+                                const ppl = chat.chatroomID.split(',').map(a => a.trim()).filter(a => a !== '');
                                 addChat(username, ppl);
-                            }}>{chat}</li>)
+                                await chatbar_middleware.viewChatroom({chatroomID: chat.chatroomID});
+                            }} style={ chat.new !== 'true' ? { fontWeight: 'normal' } : { fontWeight: 'bold' } } >{chat.chatroomID}</li>)
                         }
                     </ul>
                 }

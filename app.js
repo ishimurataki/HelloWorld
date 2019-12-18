@@ -84,6 +84,7 @@ app.get('/getFriends/:user/:affiliation', friendVisRoutes.get_new_visualization)
    app.post('/api/getSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
    app.get('/api/getChatrooms', chatroomRoutes.getChatrooms);
    app.post('/api/leaveChatroom', chatroomRoutes.leaveChat);
+   app.post('/api/viewChat', chatroomRoutes.viewChat);
 
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));

@@ -9,10 +9,15 @@ class ChatBar{
         const res = await axios.post('/api/getAllOnlineFriends', obj);
         return res.data;
     }
-    
+
     async getChatrooms() {
         console.log("fetching chatrooms");
         const res = await axios.get('/api/getChatrooms');
+        return res.data;
+    }
+
+    async viewChatroom(obj) {
+        const res = await axios.post('/api/viewChat', obj);
         return res.data;
     }
 }
