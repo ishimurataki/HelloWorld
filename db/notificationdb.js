@@ -22,12 +22,13 @@ var routes = function(Notification, Friend) {
 	var getAllNotifications = function(username, callback) {
 		console.log('Getting all notifications for ' + username);
 		Friend.query(username).exec(function (err, response) {
+			var length = response.Items.length;
 			if (err) {
 				console.log(err);
 				callback(null);
-			} else {
+			} else if (length > 0) {
 				var notifications = [];
-				for (var i = 0; i < response.Items.length; i++) {
+				for (var i = 0; i < length ; i++) {
 					var cnt = 0;
 					var friend = response.Items[i].attrs.friendUsername;
 					console.log(friend);
@@ -56,6 +57,9 @@ var routes = function(Notification, Friend) {
 						});
 					})(notifications, friend);
 				}
+			} else {
+				var notifications = [];
+				callback(notifications);
 			}
 		})
 
