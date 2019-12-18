@@ -1,4 +1,5 @@
 var express = require('express');
+const path = require('path')
 var app = express();
 //var session = require('express-session');
 const http = require('http').createServer(app);
@@ -45,6 +46,8 @@ app.use(
     })
 );
 app.use('/public', express.static('./public/'));
+app.use(express.static(path.join(__dirname, 'client/build')))
+
 
 // friend visualizer 
 
@@ -81,6 +84,10 @@ app.get('/getFriends/:user/:affiliation', friendVisRoutes.get_new_visualization)
    app.post('/api/getSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
    app.get('/api/getChatrooms', chatroomRoutes.getChatrooms);
    app.post('/api/leaveChatroom', chatroomRoutes.leaveChat);
+
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 // run the server below
 console.log('Author: Kevin Xu (xukevin)');

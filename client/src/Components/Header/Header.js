@@ -40,6 +40,7 @@ class Header extends Component {
         if(this.props.user) {
             if(path == "/feed") {
                 return ([
+                    <li key = "-1"><a href={"http://localhost:8080/friendvisualizer"}> TEST VISUALIZER LINK </a></li>,
                     <li key = "0"><div style = {{marginRight: "20px"}} onClick = {this.handleNotifications}>Notifications</div> </li>,
                     <li key = "1"><div style = {{marginRight: "20px"}} onClick = {this.handleLogout}>Log out </div> </li>
                 ])

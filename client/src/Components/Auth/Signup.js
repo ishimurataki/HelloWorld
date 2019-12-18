@@ -16,6 +16,7 @@ class Signup extends Component {
             birthday: 'none',
             firstname: '',
             lastname: '',
+            interests: ''
         }
     }
     handleUsernameChange = (event) => {
@@ -63,7 +64,7 @@ class Signup extends Component {
             console.log("triggered signup sequence");
             var obj = {username: this.state.username, password: this.state.password, email: this.state.email,
                 affiliation: this.state.affiliation, birthday: this.state.birthday, firstname: this.state.firstname, 
-                lastname: this.state.lastname
+                lastname: this.state.lastname, interests: this.state.interests
             };
             var obj2 = {username: this.state.username, friendUsername: this.state.username};
             auth.signup(obj, obj2, (result) => {
