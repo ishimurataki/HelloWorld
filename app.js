@@ -35,6 +35,7 @@ var friendRequestRoutes = require('./routes/friendrequestroutes.js')(friendreqDb
 var notificationRoutes = require('./routes/notificationroutes.js')(notificationDb);
 var friendRecRoutes = require('./routes/friendrecroutes.js')(friendRecFile, User, Friend);
 var friendVisRoutes = require('./routes/friendvisroutes.js')(User, Friend, visualizerView);
+var chatroomRoutes = require('./routes/chatroomroutes');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -81,6 +82,9 @@ app.get('/getFriends/:user/:affiliation', friendVisRoutes.get_new_visualization)
    app.get('/api/logout', authRoutes.remove_user);
    app.post('/api/deletePost', postRoutes.delete_post);
    app.post('/api/getSentFriendReqs', friendRequestRoutes.get_all_sent_friend_reqs);
+   app.get('/api/getChatrooms', chatroomRoutes.getChatrooms);
+   app.post('/api/leaveChatroom', chatroomRoutes.leaveChat);
+   app.post('/api/viewChat', chatroomRoutes.viewChat);
 
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));

@@ -35,7 +35,7 @@ module.exports = (client, clientManager, chatroomManager) => {
         const chatroom = chatroomManager.getChatroomByName(chatroomName);
 
         chatroom.addClient(client);
-        chatroom.broadcastMessage({ chat: chatroomName, ...entry });
+        chatroom.broadcastMessage({ chat: chatroomName, ...entry }, username);
         chatroom.getChatHistory().then((chatHistory) => {
             console.log(chatHistory);
             cb(null, chatHistory);
@@ -49,7 +49,7 @@ module.exports = (client, clientManager, chatroomManager) => {
         const chatroom = chatroomManager.getChatroomByName(chatroomName);
 
         chatroom.addEntry(entry).then(() => {
-            chatroom.broadcastMessage(entry);
+            chatroom.broadcastMessage(entry, sender);
             return chatroom.getChatHistory();
         }).then((chatHistory) => {
             console.log(chatHistory);

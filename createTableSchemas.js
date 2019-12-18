@@ -8,6 +8,7 @@ var Comment = require('./models/Comment')(dynamo);
 var FriendRequests = require('./models/FriendRequests')(dynamo);
 var Notification = require('./models/Notification')(dynamo);
 var Chat = require('./models/Chat')(dynamo);
+var Chatroom = require('./models/Chatroom')(dynamo);
 
 // create tables snippet of code is a one time thing, to build a table that does not exist.
 // if a schema was updated and a table already exists, we will have to delete the table, and rebuild it

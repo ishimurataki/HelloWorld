@@ -9,8 +9,12 @@ class ChatBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            chatrooms: [],
+            show: false
         }
+        this.handleGetChats = this.handleGetChats.bind(this);
+        this.renderChatrooms = this.renderChatrooms.bind(this);
     }
     // IMPORTANT: TEST ALL ONLINE FRIENDS
     async componentDidMount() {
@@ -18,6 +22,12 @@ class ChatBar extends Component {
         var result = await chatbar_middleware.fetchAllOnlineFriends(obj);
         console.log(result);
         this.setState({ data: result });
+
+        setInterval(async () => {
+            const c = await chatbar_middleware.getChatrooms();
+            const friendos = await chatbar_middleware.fetchAllOnlineFriends({ username: localStorage.getItem("token") });
+            this.setState({chatrooms: c, data:friendos});
+        }, 5000)
     }
 
     renderOnlineFriends = (data) => {
@@ -48,24 +58,46 @@ class ChatBar extends Component {
         }
     }
 
+    handleGetChats = async () => {
+        const c = await chatbar_middleware.getChatrooms();
+        this.setState({chatrooms: c, show: !this.state.show});
+        console.log(this.state.show);
+        console.log(c);
+    }
+
+    renderChatrooms = () => {
+        console.log(this.state.chatrooms);
+    }
+
+
     render() {
-        var { data } = this.state;
+        const { data, chatrooms } = this.state;
+        const { addChat, username } = this.props;
         return (
             <div>
                 <h5> Chat Active Friends </h5>
                 {this.renderOnlineFriends(data)}
                 <div id='chatsearch'>🔍: 
                     <span><input id='friendFind' ref='textarea' type="text" name="username" onKeyPress={this.handleChange} autoComplete='off'></input></span>
-                    <span id='groupChat' onClick={() => console.log('Group chat clicked')}>💬</span>
+                    <span id='groupChat' onClick={this.handleGetChats}>💬</span>
                 </div>
                 <span id='errorArea' ref="errorArea"></span>
+                {
+                    this.state.show && <ul>
+                        {
+                            chatrooms.map(chat => <li onClick={async () => {
+                                const ppl = chat.chatroomID.split(',').map(a => a.trim()).filter(a => a !== '');
+                                addChat(username, ppl);
+                                await chatbar_middleware.viewChatroom({chatroomID: chat.chatroomID});
+                            }} style={ chat.new !== 'true' ? { fontWeight: 'normal' } : { fontWeight: 'bold' } } >{chat.chatroomID}</li>)
+                        }
+                    </ul>
+                }
             </div>
         )
     }
 }
 
-const mapStateToProps = state => {
-    return { friends: state.friends };
-}
+const mapStateToProps = ({ friends }) => ({ friends });
 
 export default connect(mapStateToProps, actions)(ChatBar);

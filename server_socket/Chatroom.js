@@ -10,8 +10,14 @@ module.exports = (name) => {
 
     initialize = async () => {
         try {
+            console.log('we are here');
+            for (const folk of name.split(',').map((c) => c.trim())) {
+                console.log(folk);
+                await chatsDb.addChatroom(folk, name, new Date().getTime());
+            }
             const data = await chatsDb.getChats(name, new Date().getTime());
             if (data.length > 0) {
+                console.log(data);
                 currChatHistory = data[0].map((c) => JSON.parse(c));
                 allChatHistory = data.flat().map((c) => JSON.parse(c));
                 currTimeStamp = parseInt(currChatHistory[0].timestamp);
@@ -22,7 +28,13 @@ module.exports = (name) => {
         }
     }
 
-    broadcastMessage = (message) => {
+    broadcastMessage = async (message, sender) => {
+        for (const folk of name.split(',').map((c) => c.trim())) {
+            await chatsDb.updateChatroom(folk, name);
+            if (folk !== sender) {
+                await chatsDb.makeChatroomNew(folk, name);
+            }
+        }
         members.forEach(m => {
             console.log('message sent from server')
             m.emit('message', message)
@@ -31,11 +43,6 @@ module.exports = (name) => {
 
     addEntry = async (entry) => {
         console.log('addentry called');
-        // const newEntry = {
-        //     sender: entry.client,
-        //     timestamp: new Date().getTime(),
-        //     msg: entry.msg
-        // }
         if (currChatHistory.length >= 10) {
             const content = currChatHistory.map((c) => JSON.stringify(c));
             try {
